@@ -1,3 +1,12 @@
+import 'dart:ffi';
+
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
+import 'package:flutter/services.dart';
+
 class User {
   bool acceptAgreement;
 
@@ -7,10 +16,6 @@ class User {
     return User( acceptAgreement: json["AcceptAgreement"]);
   }
 
-  void updateAgreement(){
-      this.acceptAgreement = true;
-  }
-
   // TODO: create a setter for the acceptAgreement flag
-}
 
+}

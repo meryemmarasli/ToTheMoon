@@ -1,9 +1,10 @@
 class News {
 
-  final String title;
-  final String content;
+  final String? title;
+  final String? content;
 
   News({required this.title, required this.content});
+
 
   factory News.fromJson(Map<String, String> json) {
     return News(
@@ -11,3 +12,5 @@ class News {
         content: json["Content"]
     );
   }
+
+}

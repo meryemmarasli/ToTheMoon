@@ -7,8 +7,17 @@ class NewsModel {
     Text('S&P stock rockets'),
     Text('S&P stock rockets'),
     Text('S&P stock rockets'),
-    Text('S&P stock rockets')
-  ];
+    Text('S&P stock drops!'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets'),
+    Text('S&P stock drops!'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets'),
+    Text('S&P stock rockets')  ];
 
   /*
   final String title;

@@ -14,7 +14,7 @@ void main() {
   runApp(const MyApp());
 }
 
-User user = new User(acceptAgreement: false);
+User user = new User(acceptAgreement: false, userId: -1);
 NewsModel news = new NewsModel();
 LessonModel lessons = new LessonModel();
 
@@ -42,6 +42,10 @@ class MyApp extends StatelessWidget {
   }
 
   startPage(){
+    if(user.userId == -1){
+      user.userId = 1;
+    }
+
     if(user.acceptAgreement == true)
         return const MenuView();
     else

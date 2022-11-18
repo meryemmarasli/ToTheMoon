@@ -9,11 +9,16 @@ import 'package:flutter/services.dart';
 
 class User {
   bool acceptAgreement;
+  int userId;
 
-  User({required this.acceptAgreement});
+  User({required this.acceptAgreement, required this.userId});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    return User( acceptAgreement: json["AcceptAgreement"]);
+    return User(
+        acceptAgreement: json["AcceptAgreement"],
+        userId: json["AcceptAgreement"]
+        );
+
   }
 
   // TODO: create a setter for the acceptAgreement flag

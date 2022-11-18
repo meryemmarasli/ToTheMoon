@@ -17,8 +17,12 @@ class NewsView extends StatelessWidget {
     final List<Text> News = newsViewModel.Headlines;
     return Scaffold(
       appBar: AppBar(
-
-      ),
+        //return button
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed:(){
+           Navigator.push(context, MaterialPageRoute(builder: (context) => MenuView()));
+        }),
+        title: Text("Lessons"),
+      )
       body: ListView.builder(
         itemCount: News.length,
         itemBuilder: (context, index) {

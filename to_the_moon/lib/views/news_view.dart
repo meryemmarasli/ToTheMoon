@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/viewmodels/news_view_model.dart';
 import 'package:to_the_moon/views/dashboard_view.dart';
+import 'package:to_the_moon/views/menu_view.dart';
 import 'package:to_the_moon/views/news_view.dart';
 
 class NewsView extends StatelessWidget {
@@ -17,7 +18,11 @@ class NewsView extends StatelessWidget {
     final List<Text> News = newsViewModel.Headlines;
     return Scaffold(
       appBar: AppBar(
-
+        //return button
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed:(){
+           Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardView()));
+        }),
+        title: Text("News"),
       ),
       body: ListView.builder(
         itemCount: News.length,

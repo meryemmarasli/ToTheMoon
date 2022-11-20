@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
 
   startPage(){
     if(user.acceptAgreement == true)
-        return const MenuView();
+        return const BottomBar();
     else
       return const WelcomeView();
   }

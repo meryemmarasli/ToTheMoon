@@ -39,6 +39,7 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(CupertinoIcons.rocket),
         title: Text("To The Moon"),
         automaticallyImplyLeading: false,
         ),
@@ -55,9 +56,9 @@ class _BottomBarState extends State<BottomBar> {
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: const Color(0xFF526480),
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label:"Home" ),
-          BottomNavigationBarItem(icon: Icon(Icons.auto_graph_sharp), label: "Market"),
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: "Lesson"),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label:"Dashboard" ),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.graph_square), label: "Market"),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.news), label: "Lessons"),
         ],
       ) ,
     );

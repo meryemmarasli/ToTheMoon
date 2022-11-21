@@ -9,18 +9,18 @@ class IndividualLessonView extends StatelessWidget {
   // In the constructor, require a lesson
   const IndividualLessonView({super.key, required this.lesson});
 
-  // Declare a field that holds the lesson.
+  // Declare a field that holds the Todo.
   final LessonModel lesson;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(lesson.title),
+        title: Text("To the Moon!"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text(lesson.content),
+        child: Text(lesson.description + "\n \n[add image] \n \n \n " + lesson.content),
       ),
     );
   }

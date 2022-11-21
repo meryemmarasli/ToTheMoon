@@ -1,3 +1,5 @@
+//navigation bar view
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -38,6 +40,7 @@ class _BottomBarState extends State<BottomBar> {
     return Scaffold(
       appBar: AppBar(
         title: Text("To The Moon"),
+        automaticallyImplyLeading: false,
         ),
       body: Center(
         child: _widgetOptions[selectedIndex]

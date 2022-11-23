@@ -16,11 +16,26 @@ class IndividualLessonView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("To the Moon!"),
+        title: Center(child: Text(lesson.getTitle())),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(lesson.description + "\n \n[add image] \n \n \n " + lesson.content),
+      body: Column(
+        children: [
+            //setting up title
+            Padding( padding: EdgeInsets.fromLTRB(10, 10.0, 20, 4.0)),
+            Row(children: [
+              Spacer(),
+              Text(lesson.getDescription(), style: TextStyle(fontSize: 20),),
+              Spacer(),
+            ]),
+            SizedBox(height: 10),
+            Image.asset(''/*lesson.getImagePath()*/),
+            SizedBox(height: 10),
+            Padding(padding: EdgeInsets.all(10), child: Text(lesson.getContent())),
+            SizedBox(height: 10),
+            
+
+        ]
+       
       ),
     );
   }

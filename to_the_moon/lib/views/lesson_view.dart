@@ -10,7 +10,7 @@ import 'package:to_the_moon/views/individual_lesson_view.dart';
 
 
 
-class LessonView extends StatelessWidget {
+lass LessonView extends StatelessWidget {
   const LessonView({super.key});
 
   @override
@@ -21,20 +21,16 @@ class LessonView extends StatelessWidget {
     return Scaffold(
      body: Column(
       children : [
-      //edit this to make it better looking
-      Row(children: [
-        Text( " you have completed", style: TextStyle(fontSize: 30, color: Colors.blue, ),)
-      ]),
       //progress card
       Center(
       child: Card(
-        color: Colors.blueGrey,
+        color:Colors.white,
         elevation: 1, 
         shape: RoundedRectangleBorder( side: BorderSide(color: Theme.of(context).colorScheme.outline,),borderRadius: const BorderRadius.all(Radius.circular(12)),),
         child: const SizedBox(
           width: 400,
           height: 200,
-          child: Center(child: Text('0/6 lessons')),
+          child: Center(child: Text('0/6 lessons complete')),
         ),
       ),
     ),
@@ -42,10 +38,12 @@ class LessonView extends StatelessWidget {
       itemCount: Lessons.length,
       itemBuilder: 
       (context, index) {
-        return Card(child: ListTile(
+        return Card(
+        elevation: 1, 
+        shape: RoundedRectangleBorder(side: BorderSide(width: .25),borderRadius: BorderRadius.circular(20) ),
+        child: ListTile(  
           //change this maybe
-          leading: CircleAvatar(child: Text((index+1).toString()), backgroundColor: Colors.grey,),
-          shape: RoundedRectangleBorder(side: BorderSide(width: .25),borderRadius: BorderRadius.circular(20) ),
+          //leading: CircleAvatar(child: Text((index+1).toString()), backgroundColor: Colors.grey,),
           title:Text(Lessons[index].getTitle()),
           subtitle:Text(Lessons[index].getDescription()),
           //change this as well
@@ -69,9 +67,9 @@ class LessonView extends StatelessWidget {
 
   Icon getTrailing(LessonModel lesson){
     if(lesson.getComplete()){
-          return Icon(Icons.check_box_outlined);
+          return Icon(CupertinoIcons.star_fill);
       }else{
-        return Icon(Icons.check_box_outline_blank_outlined );
+        return Icon(CupertinoIcons.star);
       }
   }
 

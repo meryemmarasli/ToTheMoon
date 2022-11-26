@@ -5,11 +5,17 @@ import 'package:provider/provider.dart';
 
 
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:to_the_moon/models/lesson.dart';
 import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
 import 'package:to_the_moon/views/individual_lesson_view.dart';
 
 
+=======
+import 'package:provider/provider.dart';
+import 'package:to_the_moon/views/menu_view.dart';
+import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
+>>>>>>> 012acfeaa880efacc4310f2a01d4ac2e4718556f
 
 
 class LessonView extends StatelessWidget {
@@ -17,6 +23,7 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
 
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
   
@@ -63,6 +70,25 @@ class LessonView extends StatelessWidget {
             }
           ),
 
+=======
+    LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
+    final List<Text> Lessons = lessonViewModel.Lessons;
+    return Scaffold(
+       appBar: AppBar(
+        //return button
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed:(){
+           Navigator.push(context, MaterialPageRoute(builder: (context) => MenuView()));
+        }),
+        title: Text("Lessons"),
+      ),
+      body: ListView.builder(
+        itemCount: Lessons.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Lessons[index],
+          );
+        },
+>>>>>>> 012acfeaa880efacc4310f2a01d4ac2e4718556f
       ),
     );
   }

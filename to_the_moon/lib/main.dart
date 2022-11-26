@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:to_the_moon/models/lesson.dart';
 import 'package:to_the_moon/models/user.dart';
 import 'package:to_the_moon/models/news.dart';
+import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
 import 'package:to_the_moon/viewmodels/news_view_model.dart';
 import 'package:to_the_moon/viewmodels/user_view_model.dart';
+<<<<<<< HEAD
+import 'package:to_the_moon/views/navigationBar.dart';
+=======
 import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
 import 'package:to_the_moon/views/menu_view.dart';
+>>>>>>> 012acfeaa880efacc4310f2a01d4ac2e4718556f
 import 'package:to_the_moon/views/welcome_view.dart';
 import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<LessonViewModel>(
+    child: const MyApp(),
+    create: (_) => LessonViewModel()
+    )
+  );
 }
 
 User user = new User(acceptAgreement: false, userId: -1);
@@ -47,7 +56,7 @@ class MyApp extends StatelessWidget {
     }
 
     if(user.acceptAgreement == true)
-        return const MenuView();
+        return const BottomBar();
     else
       return const WelcomeView();
   }

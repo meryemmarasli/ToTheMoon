@@ -1,49 +1,69 @@
 import 'package:flutter/material.dart';
 class LessonModel {
 
-  LessonModel(this.title, this.content, this.description, this.complete);
+  LessonModel(this.title, this.description, this.image, this.complete, this.content); 
  
-  String title;
-  String description;
-  String content;
-  bool complete;
+  String? title;
+  String? description;
+  String? content;
+  bool? complete;
+  String? image;
 
-  String getDescription(){
+   String? getImage(){
+    return this.image;
+  }
+
+  String? getDescription(){
     return description;
   }
-  String getTitle(){
+  String? getTitle(){
     return title;
   }
 
-  String getContent(){
+  String? getContent(){
     return content;
   }
 
-  void setTitle(String title){
-    this.title = title;
-  }
 
-  void setContent(){
-    this.content = content;
-  }
 
   void updateComplete(){
-      complete = !complete;
-  }
+      complete = true;
+  } 
 
-  bool getComplete(){
+  bool? getComplete(){
     return complete;
-  }
+  } 
 
-  LessonModel.fromJson(Map<String, dynamic> json){
+  LessonModel.fromMap(Map<String, dynamic> json){
     title = json["title"];
+    if(json["complete"] == 'true'){
+      complete = true;
+    }else{
+      complete = false;
+    }
     description = json["description"];
+    image = json["image"]; 
     content = json["content"];
-    complete = json["complete"];
-    image = json["image"];
+
+  
+ 
   }
-
-
 
  
+
+    Map<String, dynamic> toMap() =>{
+    'title': title,
+    'description': description,
+    'image': image, 
+    'complete': complete,
+    'content': content
+    
+   
+  }; 
+
+  
+
+
+
+
 }

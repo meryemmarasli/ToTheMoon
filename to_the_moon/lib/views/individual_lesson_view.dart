@@ -14,9 +14,10 @@ class IndividualLessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(lesson.getTitle())),
+        title: Center(child: Text(lesson.getTitle().toString())),
       ),
       body: Column(
         children: [
@@ -24,16 +25,22 @@ class IndividualLessonView extends StatelessWidget {
             Padding( padding: EdgeInsets.fromLTRB(10, 10.0, 20, 4.0)),
             Row(children: [
               Spacer(),
-              Text(lesson.getDescription(), style: TextStyle(fontSize: 20),),
+              //Text(lesson.getDescription().toString(), style: TextStyle(fontSize: 20),),
               Spacer(),
             ]),
             SizedBox(height: 10),
-            Image.asset(''/*lesson.getImagePath()*/),
+            Image.asset(lesson.getImage().toString()),
             SizedBox(height: 10),
-            Padding(padding: EdgeInsets.all(10), child: Text(lesson.getContent())),
+            Padding(padding: EdgeInsets.all(10), child: Text(lesson.getContent().toString())),
             SizedBox(height: 10),
-            
-
+            ElevatedButton(
+                child: Text('Finished Lesson.', style:TextStyle(color: Colors.white,)),
+                onPressed: () {
+                    //insert completed animation
+                    lessonViewModel.updateLesson(lesson);
+                    lessonViewModel.notifyListeners();
+                  }
+                )
         ]
        
       ),

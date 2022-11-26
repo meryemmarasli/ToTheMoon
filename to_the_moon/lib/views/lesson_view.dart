@@ -17,34 +17,22 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
-    var list = context.watch<LessonViewModel>().Lessons;
+  
+
     // LessonViewModel L = new LessonViewModel();
      // List<LessonModel> Lessons = L.getLessonsList();
     return Scaffold(
-     body: Column(
-          children : [
-          //progress card
-          Center(
-          child: Card(
-            color:Colors.white,
-            elevation: 1, 
-            shape: RoundedRectangleBorder( side: BorderSide(color: Theme.of(context).colorScheme.outline,),borderRadius: const BorderRadius.all(Radius.circular(12)),),
-            child: const SizedBox(
-              width: 400,
-              height: 200,
-              child: Center(child: Text('0/6 lessons complete')),
-            ),
-          ),
-        ),
-        Expanded(child:FutureBuilder(
-            future: list,
+     body:  Expanded(child:FutureBuilder(
+            future: lessonViewModel.Lessons,
             builder: (context,data){
               if(data.hasError){
-                return Text("${data.error}");
+                return Text("Error: ${data.error}");
               }else if(data.hasData){
                 var Lessons = data.data as List<LessonModel>;
                 return ListView.builder(
+                    itemCount: Lessons.length,
                     itemBuilder: (context, index) {
                       return Card(
                         elevation: 1, 
@@ -55,7 +43,7 @@ class LessonView extends StatelessWidget {
                           title:Text(Lessons[index].getTitle().toString()),
                           subtitle:Text(Lessons[index].getDescription().toString()),
                           //change this as well
-                          trailing: getTrailing(Lessons[index]),
+                         trailing: getTrailing(Lessons[index]),
                           onTap:(){
                             Navigator.push(
                               context,
@@ -64,7 +52,7 @@ class LessonView extends StatelessWidget {
                               ),
                             );
                           },
-                        ) 
+                        ), 
                       ); 
                     },
                 ); 
@@ -73,14 +61,15 @@ class LessonView extends StatelessWidget {
                 return Center(child:CircularProgressIndicator());
               }
             }
-          )
-      ),] )
+          ),
+
+      ),
     );
   }
 
   Icon getTrailing(LessonModel lesson){
-    if(lesson.getComplete().toString() == 'true'){
-          return Icon(CupertinoIcons.star_fill);
+    if(lesson.getComplete() == true){
+          return Icon(CupertinoIcons.star_fill, color: Colors.yellow);
       }else{
         return Icon(CupertinoIcons.star);
       }

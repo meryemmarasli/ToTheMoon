@@ -11,8 +11,7 @@ class MarketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       
-        title: Text("Market"),
+
 
     );
   }

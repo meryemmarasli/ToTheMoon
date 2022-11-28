@@ -20,7 +20,7 @@ void main() {
 
 User user = new User(acceptAgreement: false, userId: -1);
 NewsModel news = new NewsModel();
-LessonModel lessons = new LessonModel();
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel(user)),
           ChangeNotifierProvider(create: (_) => NewsViewModel(news)),
-          ChangeNotifierProvider(create: (_) => LessonViewModel(lessons)),
+          ChangeNotifierProvider(create: (_) => LessonViewModel()),
         ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,

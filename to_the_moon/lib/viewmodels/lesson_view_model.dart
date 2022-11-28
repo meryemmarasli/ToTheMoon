@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:to_the_moon/models/lesson.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -172,3 +171,7 @@ Future close() async{
       });
     }
 
+
+
+    
+}

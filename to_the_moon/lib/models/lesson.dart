@@ -48,6 +48,16 @@ class LessonModel {
   
  
   }
+  LessonModel.fromJson(Map<String, dynamic> json){
+    title = json["title"];
+    complete = json['complete'];
+    description = json["description"];
+    image = json["image"]; 
+    content = json["content"];
+
+  
+ 
+  }
 
  
 

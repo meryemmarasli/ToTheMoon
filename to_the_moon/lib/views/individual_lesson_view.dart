@@ -41,7 +41,7 @@ class IndividualLessonView extends StatelessWidget {
                 child: Text('Finished Lesson.', style:TextStyle(color: Colors.white,)),
                 onPressed: () {
                     //insert completed animation
-                    lessonViewModel.updateLesson(lesson);
+                    //lessonViewModel.updateLesson(lesson);
                     lessonViewModel.notifyListeners();
                   }
                 )

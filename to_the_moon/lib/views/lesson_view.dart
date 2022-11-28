@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -20,11 +18,10 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     return Scaffold(
-     body:  Expanded(child:FutureBuilder(
-            future: lessonViewModel.Lessons,
+      body: Expanded(child:FutureBuilder(
+            future: lessonViewModel.initialLessons,
             builder: (context,data){
               if(data.hasError){
                 return Text("Error: ${data.error}");
@@ -39,8 +36,8 @@ class LessonView extends StatelessWidget {
                         child: ListTile(  
                           //change this maybe
                           //leading: CircleAvatar(child: Text((index+1).toString()), backgroundColor: Colors.grey,),
-                          title:Text(Lessons[index].getTitle().toString()),
-                          subtitle:Text(Lessons[index].getDescription().toString()),
+                          title:Text("${index}"),//Lessons[index].getTitle().toString()),
+                          //subtitle:Text(Lessons[index].getDescription().toString()),
                           //change this as well
                          trailing: getTrailing(Lessons[index]),
                           onTap:(){
@@ -65,6 +62,11 @@ class LessonView extends StatelessWidget {
       ),
     );
   }
+
+
+
+
+
 
   Icon getTrailing(LessonModel lesson){
     if(lesson.getComplete() == true){

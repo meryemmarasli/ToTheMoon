@@ -4,17 +4,28 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
 
 
+import 'package:flutter/material.dart';
+
+Future<List<LessonModel>> readJsonData() async {
+      final jsonData = await rootBundle.rootBundle.loadString("assets/lesson.json");
+      Map<String,dynamic> map = json.decode(jsonData.toString());
+      List<LessonModel> list = [];
+      for(var v in map["lesson"]){
+        list.add(LessonModel.fromJson(v));
+      }
+      
+      return list;
+
+
+  }
 
 
 class LessonViewModel with ChangeNotifier{
-   //Future<List<LessonModel>> initialLessons = readJsonData();
+   Future<List<LessonModel>> initialLessons = readJsonData();
    Future<List<LessonModel>> Lessons = LessonDatabase.instance.lessons();
 
 
@@ -26,60 +37,6 @@ class LessonViewModel with ChangeNotifier{
 
 
 
-
-
-
-
-
-
-    
-
-    
-
-
-   
-
-   /* Future<List<LessonModel>> Lessons = initialLessons;
-
-    Future<List<LessonModel>> get lessons => Lessons;
-
-
-  void setLessonsList(){
-     Lessons = readJsonData();
-     notifyListeners();
-  }
-
-  void updateLesson(int index) async{
-    final directory = await getApplicationDocumentsDirectory();
-
-    final File file = File('${directory.path}/assets/lesson.json');
-  
- 
-    //update lessons
-    var list = await Lessons;
-    list[index].updateComplete();
-
-    //update json
-    Map<String, dynamic> map = {};
-
-    for(var v in list){
-      map.addAll(v.toJson());
-    }
-
-    String jsonData = jsonEncode(map);
-    file.writeAsStringSync(jsonData);
-    
-    setLessonsList();
-    //write to json
-   // updateJson(index);
-    
-
-  } */
-
-  
- 
-
-  
 }
 
 //database class

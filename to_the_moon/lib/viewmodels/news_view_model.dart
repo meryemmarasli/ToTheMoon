@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/viewmodels/user_view_model.dart';
-import 'package:to_the_moon/views/menu_view.dart';
 import 'package:provider/provider.dart';
 
 

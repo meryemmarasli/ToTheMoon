@@ -1,0 +1,74 @@
+{
+    "lesson":[
+        {
+            "title":"Lesson 1",
+            "description":"What is the Stock Market?",
+            "content":" [lesson 1 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title": "Lesson 2",
+            "description":"Different Investing Platforms",
+            "content":"[lesson 2 content]",
+            "complete": false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 3",
+            "description":"Trends to Look Out For",
+            "content":" [lesson 2 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 4",
+            "description":"Sell High, Buy Low",
+            "content":" [lesson 3 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 5",
+            "description":"Investing Tips",
+            "content":" [lesson 3 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 6",
+            "description":"Trends to Look Out For",
+            "content":" [lesson 2 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 7",
+            "description":"Trends to Look Out For",
+            "content":" [lesson 2 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 8",
+            "description":"Trends to Look Out For",
+            "content":" [lesson 2 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 9",
+            "description":"Trends to Look Out For",
+            "content":" [lesson 2 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        },
+        {
+            "title":"Lesson 10",
+            "description":"Trends to Look Out For",
+            "content":" [lesson 2 content]",
+            "complete":false,
+            "image": "assets/imagepath.jpg"
+        }
+    ]   
+}

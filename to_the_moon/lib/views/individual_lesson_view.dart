@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/models/lesson.dart';
+import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
+
 
 class IndividualLessonView extends StatelessWidget {
   // In the constructor, require a lesson

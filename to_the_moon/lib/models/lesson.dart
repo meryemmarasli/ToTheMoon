@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 class LessonModel {
 
-<<<<<<< HEAD
   LessonModel(this.title, this.description, this.image, this.complete, this.content); 
  
   String? title;
@@ -68,28 +67,5 @@ class LessonModel {
 
 
 }
-=======
-  final List<Text> Lessons = [
-    Text('Lesson 1!'),
-    Text('Lesson 2'),
-    Text('Lesson 3'),
-    Text('Lesson 4'),
-    ];
-
-  /*
-  final String lesson;
-  final String content;
 
 
-  LessonModel({required this.title, required this.headline});
-
-  factory LessonModel.fromJson(Map<String, String> json) {
-    return LessonModel(
-        lesson: json["Lesson"],
-        content: json["Content"]
-    );
-  }
-
-   */
-}
->>>>>>> 012acfeaa880efacc4310f2a01d4ac2e4718556f

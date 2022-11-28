@@ -5,7 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/views/lesson_view.dart';
-import 'package:to_the_moon/views/dashboard_view.dart';
 import 'package:to_the_moon/views/news_view.dart';
 import 'package:to_the_moon/views/market_view.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/viewmodels/user_view_model.dart';
-import 'package:to_the_moon/views/menu_view.dart';
+import 'package:to_the_moon/views/navigationBar.dart';
 import 'package:provider/provider.dart';
 
 
@@ -36,7 +36,7 @@ class AgreementView extends StatelessWidget {
                           child: Text('Accept.', style:TextStyle(color: Colors.white,)),
                           onPressed: () {
                             usersViewModel.setAgreement();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MenuView()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar()));
                           }
                       )
                   ),

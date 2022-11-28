@@ -1,5 +1,4 @@
 //dashboard view
-
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +18,22 @@ class NewsView extends StatelessWidget {
     NewsViewModel newsViewModel = context.watch<NewsViewModel>();
     final List<Text> News = newsViewModel.Headlines;
     return Scaffold(
-     
+      appBar: AppBar(
+        //return button
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed:(){
+           Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardView()));
+        }),
+        title: Text("News"),
+      ),
+      body: ListView.builder(
+        itemCount: News.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: News[index],
+          );
+        },
+      ),
     );
   }
 }
+

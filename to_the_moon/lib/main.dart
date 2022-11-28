@@ -5,12 +5,7 @@ import 'package:to_the_moon/models/news.dart';
 import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
 import 'package:to_the_moon/viewmodels/news_view_model.dart';
 import 'package:to_the_moon/viewmodels/user_view_model.dart';
-<<<<<<< HEAD
 import 'package:to_the_moon/views/navigationBar.dart';
-=======
-import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
-import 'package:to_the_moon/views/menu_view.dart';
->>>>>>> 012acfeaa880efacc4310f2a01d4ac2e4718556f
 import 'package:to_the_moon/views/welcome_view.dart';
 import 'package:provider/provider.dart';
 

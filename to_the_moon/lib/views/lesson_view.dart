@@ -18,51 +18,46 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
+   Future<List<LessonModel>> Lessons = context.watch<LessonViewModel>().getLessons();
     return Scaffold(
-      body: Expanded(child:FutureBuilder(
-            future: lessonViewModel.initialLessons,
-            builder: (context,data){
-              if(data.hasError){
-                return Text("Error: ${data.error}");
-              }else if(data.hasData){
-                var Lessons = data.data as List<LessonModel>;
-                return ListView.builder(
-                    itemCount: Lessons.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 1, 
-                        shape: RoundedRectangleBorder(side: BorderSide(width: .25),borderRadius: BorderRadius.circular(20) ),
-                        child: ListTile(  
-                          //change this maybe
-                          //leading: CircleAvatar(child: Text((index+1).toString()), backgroundColor: Colors.grey,),
-                          title:Text("${index}"),//Lessons[index].getTitle().toString()),
-                          //subtitle:Text(Lessons[index].getDescription().toString()),
-                          //change this as well
-                         trailing: getTrailing(Lessons[index]),
-                          onTap:(){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => IndividualLessonView(lesson: Lessons[index]),
-                              ),
-                            );
-                          },
-                        ), 
-                      ); 
+      body:FutureBuilder(
+        future: Lessons,
+        builder:(context, data){
+          if(data.hasError){
+            return Text("Error: ${data.error}");
+          }else if(data.hasData){
+            var lessons = data.data as List<LessonModel>;
+            return ListView.builder(
+             itemCount: lessons.length,
+             itemBuilder:(context, index) {
+              return Card(
+                elevation: 1,
+                shape: RoundedRectangleBorder(side: BorderSide(width: .25),borderRadius: BorderRadius.circular(20) ),
+                child: ListTile(
+                    //change this maybe
+                    leading: CircleAvatar(child: Text((index+1).toString()), backgroundColor: Colors.grey,),
+                    title:Text(lessons[index].getTitle().toString()),
+                    subtitle:Text(lessons[index].getDescription().toString()),
+                    trailing: getTrailing(lessons[index]),
+                    onTap:(){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IndividualLessonView(lesson: lessons[index]),
+                        ),
+                      );
                     },
-                ); 
-
-              }else{
-                return Center(child:CircularProgressIndicator());
-              }
+                )
+              );
             }
-          ),
-
-      ),
+            );
+          }else{
+            return CircularProgressIndicator();
+          }
+        }
+        )
     );
   }
-
 
 
 

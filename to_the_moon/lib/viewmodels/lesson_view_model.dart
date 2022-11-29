@@ -10,23 +10,19 @@ import 'package:flutter/services.dart' as rootBundle;
 
 import 'package:flutter/material.dart';
 
-Future<List<LessonModel>> readJsonData() async {
-      final jsonData = await rootBundle.rootBundle.loadString("assets/lesson.json");
-      Map<String,dynamic> map = json.decode(jsonData.toString());
-      List<LessonModel> list = [];
-      for(var v in map["lesson"]){
-        list.add(LessonModel.fromJson(v));
-      }
-      
-      return list;
 
 
-  }
 
 
 class LessonViewModel with ChangeNotifier{
-   Future<List<LessonModel>> initialLessons = readJsonData();
-   Future<List<LessonModel>> Lessons = LessonDatabase.instance.lessons();
+  Future<List<LessonModel>> Lessons = LessonDatabase.instance.lessons();
+
+   Future<List<LessonModel>> getLessons(){
+      return Lessons;
+   } 
+
+
+   
 
 
    updateLesson(LessonModel lesson){
@@ -131,4 +127,4 @@ Future close() async{
 
 
     
-}
+} 

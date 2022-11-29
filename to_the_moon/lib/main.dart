@@ -8,6 +8,8 @@ import 'package:to_the_moon/viewmodels/user_view_model.dart';
 import 'package:to_the_moon/views/navigationBar.dart';
 import 'package:to_the_moon/views/welcome_view.dart';
 import 'package:provider/provider.dart';
+import 'package:to_the_moon/viewmodels/market_view_model.dart';
+
 
 
 void main() {
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserViewModel(user)),
           ChangeNotifierProvider(create: (_) => NewsViewModel(news)),
           ChangeNotifierProvider(create: (_) => LessonViewModel()),
+          ChangeNotifierProvider(create: (_) => StockViewModel()),
         ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,

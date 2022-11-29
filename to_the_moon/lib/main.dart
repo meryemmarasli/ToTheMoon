@@ -11,11 +11,9 @@ import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(ChangeNotifierProvider<LessonViewModel>(
-    child: const MyApp(),
-    create: (_) => LessonViewModel()
-    )
-  );
+  runApp(const MyApp()
+   
+    );
 }
 
 User user = new User(acceptAgreement: false, userId: -1);

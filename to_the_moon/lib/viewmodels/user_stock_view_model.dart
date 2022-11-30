@@ -10,14 +10,7 @@ import 'dart:collection';
 
 
 class UserViewModel with ChangeNotifier{
-  // Future<List<UserStock>> users = UserDatabase.instance.users();
   Future<UserModel> user = UserDatabase.instance.user();
-
-  /*
-  Future<List<UserStock>> getUsers(){
-    return users;
-  }
-   */
 
   Future<UserModel> getUser(){
     return user;
@@ -67,7 +60,7 @@ class UserDatabase{
     if(_database != null) return _database!;
 
     _database = await _initDB("users_database.db");
-    instance.insertUserStock(new UserModel(0, 1000, false, new HashMap<String,int>())); // new HashMap<String,int>())
+    instance.insertUser(new UserModel(0, 1000, false, new HashMap<String,int>())); // new HashMap<String,int>())
     return _database!;
   }
   Future<Database> _initDB(String filePath) async{
@@ -91,7 +84,7 @@ class UserDatabase{
   }
 
 
-  Future<void> insertUserStock(UserModel user) async {
+  Future<void> insertUser(UserModel user) async {
     // Get a reference to the database.
     final db = await instance.database;
 
@@ -131,19 +124,4 @@ class UserDatabase{
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return UserModel.fromMap(maps[0]);
   }
-
-  /*
-  Future<List<UserStock>> users() async {
-    // Get a reference to the database.
-    final db = await instance.database;
-
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query('users');
-
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
-      return UserStock.fromMap(maps[i]);
-    });
-  }
-   */
 }

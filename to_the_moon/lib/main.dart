@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:to_the_moon/models/lesson.dart';
-import 'package:to_the_moon/models/user.dart';
+import 'package:to_the_moon/models/User.dart';
 import 'package:to_the_moon/models/news.dart';
 import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
 import 'package:to_the_moon/viewmodels/news_view_model.dart';
-import 'package:to_the_moon/viewmodels/user_view_model.dart';
 import 'package:to_the_moon/views/navigationBar.dart';
 import 'package:to_the_moon/views/welcome_view.dart';
 import 'package:provider/provider.dart';
 import 'package:to_the_moon/viewmodels/market_view_model.dart';
+import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+
+import 'package:flutter/material.dart';
+import 'package:to_the_moon/models/User.dart';
+import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
+import 'package:to_the_moon/views/navigationBar.dart';
+import 'package:provider/provider.dart';
+
 
 
 
@@ -18,7 +26,6 @@ void main() {
     );
 }
 
-User user = new User(acceptAgreement: false, userId: -1);
 NewsModel news = new NewsModel();
 
 
@@ -30,10 +37,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-        ChangeNotifierProvider(create: (_) => UserViewModel(user)),
           ChangeNotifierProvider(create: (_) => NewsViewModel(news)),
           ChangeNotifierProvider(create: (_) => LessonViewModel()),
           ChangeNotifierProvider(create: (_) => StockViewModel()),
+          ChangeNotifierProvider(create: (_) => UserViewModel()),
         ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -46,16 +53,12 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  startPage(){
-    if(user.userId == -1){
-      user.userId = 1;
-    }
-
-    if(user.acceptAgreement == true)
-        return const BottomBar();
-    else
-      return const WelcomeView();
-  }
-
+  startPage() {
+        bool accepted = false;
+        if (accepted)
+          return const BottomBar();
+        else
+          return const WelcomeView();
+        }
 }
 

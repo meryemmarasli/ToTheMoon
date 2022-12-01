@@ -21,7 +21,7 @@ class IndividualLessonView extends StatelessWidget {
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(lesson.getTitle().toString())),
+        title: Center(child:Text(lesson.getTitle().toString())),
       ),
       body: Column(
         children: [
@@ -29,16 +29,17 @@ class IndividualLessonView extends StatelessWidget {
             Padding( padding: EdgeInsets.fromLTRB(10, 10.0, 20, 4.0)),
             Row(children: [
               Spacer(),
-              //Text(lesson.getDescription().toString(), style: TextStyle(fontSize: 20),),
+              Text(lesson.getDescription().toString(), style: TextStyle(fontSize: 20),),
               Spacer(),
             ]),
             SizedBox(height: 10),
-            Image.asset(lesson.getImage().toString()),
+            Image.asset(lesson.getImage().toString(), height: 200, width: 200),
             SizedBox(height: 10),
             Padding(padding: EdgeInsets.all(10), child: Text(lesson.getContent().toString())),
             SizedBox(height: 10),
             ElevatedButton(
                 child: Text('Finished Lesson.', style:TextStyle(color: Colors.white,)),
+                style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 220, 35, 22)),
                 onPressed: () {
                     //insert completed animation
                     lessonViewModel.updateLesson(lesson);

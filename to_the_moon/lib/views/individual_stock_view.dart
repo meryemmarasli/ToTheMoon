@@ -6,16 +6,18 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import 'package:flutter/material.dart';
-import 'package:to_the_moon/models/lesson.dart';
 import 'package:to_the_moon/models/stock.dart';
+import 'package:to_the_moon/models/User.dart';
+import 'package:to_the_moon/views/individual_transaction_view.dart';
 import 'package:to_the_moon/viewmodels/market_view_model.dart';
 
 class IndividualStockView extends StatelessWidget {
   // In the constructor, require a lesson
-  const IndividualStockView({super.key, required this.stock});
+  const IndividualStockView({super.key, required this.stock, required this.user});
 
   // Declare a field that holds the Todo.
   final StockModel stock;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,13 @@ class IndividualStockView extends StatelessWidget {
             ElevatedButton(
                 child: Text('Buy/Sell Stock', style:TextStyle(color: Colors.white,)),
                 onPressed: () {
-                  // ADD BUY/SELL PAGE
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => IndividualTransactionStockView(
+                            stock: stock, user: user),
+                      ),
+                    );
                 }
             )
           ]

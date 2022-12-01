@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 class LessonModel {
 
   LessonModel(this.title, this.description, this.image, this.complete, this.content, this.cash); 

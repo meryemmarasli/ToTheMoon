@@ -39,6 +39,7 @@ class IndividualLessonView extends StatelessWidget {
             SizedBox(height: 10),
             ElevatedButton(
                 child: Text('Finished Lesson.', style:TextStyle(color: Colors.white,)),
+                style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 220, 35, 22)),
                 onPressed: () {
                     //insert completed animation
                     lessonViewModel.updateLesson(lesson);

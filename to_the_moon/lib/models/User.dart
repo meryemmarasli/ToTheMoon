@@ -54,7 +54,9 @@ class UserModel {
     cash = cash-amount;
   }
 
-
+  int getCash(){
+    return cash;
+  }
 
   UserModel.fromJson(Map<String, dynamic> json){
     userId = json["userId"];

@@ -25,9 +25,6 @@ class IndividualTransactionStockView extends StatelessWidget {
 
 @override
   Widget build(BuildContext context) {
-    TextEditingController textController = TextEditingController();
-    RegExp digitValidator  = RegExp("[0-9]+");
-    bool isANumber = true;
     final _formBuy = GlobalKey<FormState>();
     final _formSell = GlobalKey<FormState>();
 

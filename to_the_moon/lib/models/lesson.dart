@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 class LessonModel {
 
-  LessonModel(this.title, this.description, this.image, this.complete, this.content); 
+  LessonModel(this.title, this.description, this.image, this.complete, this.content, this.cash); 
  
   String? title;
   String? description;
   String? content;
   bool? complete;
   String? image;
+  int? cash;
 
    String? getImage(){
     return this.image;
+  }
+  int? getCashValue(){
+    return this.cash;
   }
 
   String? getDescription(){
@@ -44,6 +48,7 @@ class LessonModel {
     description = json["description"];
     image = json["image"]; 
     content = json["content"];
+    cash = json["cash"];
 
   
  
@@ -54,6 +59,8 @@ class LessonModel {
     description = json["description"];
     image = json["image"]; 
     content = json["content"];
+    cash = json["cash"];
+
 
   
  
@@ -66,7 +73,9 @@ class LessonModel {
     'description': description,
     'image': image, 
     'complete': complete,
-    'content': content
+    'content': content,
+     'cash': cash,
+
     
    
   }; 

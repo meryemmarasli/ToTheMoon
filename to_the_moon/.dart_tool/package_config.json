@@ -32,6 +32,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "confetti",
+      "rootUri": "file:///Users/meryemmarasli/Documents/Support/flutter/.pub-cache/hosted/pub.dartlang.org/confetti-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "cupertino_icons",
       "rootUri": "file:///Users/meryemmarasli/Documents/Support/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5",
       "packageUri": "lib/",
@@ -278,7 +284,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-12-01T03:40:25.339382Z",
+  "generated": "2022-12-02T02:08:31.887826Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }

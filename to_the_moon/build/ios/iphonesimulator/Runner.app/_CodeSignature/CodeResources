@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		XDaj3Vin+XX5VSsyl/wjvwJPkzg=
+		4QlyMfMUUMy/fkv6BTXgyqdMdOw=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		y49UTt6xkuv0nYRlikQPuGePbY0=
+		Dtuj80pVW+HJVCu0ns+Gnnr/t84=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		TCHuALdkkar2yr6I3VQfTF7ljrU=
+		KYf0OZPe7i1/Fj3Hjusku/ORUMU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/earth.png</key>
 		<data>
@@ -94,7 +94,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/lesson4.png</key>
 		<data>
-		pPzGfMmf3vFDisaMgEv3TRmwxSA=
+		bQXksBut686e1dwyIBB4dGNzZf0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/lesson5.png</key>
 		<data>
@@ -170,7 +170,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		4RP09qqWidUtlk553ZdLKLakvBQ=
+		cm1AlSs24Z2JuI2eDJehcl58KZU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -306,7 +306,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mEF/BWuBaieoq8oEdd8mEJp1lv4=
+		+GDbqNQvwPzQc5zDBoOz5307KGs=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -389,7 +389,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VvnT2Nxma3HFXOq4YacrKbLZwmBJREHHXpxvQWbUXuo=
+			WiJYO5RPmYvfG+RVY+TY7tOH58wiFwQDUixRzdfAjg0=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -403,7 +403,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			11fEzG8FmqorG+KkG+CBTmp3vEFPyOhcQDVtTIb92iI=
+			L/21h21Bg/SycrQN7fiZzUv2uhddrOg/bxiTTeUfOCY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -424,7 +424,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			6KCX4G5QsWlxpLRRg1wvgkoLoAXGdq1B8+uub8lffPM=
+			S8Li8a9Vbc5GuqYBW/C9jmwLywk35P2EAFlA0V2SE28=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/earth.png</key>
@@ -473,7 +473,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2WEQg9KVuku0RSgKFMtUITnTkCr2II3HoLCdCSCODEE=
+			YjoZ6izC2xXYnuTQD6gqRzdHlcPNXU1ELMDHjHY0wVY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/lesson5.png</key>
@@ -606,7 +606,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vDUWnd6Rf77tH3+vP0SuqLm+8/JXeHZiPv6V6MXHc+0=
+			S+qQgnXc6SDMbD/AXbfOQg74xQpOXS3J+FKe8xCnbcE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

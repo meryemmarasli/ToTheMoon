@@ -1,6 +1,10 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
+
+
 
 
 
@@ -15,16 +19,26 @@ class IndividualLessonView extends StatelessWidget {
 
   // Declare a field that holds the Todo.
   final LessonModel lesson;
+  
 
   @override
   Widget build(BuildContext context) {
+    final controller = ConfettiController(duration: const Duration(seconds: 6) );
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child:Text(lesson.getTitle().toString())),
+        title: Text(lesson.getTitle().toString(), textAlign: TextAlign.center),
+        backgroundColor: Color.fromARGB(255, 13, 38, 60),
       ),
       body: Column(
         children: [
+            ConfettiWidget(
+            
+              confettiController: controller,
+              blastDirection: 180/2,
+              shouldLoop: false,
+              createParticlePath: drawStar,
+              ),
             //setting up title
             Padding( padding: EdgeInsets.fromLTRB(10, 10.0, 20, 4.0)),
             Row(children: [
@@ -39,16 +53,49 @@ class IndividualLessonView extends StatelessWidget {
             SizedBox(height: 10),
             ElevatedButton(
                 child: Text('Finished Lesson.', style:TextStyle(color: Colors.white,)),
-                style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 220, 35, 22)),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 30),
+                    ),
                 onPressed: () {
                     //insert completed animation
                     lessonViewModel.updateLesson(lesson);
                     lessonViewModel.notifyListeners();
+                    //play confetti
+                    controller.play();
                   }
-                )
+                ),
+            
         ]
        
       ),
     );
   }
+
+  Path drawStar(Size size) {
+    // Method to convert degree to radians
+    double degToRad(double deg) => deg * (pi / 180.0);
+
+    const numberOfPoints = 5;
+    final halfWidth = size.width / 2;
+    final externalRadius = halfWidth;
+    final internalRadius = halfWidth / 2.5;
+    final degreesPerStep = degToRad(360 / numberOfPoints);
+    final halfDegreesPerStep = degreesPerStep / 2;
+    final path = Path();
+    final fullAngle = degToRad(360);
+    path.moveTo(size.width, halfWidth);
+
+    for (double step = 0; step < fullAngle; step += degreesPerStep) {
+      path.lineTo(halfWidth + externalRadius * cos(step),
+          halfWidth + externalRadius * sin(step));
+      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+    }
+    path.close();
+    return path;
+  }
 }
+
+

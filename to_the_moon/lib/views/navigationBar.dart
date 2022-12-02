@@ -38,6 +38,7 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 13, 38, 60),
         leading: Icon(CupertinoIcons.rocket),
         title: Text("To The Moon"),
         automaticallyImplyLeading: false,

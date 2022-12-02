@@ -24,7 +24,8 @@ class IndividualStockView extends StatelessWidget {
     StockViewModel stockViewModel = context.watch<StockViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(stock.getName().toString())),
+        title: Text(stock.getName().toString(), textAlign: TextAlign.center),
+       backgroundColor: Color.fromARGB(255, 13, 38, 60)
       ),
       body: Column(
           children: [

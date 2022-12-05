@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/views/lesson_view.dart';
-import 'package:to_the_moon/views/news_view.dart';
+import 'package:to_the_moon/views/dashboard_view.dart';
 import 'package:to_the_moon/views/market_view.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -21,7 +21,7 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
-    NewsView(),
+    DashboardView(),
     MarketView(),
     LessonView(),
   ];

@@ -11,12 +11,6 @@ import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import 'package:flutter/material.dart';
-import 'package:to_the_moon/models/User.dart';
-import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
-import 'package:to_the_moon/views/navigationBar.dart';
-import 'package:provider/provider.dart';
-
 void main() {
   runApp(const MyApp());
 }

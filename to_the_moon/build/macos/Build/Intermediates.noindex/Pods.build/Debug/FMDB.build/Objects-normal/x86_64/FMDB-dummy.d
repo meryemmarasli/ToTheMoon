@@ -1,0 +1,4 @@
+dependencies: \
+  /Users/meryemmarasli/Documents/ToTheMoon/to_the_moon/macos/Pods/Target\ Support\ Files/FMDB/FMDB-dummy.m \
+  /Users/meryemmarasli/Documents/ToTheMoon/to_the_moon/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FMDB.build/module.modulemap \
+  /Users/meryemmarasli/Documents/ToTheMoon/to_the_moon/macos/Pods/Target\ Support\ Files/FMDB/FMDB-prefix.pch

@@ -63,7 +63,7 @@ class IndividualTransactionStockView extends StatelessWidget {
                       return 'Please enter a positive number';
                     }
                     int cost = int.parse(value) * stock.getCurrentPrice();
-                    if(cost > user.cash){
+                    if(cost > user.cash!){
                       return 'Not enough money';
                     }
                     userViewModel.buyStock(user, stock.getName().toString(), int.parse(value), stock.getCurrentPrice());

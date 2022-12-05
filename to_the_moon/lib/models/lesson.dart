@@ -1,7 +1,7 @@
 class LessonModel {
+  LessonModel(this.title, this.description, this.image, this.complete,
+      this.content, this.cash);
 
-  LessonModel(this.title, this.description, this.image, this.complete, this.content, this.cash); 
- 
   String? title;
   String? description;
   String? content;
@@ -9,81 +9,65 @@ class LessonModel {
   String? image;
   int? cash;
 
-   String? getImage(){
+  String? getImage() {
     return this.image;
   }
-  int? getCashValue(){
+
+  int? getCashValue() {
     return this.cash;
   }
 
-  String? getDescription(){
+  String? getDescription() {
     return description;
   }
-  String? getTitle(){
+
+  String? getTitle() {
     return title;
   }
 
-  String? getContent(){
+  String? getContent() {
     return content;
   }
 
+  int? getCash() {
+    return cash;
+  }
 
+  void updateComplete() {
+    complete = true;
+  }
 
-  void updateComplete(){
-      complete = true;
-  } 
-
-  bool? getComplete(){
+  bool? getComplete() {
     return complete;
-  } 
+  }
 
-  LessonModel.fromMap(Map<String, dynamic> json){
+  LessonModel.fromMap(Map<String, dynamic> json) {
     title = json["title"];
-    if(json["complete"] == 'true'){
+    if (json["complete"] == 'true') {
       complete = true;
-    }else{
+    } else {
       complete = false;
     }
     description = json["description"];
-    image = json["image"]; 
+    image = json["image"];
     content = json["content"];
     cash = json["cash"];
-
-  
- 
   }
-  LessonModel.fromJson(Map<String, dynamic> json){
+  LessonModel.fromJson(Map<String, dynamic> json) {
     title = json["title"];
     complete = json['complete'];
     description = json["description"];
-    image = json["image"]; 
+    image = json["image"];
     content = json["content"];
     cash = json["cash"];
-
-
-  
- 
   }
 
- 
-
-    Map<String, dynamic> toMap() =>{
-    'title': title,
-    'description': description,
-    'image': image, 
-    'complete': complete,
-    'content': content,
-     'cash': cash,
-
-    
-   
-  }; 
-
-  
-
-
-
-
+  Map<String, dynamic> toMap() => {
+        'title': title,
+        'description': description,
+        'image': image,
+        'complete': complete,
+        'content': content,
+        'cash': cash,
+      };
 }
-
-

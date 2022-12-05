@@ -17,17 +17,11 @@ import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
 import 'package:to_the_moon/views/navigationBar.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 void main() {
-  runApp(const MyApp()
-   
-    );
+  runApp(const MyApp());
 }
 
 NewsModel news = new NewsModel();
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -42,25 +36,22 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => StockViewModel()),
           ChangeNotifierProvider(create: (_) => UserViewModel()),
         ],
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        //primarySwatch: Colors.blue,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+              //primarySwatch: Colors.blue,
 
-
-      ),
-      home: startPage(),
-      )
-    );
+              ),
+          home: startPage(),
+        ));
   }
 
   startPage() {
-        bool accepted = false;
-        if (accepted)
-          return const BottomBar();
-        else
-          return const WelcomeView();
-        }
+    bool accepted = false;
+    if (accepted)
+      return const BottomBar();
+    else
+      return const WelcomeView();
+  }
 }
-

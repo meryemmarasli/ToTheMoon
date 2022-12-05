@@ -12,6 +12,8 @@ class UserModel {
 
   int userId = 0;
   int cash = 1000;
+  int gains = 0;
+  int loss = 0;
   bool acceptAgreement = false;
   HashMap<String, int> stocksOwned = HashMap<String, int>();
 
@@ -58,6 +60,14 @@ class UserModel {
     return cash;
   }
 
+  int getLoss(){
+    return loss;
+  }
+
+  int getGain(){
+    return gains;
+  }
+
   UserModel.fromJson(Map<String, dynamic> json){
     userId = json["userId"];
     cash = json['cash'];
@@ -84,3 +94,4 @@ class UserModel {
     'acceptAgreement': acceptAgreement,
   };
 }
+

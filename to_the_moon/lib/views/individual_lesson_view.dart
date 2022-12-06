@@ -32,8 +32,9 @@ class IndividualLessonView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(children: [
           ConfettiWidget(
+            numberOfParticles: 100,
             confettiController: controller,
-            blastDirection: 180 / 2,
+            blastDirection: pi / 2,
             shouldLoop: false,
             createParticlePath: drawStar,
           ),

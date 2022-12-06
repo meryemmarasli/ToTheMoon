@@ -1,38 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class NewsModel {
-
-  final List<Text> Headlines = [
-    Text('S&P stock drops!'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock drops!'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock drops!'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets')  ];
-
-  /*
-  final String title;
-  final String headline;
+   NewsModel(this.stockName, this.companyName, this.value, this.change, this.imagePath);
 
 
-  NewsModel({required this.title, required this.headline});
+  String? stockName;
+  String? companyName;
+  double? value;
+  double? change;
+  String? imagePath;
 
-  factory NewsModel.fromJson(Map<String, String> json) {
-    return NewsModel(
-        title: json["Title"],
-        headline: json["Content"]
-    );
+
+ 
+  getStockName(){
+    return stockName;
   }
 
-   */
+  getCompanyName(){
+    return companyName;
+  }
+
+  getValue(){
+    return value;
+  }
+
+  getChange(){
+    if(change! >= 0){
+      return Text("+${change.toString()}%", style: TextStyle(color: Colors.green));
+      
+    }else{
+      return Text("${change.toString()}%", style: TextStyle(color: Colors.red));
+      
+    }
+  }
+
+  getImage(){
+    return Image.asset(imagePath.toString());    
+    
+  }
+
+  
+ 
+
+  
 }
+
+   

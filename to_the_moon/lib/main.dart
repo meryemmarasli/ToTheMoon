@@ -15,7 +15,6 @@ void main() {
   runApp(const MyApp());
 }
 
-NewsModel news = new NewsModel();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => NewsViewModel(news)),
+          ChangeNotifierProvider(create: (_) => NewsViewModel()),
           ChangeNotifierProvider(create: (_) => LessonViewModel()),
           ChangeNotifierProvider(create: (_) => StockViewModel()),
           ChangeNotifierProvider(create: (_) => UserViewModel()),

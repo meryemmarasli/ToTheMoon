@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/viewmodels/news_view_model.dart';
 import 'package:to_the_moon/models/User.dart';
+import 'package:to_the_moon/models/news.dart';
 import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
 
 import 'package:to_the_moon/views/dashboard_view.dart';
@@ -35,7 +36,7 @@ class _DashboardViewState extends State<DashboardView> {
     UserViewModel userViewModel = context.watch<UserViewModel>();
     Future<UserModel> user = userViewModel.getUser();
     NewsViewModel newsViewModel = context.watch<NewsViewModel>();
-    final List<Text> News = newsViewModel.Headlines;
+    List<NewsModel> News = newsViewModel.getHeadlines();
 
     updateTotalCash(user);
  
@@ -74,13 +75,24 @@ class _DashboardViewState extends State<DashboardView> {
         
 
                 ),
-
+                 Row(children: [
+                      Padding(padding: EdgeInsets.fromLTRB(12, 18, 0, 5), child: Text("Market News", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold ) ) ),
+                  ]),
                 Expanded(child: ListView.builder(
                 itemCount: News.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: News[index],
-                  );
+                 return ListTile(
+                      leading: CircleAvatar(child: News[index].getImage(), backgroundColor: Colors.white,),
+                        title: Text("${News[index].getStockName()}"),
+                        subtitle: Text("${News[index].getCompanyName()}"),
+                        trailing: Column(
+                          children: [
+                            Text("\$${News[index].getValue()}"),
+                            News[index].getChange(),
+                          ],
+                        )
+
+                      );
                 },
                ) ),
 

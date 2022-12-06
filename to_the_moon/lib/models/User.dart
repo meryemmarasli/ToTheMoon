@@ -68,6 +68,28 @@ class UserModel {
     return gains;
   }
 
+ void updateCash(String stock, int newPrice ){
+     if(stocksOwned.containsKey(stock)){
+        stocksOwned.forEach((key, value) {
+            if(key == stock){
+              //loss
+              if(newPrice < value){
+                  loss += (value - newPrice);
+                  cash -= (value - newPrice);
+                  gains -= (value - newPrice);
+              }else if(newPrice > value){
+                  loss -= (newPrice - value);
+                  cash += (newPrice - value);
+                  gains += (newPrice - value);
+              }else{
+                //same price nothing changes
+              }
+            }
+        });
+     }
+    
+  }
+
   UserModel.fromJson(Map<String, dynamic> json){
     userId = json["userId"];
     cash = json['cash'];

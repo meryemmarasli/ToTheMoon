@@ -33,9 +33,9 @@ class IndividualLessonView extends StatelessWidget {
       body: Column(
         children: [
             ConfettiWidget(
-            
+              numberOfParticles: 40,
               confettiController: controller,
-              blastDirection: 180/2,
+              blastDirection: pi/2,
               shouldLoop: false,
               createParticlePath: drawStar,
               ),
@@ -64,6 +64,7 @@ class IndividualLessonView extends StatelessWidget {
                     lessonViewModel.notifyListeners();
                     //play confetti
                     controller.play();
+                    //add sound
                   }
                 ),
             

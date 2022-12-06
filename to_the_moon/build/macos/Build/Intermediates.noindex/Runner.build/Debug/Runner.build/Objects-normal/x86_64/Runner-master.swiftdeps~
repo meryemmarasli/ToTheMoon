@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)"
-options: "d6c7c848aae1b8b5df2bed8f7f1526ec61aa602f9628523755d05a68002a7db7"
-build_start_time: [1670219500, 492403030]
-build_end_time: [1670219500, 619875907]
-inputs:
-  "/Users/meryemmarasli/Documents/ToTheMoon/to_the_moon/macos/Flutter/GeneratedPluginRegistrant.swift": !private [1670219447, 995962619]
-  "/Users/meryemmarasli/Documents/ToTheMoon/to_the_moon/macos/Runner/AppDelegate.swift": !private [1667942880, 523022174]
-  "/Users/meryemmarasli/Documents/ToTheMoon/to_the_moon/macos/Runner/MainFlutterWindow.swift": !private [1667942880, 526939630]

@@ -8,81 +8,92 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 
-
-class UserViewModel with ChangeNotifier{
+class UserViewModel with ChangeNotifier {
   Future<UserModel> user = UserDatabase.instance.user();
 
-  Future<UserModel> getUser(){
+  Future<UserModel> getUser() {
     return user;
   }
 
-  sellStock(UserModel user, String name, int amount, int currentPrice){
+  sellStock(UserModel user, String name, int amount, int currentPrice) {
     user.removeStock(name, amount);
-    user.addCash(currentPrice*amount);
+    user.addCash(currentPrice * amount);
     notifyListeners();
   }
 
-  buyStock(UserModel user, String name, int amount, int currentPrice){
+  buyStock(UserModel user, String name, int amount, int currentPrice) {
     user.addStock(name, amount);
-    user.removeCash(currentPrice*amount);
+    user.removeCash(currentPrice * amount);
     notifyListeners();
   }
 
-  void setAgreement(UserModel user){
+  void setAgreement(UserModel user) {
     user.setAgreement();
     notifyListeners();
   }
 
-  int getUserId(UserModel user){
+  int getUserId(UserModel user) {
     return user.userId;
   }
 
-  void setUserId(UserModel user, int newId){
+  void setUserId(UserModel user, int newId) {
     user.userId = newId;
   }
 
-  bool acceptAgreement(UserModel user){
+  bool acceptAgreement(UserModel user) {
     return user.acceptAgreement;
   }
 
+  int getUserCash(UserModel user) {
+    return user.cash;
+  }
+
+  void updateCash(UserModel user, int amount) {
+    user.addCash(amount);
+    notifyListeners();
+  }
+
+  void rewardCash(UserModel user, int amount, bool lessonStatus) {
+    if (!lessonStatus) {
+      updateCash(user, amount);
+    }
+  }
 }
 
 //database class
-class UserDatabase{
-
+class UserDatabase {
   static final UserDatabase instance = UserDatabase._init();
   static Database? _database;
 
   UserDatabase._init();
 
-
-  Future<Database> get database async{
-    if(_database != null) return _database!;
+  Future<Database> get database async {
+    if (_database != null) return _database!;
 
     _database = await _initDB("users_database.db");
-    instance.insertUser(new UserModel(0, 1000, false, new HashMap<String,int>())); // new HashMap<String,int>())
+    instance.insertUser(new UserModel(0, 1000, false,
+        new HashMap<String, int>())); // new HashMap<String,int>())
     return _database!;
   }
-  Future<Database> _initDB(String filePath) async{
+
+  Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
-    final  path = join(dbPath, filePath);
+    final path = join(dbPath, filePath);
 
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  Future _createDB(Database db, int version){
-
+  Future _createDB(Database db, int version) {
     return db.execute(
-        'CREATE TABLE users(userId INTEGER PRIMARY KEY, cash INTEGER, acceptAgreement TEXT, stocksOwned BLOB)'// priceHistory List, priceUP BOOLEAN)',
-    );
+        'CREATE TABLE users(userId INTEGER PRIMARY KEY, cash INTEGER, acceptAgreement TEXT, stocksOwned BLOB)' // priceHistory List, priceUP BOOLEAN)',
+        );
   }
-        // 'CREATE TABLE users(userId int PRIMARY KEY, cash int, acceptAgreement TEXT)'// ownedStock HashMap
+  // 'CREATE TABLE users(userId int PRIMARY KEY, cash int, acceptAgreement TEXT)'// ownedStock HashMap
 
-  Future close() async{
+  Future close() async {
     final db = await instance.database;
     db.close();
   }
-
 
   Future<void> insertUser(UserModel user) async {
     // Get a reference to the database.

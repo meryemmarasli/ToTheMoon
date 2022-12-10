@@ -17,6 +17,11 @@ class StockModel {
     return this.name;
   }
 
+  double gain() {
+    return (priceHistory.elementAt(priceHistory.length-1) - priceHistory.elementAt(priceHistory.length-2))/priceHistory.elementAt(priceHistory.length-1)*100;
+  }
+
+
   List<int> getPriceHistory(){
     return priceHistory;
   }

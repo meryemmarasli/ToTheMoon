@@ -32,6 +32,18 @@ class StockViewModel with ChangeNotifier{
     notifyListeners();
   }
 
+  double getStockGain(StockModel stock){
+    return stock.gain();
+  }
+
+  int getStockPrice(StockModel stock){
+    return stock.getCurrentPrice();
+  }
+
+  String? getStockName(StockModel stock){
+    return stock.getName();
+  }
+
 }
 
 //database class

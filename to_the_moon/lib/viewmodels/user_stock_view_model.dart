@@ -27,6 +27,10 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  dynamic stockAmount(UserModel user, String name){
+    return user.getStockAmount(name);
+  }
+
   void setAgreement(UserModel user) {
     user.setAgreement();
     notifyListeners();

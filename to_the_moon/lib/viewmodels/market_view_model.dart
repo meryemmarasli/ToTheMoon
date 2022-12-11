@@ -40,6 +40,10 @@ class StockViewModel with ChangeNotifier{
     return stock.getCurrentPrice();
   }
 
+  String? getStockAbbreviation(StockModel stock){
+    return stock.getAbbreviation();
+  }
+
   String? getStockName(StockModel stock){
     return stock.getName();
   }
@@ -59,9 +63,16 @@ class StockDatabase{
     if(_database != null) return _database!;
 
     _database = await _initDB("stock_database.db");
-    instance.insertStock(new StockModel("S&P", [100, 101, 102, 103,], true));
-    instance.insertStock(new StockModel("GOOG", [203, 202, 201, 200,], false));
-    instance.insertStock(new StockModel("AAPL", [300, 301, 302, 303,], true));
+    instance.insertStock(StockModel("GOOG", 'Google inc.', [100, 101, 102, 103,], true, 'assets/images/google.png'));
+    instance.insertStock(StockModel("APPL", 'Apple inc.', [203, 202, 201, 200,], false, 'assets/images/apple.png'));
+    instance.insertStock(StockModel("MSFT", 'Micrsoft inc.', [300, 301, 302, 303,], true, 'assets/images/microsoft.png'));
+    instance.insertStock(StockModel("AMZN", 'Amazon inc.', [300, 301, 302, 303,], true, 'assets/images/amazon.png'));
+    instance.insertStock(StockModel("TSLA", 'Tesla Inc', [300, 301, 302, 303,], true, 'assets/images/tesla.png'));
+    instance.insertStock(StockModel("JNJ", 'Johnson & Johnson', [300, 301, 302, 303,], true, 'assets/images/johnson.png'));
+    instance.insertStock(StockModel("JPM", 'JP Morgan Chase & Co.', [300, 301, 302, 303,], true, 'assets/images/jpmorgan.png'));
+    instance.insertStock(StockModel("META", 'Meta Platforms Inc.', [300, 301, 302, 303,], true, 'assets/images/meta.png'));
+    instance.insertStock(StockModel("PFE", 'Pfizer Inc.', [300, 301, 302, 303,], true, 'assets/images/pfizer.png'));
+    instance.insertStock(StockModel("NKE", 'Nike inc.', [300, 301, 302, 303,], true, 'assets/images/nike.png'));
 
     return _database!;
   }
@@ -75,7 +86,7 @@ class StockDatabase{
   Future _createDB(Database db, int version){
 
     return db.execute(
-        'CREATE TABLE stocks(name TEXT PRIMARY KEY, priceHistory LIST, priceUP TEXT)'// priceHistory List, priceUP BOOLEAN)',
+        'CREATE TABLE stocks(abbreviation TEXT PRIMARY KEY, name TEXT, priceHistory LIST, priceUP TEXT, imagePath TEXT)'
     );
   }
 
@@ -109,9 +120,9 @@ class StockDatabase{
       'stocks',
       stock.toMap(),
       // Ensure that the Dog has a matching id.
-      where: 'name = ?',
+      where: 'abbreviation = ?',
       // Pass the Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [stock.name],
+      whereArgs: [stock.abbreviation],
     );
   }
 

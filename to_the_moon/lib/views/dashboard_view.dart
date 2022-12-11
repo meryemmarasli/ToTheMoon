@@ -47,6 +47,7 @@ class _DashboardViewState extends State<DashboardView> {
     Future<UserModel> user = userViewModel.getUser();
     NewsViewModel newsViewModel = context.watch<NewsViewModel>();
     StockViewModel stockViewModel = context.watch<StockViewModel>();
+    newsViewModel.addHeadline(stockViewModel.getGeneratedHeadlineData());
     List<NewsModel> News = newsViewModel.getHeadlines();
     stockList(user);
     updateTotalCash(user);
@@ -125,7 +126,11 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
 
               ]),
                Expanded(
-                 child: ListView.builder(
+                 child: Align(
+                  alignment: Alignment.topCenter,
+                  child: ListView.builder(
+                  reverse: true,
+                  shrinkWrap: true,
                  itemCount: News.length,
                    itemBuilder: (context, index){
                      return ListTile(
@@ -142,7 +147,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
                        }
                      ),
                      ),
-                    ],)
+               )],)
                  );
   }else{
     return Container(

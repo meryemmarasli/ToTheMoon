@@ -3,30 +3,38 @@ import 'package:flutter/cupertino.dart';
 
 
 class NewsModel {
-   NewsModel(this.headline, this.imagePath);
+   NewsModel(this.stockName, this.companyName, this.value, this.change, this.eventType, this.headline, this.imagePath);
 
 
-  String? headline;
+  String? stockName;
+  String? companyName;
+  double? value;
+  String? change;
   String? imagePath;
+  bool eventType;
 
-
+  String headline = '';
  
-  getHeadline(){
-    return headline;
+  getStockName(){
+    return stockName;
   }
 
+  getCompanyName(){
+    return companyName;
+  }
 
-  
-  
+  getValue(){
+    return value;
+  }
+
   getImage(){
     return Image.asset(imagePath.toString());    
     
   }
 
-  
- 
-
-  
+  getHeadline(){
+    return headline;
+  }
 }
 
    

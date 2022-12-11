@@ -301,7 +301,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                           return 'Not enough money';
                         }
 
-                        userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stockViewModel.getStockPrice(stock));
+                        userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stockViewModel.getStockPrice(stock), stock);
                         return null;
                       },
                     ),
@@ -368,7 +368,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                           if(int.parse(value) > userViewModel.stockAmount(user, stockViewModel.getStockAbbreviation(stock).toString())){
                             return 'Not enough stocks';
                           }
-                          userViewModel.sellStock(user, stockViewModel.getStockAbbreviation(stock).toString(), int.parse(value), stockViewModel.getStockPrice(stock));
+                          userViewModel.sellStock(user, stockViewModel.getStockAbbreviation(stock).toString(), int.parse(value), stockViewModel.getStockPrice(stock), stock);
                           return null;
                         },
                       ),

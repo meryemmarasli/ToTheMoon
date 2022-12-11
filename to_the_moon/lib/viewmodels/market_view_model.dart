@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/models/user.dart';
+import '../models/news.dart';
 
 
 class StockViewModel with ChangeNotifier{
@@ -20,22 +21,65 @@ class StockViewModel with ChangeNotifier{
   }
 
   Timer? timer;
-  int marketUpdateSeconds = 10;
+  int marketUpdateSeconds = 15;
 
   StockViewModel(){
     timer = Timer.periodic(Duration(seconds: marketUpdateSeconds), (Timer t) => updateMarket());
 
   }
 
+  NewsModel generatedHeadlineData = NewsModel("NULL", "NULL", 0.0, "0.0", false, "NULL", "NULL");
+
   updateMarket() async {
     List<StockModel>  stockList = await getStock();
     var rng = Random();
+    int headlineSelection = rng.nextInt(stockList.length - 1);
+    bool eventType = false;
     for(int i = 0; i < stockList.length; i++){
-      updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-10 + rng.nextInt(25))));
-    
+      if(i == headlineSelection){
+        // negative event
+        if(rng.nextInt(2) == 0){
+          updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-20 + rng.nextInt(10))));
+          eventType = false;
+        }
+        // positive event
+        else{
+          updateStock(stockList[i], (stockList[i].getCurrentPrice() + (rng.nextInt(100))));
+          eventType = true;
+        }
+        generatedHeadlineData = NewsModel(stockList[i].getAbbreviation(), stockList[i].getName(), stockList[i].getCurrentPrice().toDouble(), getPercentage(stockList[i]), eventType, "NULL", stockList[i].imagePath);
+      }else{
+        updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-5 + rng.nextInt(12))));
+      }
     }
-    // Add news listener
     notifyListeners();
+  }
+
+  String getPercentage(StockModel stock) {
+    String fullPercentage = stock.gain().toString();
+    String buffer = '';
+    if(fullPercentage.length == 0){
+      return '0.0%';
+    } else{
+      for(int i = 0; i < fullPercentage.length; i++){
+        if(fullPercentage[i] == '.'){
+          buffer = buffer+fullPercentage[i];
+          if(i+1 < fullPercentage.length){
+            buffer = buffer+fullPercentage[i+1];
+          }if(i+2 < fullPercentage.length && buffer.length < 4){
+            buffer = buffer+fullPercentage[i+2];
+          }
+          return buffer + "%";
+        }else{
+          buffer = buffer+fullPercentage[i];
+        }
+      }
+      return buffer + "%";
+    }
+  }
+
+  NewsModel getGeneratedHeadlineData(){
+    return generatedHeadlineData;
   }
 
   updateStock(StockModel stock, int newPrice){

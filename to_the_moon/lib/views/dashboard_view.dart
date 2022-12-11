@@ -15,6 +15,8 @@ import 'package:to_the_moon/models/stock.dart';
 import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
 import 'package:to_the_moon/viewmodels/market_view_model.dart';
 import 'package:to_the_moon/views/navigationBar.dart';
+import 'package:to_the_moon/views/individual_stock_view.dart';
+
 
 
 import 'package:to_the_moon/views/dashboard_view.dart';
@@ -36,8 +38,8 @@ class _DashboardViewState extends State<DashboardView> {
   int totalCash = 0;
   int totalGain = 0;
   int totalLoss = 0;
-  var list;
-  int i = 0;
+  var list  = [];
+  int i = 1;
   
   @override
   Widget build(BuildContext context) {
@@ -87,7 +89,7 @@ class _DashboardViewState extends State<DashboardView> {
                 //market news and your stocks
                 ),
               
-              getContainer(News, stockViewModel),
+              getContainer(News, stockViewModel, user),
 
         ]
       ),
@@ -99,11 +101,11 @@ stockList(Future<UserModel> u) async{
 
       setState(() {
         list = user.getStocks();
+       
       });
 }
 
-getContainer(List<NewsModel> News, StockViewModel stockViewModel){
- 
+getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserModel> u) {
   if(i == 0){
     return Container(
        height: 398,
@@ -128,14 +130,14 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel){
                    itemBuilder: (context, index){
                      return ListTile(
                        leading: CircleAvatar(child: News[index].getImage(), backgroundColor: Colors.white,),
-                        title: Text("${News[index].getStockName()}"),
-                         subtitle: Text("${News[index].getCompanyName()}"),
-                        trailing: Column(
+                        title: Text("${News[index].getHeadline()}"),
+                        // subtitle: Text("${News[index].getCompanyName()}"),
+                        /*trailing: Column(
                              children: [
                                Text("\$${News[index].getValue()}"),
                               News[index].getChange(),
                             ],
-                       )
+                       ) */
                       );
                        }
                      ),
@@ -146,7 +148,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel){
     return Container(
                            height: 398,
                            width: 373,
-                           margin: EdgeInsets.only(right: 20,),
+                          // margin: EdgeInsets.only(left: 20, right: 20,),
                            decoration: BoxDecoration(
                               //  border: Border.all(width: 2, color: Color.fromARGB(255, 2, 44, 78)),
                                // borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -179,39 +181,90 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel){
                               ]
                             )
                             : Expanded(
-                              child:ListView.builder(
-                                    itemCount: list.length,
-                                    itemBuilder:(context, index){
-                                        return ListTile(
-                                        leading: CircleAvatar(backgroundColor: Colors.white, child: list[index].getImage(),),
-                                              title: Text(list[index].getAbbreviation().toString()),
-                                              subtitle: Text.rich(
-                                                TextSpan(
-                                                  children: <InlineSpan>[
-                                                    TextSpan(text: "Value "),
-                                                    TextSpan(text: list[index].getCurrentPrice().toString())
-                                                  ],
-                                                ),
-                                              ),
+                              child: FutureBuilder(
+                              future: Future.wait([u]),
+                              builder: (
+                                  context,
+                                  AsyncSnapshot<List> data,
+                                  ) {
+                                {
+                                  if (data.hasError) {
+                                    return Text("Error: ${data.error}");
+                                  } else if (data.hasData) {
+                                    UserModel user = data.data?[0] as UserModel;
+                                    return ListView.builder(
+                                        itemCount: list.length,
+                                        itemBuilder: (context, index) {
+                                          return Card(
+                                              elevation: .5,
+                                              color: Colors.white,
 
-                                              trailing: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                // getTrailing(stocks[index]),
-                                                  Text(stockViewModel.getStockGain(list[index]).toString().substring(0, 4) + '%'),
-                                                ],
+                                              shape: RoundedRectangleBorder(
+                                                  side: BorderSide(width: 1, color: Color.fromARGB(255, 214, 212, 212)),
+                                                  borderRadius: BorderRadius.circular(20)
                                               ),
-                                        );
-                                    }
-                                  )
-                            )
-                          ],)
+                                                    child: ListTile(
+                                                      leading: CircleAvatar(backgroundColor: Colors.white, child: list[index].getImage(),),
+                                                      title: Text(list[index].getAbbreviation().toString()),
+                                                      subtitle: Text.rich(
+                                                        TextSpan(
+                                                          children: <InlineSpan>[
+                                                            TextSpan(text: "${list[index].getName()}"),
+                                                            //TextSpan(text: "${list[index].getCurrentPrice().toString()}.00", style: TextStyle(color: priceColor(list[index]))),
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                      trailing: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          //getTrailing(list[index]),
+                                                          Text("\$${list[index].getCurrentPrice().toString()}.00"),
+                                                          Text(stockViewModel.getStockGain(list[index]).toString().substring(0, 4) + '%', style: TextStyle(color: priceColor(list[index], stockViewModel))),
+                                                        ],
+                                                      ),
+                                                      onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) => IndividualStockView(
+                                                              stock: list[index], user: user),
+                                                        ),
+                                                      );
+                                                      },
+                                                  ),
+                                                  );
+                                                  },
+                                          );
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                }
+                              })
+                                              )
+                                            ],)
                       );
 
 
                   
   }
 }
+
+  Icon getTrailing(StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
+      return Icon(CupertinoIcons.arrow_up, color: Colors.green);
+    }else{
+      return Icon(CupertinoIcons.arrow_down, color: Colors.red);
+    }
+  }
+
+  Color priceColor(StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
+      return Colors.lightGreen;
+    }else{
+      return Colors.redAccent;
+    }
+  }
 
   getButton(){
     if( i == 0){

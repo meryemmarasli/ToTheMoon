@@ -71,8 +71,10 @@ class _MarketViewState extends State<MarketView> {
                                     subtitle: Text.rich(
                                       TextSpan(
                                         children: <InlineSpan>[
-                                          TextSpan(text: "Value "),
-                                          TextSpan(text: stocks[index].getCurrentPrice().toString(), style: TextStyle(color: priceColor(stocks[index], stockViewModel)))
+                                         // TextSpan(text: "Value "),
+                                          TextSpan(text: "\$${stocks[index].getCurrentPrice().toString()}.00", style: TextStyle(color: priceColor(stocks[index], stockViewModel)))
+                                        //  TextSpan(text: "Value "),
+                                        //  TextSpan(text: stocks[index].getCurrentPrice().toString(), style: TextStyle(color: priceColor(stocks[index], stockViewModel)))
                                         ],
                                       ),
                                     ),

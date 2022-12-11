@@ -7,7 +7,20 @@ class StockModel {
   String? name = "Test";
   String? imagePath = "Test";
   List<int> priceHistory = List<int>.empty(growable: true);
+  int numOwned = 0;
 
+
+  getNumOwned(){
+      return numOwned;
+  }
+
+  increaseNumOwned(int increase){
+    numOwned += increase;
+  }
+
+  decreaseNumOwned(int decrease){
+    numOwned -= decrease;
+  }
   String? getAbbreviation(){
     return abbreviation;
   }

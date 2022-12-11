@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 class StockModel {
 
   StockModel(this.abbreviation, this.name, this.priceHistory, this.priceUP, this.imagePath);
-
+  int numOwned = 0;
   String? abbreviation = "Test";
   String? name = "Test";
   String? imagePath = "Test";
@@ -14,6 +14,17 @@ class StockModel {
   ];
   bool priceUP = true;
 
+  getNumOwned(){
+      return numOwned;
+  }
+
+  increaseNumOwned(int increase){
+    numOwned += increase;
+  }
+
+  decreaseNumOwned(int decrease){
+    numOwned -= decrease;
+  }
   String? getAbbreviation(){
     return abbreviation;
   }

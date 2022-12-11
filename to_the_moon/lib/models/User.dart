@@ -51,7 +51,7 @@ class UserModel {
   void addStock(String name, int amount, StockModel s) {
     // attempts to add stock if key doesn't exist adds new entry
     // ! in !+ is a null check
-    if(!stocksOwned.containsKey(name)){
+    if(!stocks.contains(s)){
       stocks.add(s);
     }
     stocksOwned.update(name, (e) => (stocksOwned[name]! + amount), ifAbsent: () => amount);
@@ -62,7 +62,7 @@ class UserModel {
     // attempts to add stock if key doesn't exist adds new entry
     // ! in !- is a null check
     stocksOwned.update(name, (e) => (stocksOwned[name]!-amount));
-    stocks.remove(s);
+    if(s.getNumOwned() <= 0) stocks.remove(s);
   }
 
   void addCash(int amount){

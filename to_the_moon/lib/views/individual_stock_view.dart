@@ -160,7 +160,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                                 children: <InlineSpan>[
                                   WidgetSpan(
                                       child: Icon(Icons.attach_money, size: 20,)),
-                                  TextSpan(text: "Value " + stockViewModel.getStockPrice(stock).toString(), style: TextStyle(fontSize: 18)),
+                                  TextSpan(text: "${stockViewModel.getStockPrice(stock).toString()}.00", style: TextStyle(fontSize: 18)),
                                 ],
                               ),
                             ),
@@ -187,7 +187,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                                     children: <InlineSpan>[
                                       WidgetSpan(
                                           child: Icon(Icons.shopping_basket_outlined, size: 19,)),
-                                      TextSpan(text: ' Owned ', style: TextStyle(fontSize: 18),),
+                                          TextSpan(text: ' Owned ', style: TextStyle(fontSize: 18),),
                                 ]),
                           ),
                             Container(
@@ -226,7 +226,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                     alignment: Alignment.center,
                       child: CupertinoSlidingSegmentedControl<int>(
                       backgroundColor: Color.fromARGB(205, 232, 237, 243),
-                      thumbColor: Colors.blue,
+                      thumbColor:  Color.fromARGB(255, 136, 184, 226),
                       padding: EdgeInsets.all(8),
                       groupValue: groupValue,
                       children: {
@@ -300,7 +300,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                         if (cost > userViewModel.getUserCash(user)) {
                           return 'Not enough money';
                         }
-
+                        stock.increaseNumOwned(int.parse(value));
                         userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stockViewModel.getStockPrice(stock), stock);
                         return null;
                       },
@@ -311,6 +311,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                   const SizedBox(height: 10),
 
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor:  Colors.red),
                       onPressed: ()
                         {
                         // Validate returns true if the form is valid, or false otherwise.
@@ -358,6 +359,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
 
                         decoration: const InputDecoration(
                           labelText: 'Input Sell Order',
+                        
                         ),
 
                       // The validator receives the text that the user has entered.
@@ -368,6 +370,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                           if(int.parse(value) > userViewModel.stockAmount(user, stockViewModel.getStockAbbreviation(stock).toString())){
                             return 'Not enough stocks';
                           }
+                          stock.decreaseNumOwned(int.parse(value));
                           userViewModel.sellStock(user, stockViewModel.getStockAbbreviation(stock).toString(), int.parse(value), stockViewModel.getStockPrice(stock), stock);
                           return null;
                         },
@@ -378,6 +381,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                   const SizedBox(height: 10),
 
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor:  Colors.red),
                     onPressed: ()
                     {
                       // Validate returns true if the form is valid, or false otherwise.

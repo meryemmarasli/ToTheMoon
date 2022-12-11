@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 class UserModel {
 
   int userId = 0;
+  int balance = 1000;
   int cash = 1000;
   int gains = 0;
   int loss = 0;
@@ -69,12 +70,31 @@ class UserModel {
     cash = cash+amount;
   }
 
+  //called when market updates stocks
+  void updateBalance(int amount){
+    balance += amount;
+    if(amount < 0){
+      loss += (-amount);
+      gains += amount;
+    }else{
+      loss -= amount;
+      gains += amount;
+    }
+  }
+
+  void addBalance(int amount){
+    balance += amount;
+  }
+
   void removeCash(int amount){
     cash = cash-amount;
   }
 
   int getCash(){
     return cash;
+  }
+  int getBalance(){
+    return balance;
   }
 
   int getLoss(){
@@ -85,22 +105,7 @@ class UserModel {
     return gains;
   }
 
- void updateCash(String stock, int newPrice ){
-     if(stocksOwned.containsKey(stock)){
-              //loss
-              if(newPrice < stocksOwned[stock]!){
-                  loss += (stocksOwned[stock]! - newPrice);
-                  cash -= (stocksOwned[stock]! - newPrice);
-                  gains -= (stocksOwned[stock]! - newPrice);
-              }else if(newPrice > stocksOwned[stock]!){
-                  loss -= (newPrice - stocksOwned[stock]!);
-                  cash += (newPrice - stocksOwned[stock]!);
-                  gains += (newPrice - stocksOwned[stock]!);
-              }else{
-                //same price nothing changes
-              }
-      }
-    }
+  
 
   UserModel.fromJson(Map<String, dynamic> json){
     userId = json["userId"];

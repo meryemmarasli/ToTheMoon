@@ -9,6 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:flutter/material.dart';
+import 'package:to_the_moon/models/user.dart';
 
 
 class StockViewModel with ChangeNotifier{
@@ -31,6 +32,7 @@ class StockViewModel with ChangeNotifier{
     var rng = Random();
     for(int i = 0; i < stockList.length; i++){
       updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-10 + rng.nextInt(25))));
+    
     }
     // Add news listener
     notifyListeners();

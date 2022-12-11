@@ -304,7 +304,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
 updateTotalCash(Future<UserModel> user) async{
   UserModel u = await user;
   setState(() {
-    totalCash = u.getCash();
+    totalCash = u.getBalance();
     totalGain = u.getGain();
     totalLoss = u.getLoss();
   });

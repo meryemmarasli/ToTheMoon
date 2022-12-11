@@ -54,12 +54,14 @@ class UserViewModel with ChangeNotifier {
 
   void updateCash(UserModel user, int amount) {
     user.addCash(amount);
+    user.addBalance(amount);
     notifyListeners();
   }
 
   void rewardCash(UserModel user, int amount, bool lessonStatus) {
     if (!lessonStatus) {
       updateCash(user, amount);
+      
     }
   }
 }

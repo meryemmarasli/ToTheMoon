@@ -66,7 +66,7 @@ class IndividualTransactionStockView extends StatelessWidget {
                     if(cost > userViewModel.getUserCash(user)){
                       return 'Not enough money';
                     }
-                    userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stock.getCurrentPrice());
+                    userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stock.getCurrentPrice(), stock);
                     return null;
                   },
                 ),
@@ -99,7 +99,7 @@ class IndividualTransactionStockView extends StatelessWidget {
                       if(int.parse(value) > user.getStockAmount(stock.getAbbreviation().toString())){
                         return 'Not enough stocks';
                       }
-                      userViewModel.sellStock(user, stock.getAbbreviation().toString(), int.parse(value), stock.getCurrentPrice());
+                      userViewModel.sellStock(user, stock.getAbbreviation().toString(), int.parse(value), stock.getCurrentPrice(), stock);
                       return null;
                   },
                   ),

@@ -15,14 +15,14 @@ class UserViewModel with ChangeNotifier {
     return user;
   }
 
-  sellStock(UserModel user, String name, int amount, int currentPrice) {
-    user.removeStock(name, amount);
+  sellStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
+    user.removeStock(name, amount, s);
     user.addCash(currentPrice * amount);
     notifyListeners();
   }
 
-  buyStock(UserModel user, String name, int amount, int currentPrice) {
-    user.addStock(name, amount);
+  buyStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
+    user.addStock(name, amount, s);
     user.removeCash(currentPrice * amount);
     notifyListeners();
   }

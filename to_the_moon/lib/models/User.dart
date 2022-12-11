@@ -5,6 +5,8 @@ import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'dart:collection';
+import 'package:to_the_moon/models/stock.dart';
+
 
 import 'package:flutter/services.dart';
 
@@ -16,6 +18,7 @@ class UserModel {
   int loss = 0;
   bool acceptAgreement = false;
   HashMap<String, int> stocksOwned = HashMap<String, int>();
+  List<StockModel> stocks = [];
 
   UserModel(this.userId, this.cash, this.acceptAgreement, this.stocksOwned); //  this.ownedStock
 
@@ -36,16 +39,30 @@ class UserModel {
     return stocksOwned[name];
   }
 
-  void addStock(String name, int amount) {
-    // attempts to add stock if key doesn't exist adds new entry
-    // ! in !+ is a null check
-    stocksOwned.update(name, (e) => (stocksOwned[name]! + amount), ifAbsent: () => amount);
+  
+  getStocksOwned(){
+    return stocksOwned;
+  }
+  
+  getStocks(){
+    return stocks;
   }
 
-  void removeStock(String name, int amount){
+  void addStock(String name, int amount, StockModel s) {
+    // attempts to add stock if key doesn't exist adds new entry
+    // ! in !+ is a null check
+    if(!stocksOwned.containsKey(name)){
+      stocks.add(s);
+    }
+    stocksOwned.update(name, (e) => (stocksOwned[name]! + amount), ifAbsent: () => amount);
+   
+  }
+
+  void removeStock(String name, int amount, StockModel s){
     // attempts to add stock if key doesn't exist adds new entry
     // ! in !- is a null check
     stocksOwned.update(name, (e) => (stocksOwned[name]!-amount));
+    stocks.remove(s);
   }
 
   void addCash(int amount){
@@ -70,25 +87,20 @@ class UserModel {
 
  void updateCash(String stock, int newPrice ){
      if(stocksOwned.containsKey(stock)){
-        stocksOwned.forEach((key, value) {
-            if(key == stock){
               //loss
-              if(newPrice < value){
-                  loss += (value - newPrice);
-                  cash -= (value - newPrice);
-                  gains -= (value - newPrice);
-              }else if(newPrice > value){
-                  loss -= (newPrice - value);
-                  cash += (newPrice - value);
-                  gains += (newPrice - value);
+              if(newPrice < stocksOwned[stock]!){
+                  loss += (stocksOwned[stock]! - newPrice);
+                  cash -= (stocksOwned[stock]! - newPrice);
+                  gains -= (stocksOwned[stock]! - newPrice);
+              }else if(newPrice > stocksOwned[stock]!){
+                  loss -= (newPrice - stocksOwned[stock]!);
+                  cash += (newPrice - stocksOwned[stock]!);
+                  gains += (newPrice - stocksOwned[stock]!);
               }else{
                 //same price nothing changes
               }
-            }
-        });
-     }
-    
-  }
+      }
+    }
 
   UserModel.fromJson(Map<String, dynamic> json){
     userId = json["userId"];

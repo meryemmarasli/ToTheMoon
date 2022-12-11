@@ -220,7 +220,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
                                                         children: [
                                                           //getTrailing(list[index]),
                                                           Text("\$${list[index].getCurrentPrice().toString()}.00"),
-                                                          Text(stockViewModel.getStockGain(list[index]).toString().substring(0, 4) + '%', style: TextStyle(color: priceColor(list[index]))),
+                                                          Text(stockViewModel.getStockGain(list[index]).toString().substring(0, 4) + '%', style: TextStyle(color: priceColor(list[index], stockViewModel))),
                                                         ],
                                                       ),
                                                       onTap: () {
@@ -250,16 +250,16 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
   }
 }
 
-Icon getTrailing(StockModel stock){
-    if(stock.getPriceUp()){
+  Icon getTrailing(StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
       return Icon(CupertinoIcons.arrow_up, color: Colors.green);
     }else{
       return Icon(CupertinoIcons.arrow_down, color: Colors.red);
     }
   }
 
-  Color priceColor(StockModel stock){
-    if(stock.getPriceUp()){
+  Color priceColor(StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
       return Colors.lightGreen;
     }else{
       return Colors.redAccent;

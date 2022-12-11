@@ -72,7 +72,9 @@ class _MarketViewState extends State<MarketView> {
                                       TextSpan(
                                         children: <InlineSpan>[
                                          // TextSpan(text: "Value "),
-                                          TextSpan(text: "\$${stocks[index].getCurrentPrice().toString()}.00", style: TextStyle(color: priceColor(stocks[index])))
+                                          TextSpan(text: "\$${stocks[index].getCurrentPrice().toString()}.00", style: TextStyle(color: priceColor(stocks[index], stockViewModel)))
+                                        //  TextSpan(text: "Value "),
+                                        //  TextSpan(text: stocks[index].getCurrentPrice().toString(), style: TextStyle(color: priceColor(stocks[index], stockViewModel)))
                                         ],
                                       ),
                                     ),
@@ -80,8 +82,8 @@ class _MarketViewState extends State<MarketView> {
                                     trailing: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        getTrailing(stocks[index]),
-                                        Text(stockViewModel.getStockGain(stocks[index]).toString().substring(0, 4) + '%'),
+                                        getTrailing(stocks[index], stockViewModel),
+                                        Text(getPercentage(stockViewModel,stocks[index])),
                                       ],
                                     ),
                                     onTap: () {
@@ -105,19 +107,42 @@ class _MarketViewState extends State<MarketView> {
     ));
   }
 
-  Icon getTrailing(StockModel stock){
-    if(stock.getPriceUp()){
+  Icon getTrailing(StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
       return Icon(CupertinoIcons.arrow_up, color: Colors.green);
     }else{
       return Icon(CupertinoIcons.arrow_down, color: Colors.red);
     }
   }
 
-  Color priceColor(StockModel stock){
-    if(stock.getPriceUp()){
+  Color priceColor(StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
       return Colors.lightGreen;
     }else{
       return Colors.redAccent;
+    }
+  }
+
+  String getPercentage(StockViewModel stockViewModel, StockModel stock) {
+    String fullPercentage = stockViewModel.getStockGain(stock).toString();
+    String buffer = '';
+    if(fullPercentage.length == 0){
+      return '0.0%';
+    } else{
+      for(int i = 0; i < fullPercentage.length; i++){
+        if(fullPercentage[i] == '.'){
+          buffer = buffer+fullPercentage[i];
+          if(i+1 < fullPercentage.length){
+            buffer = buffer+fullPercentage[i+1];
+          }if(i+2 < fullPercentage.length && buffer.length < 4){
+            buffer = buffer+fullPercentage[i+2];
+          }
+          return buffer + "%";
+        }else{
+          buffer = buffer+fullPercentage[i];
+        }
+      }
+      return buffer + "%";
     }
   }
 }

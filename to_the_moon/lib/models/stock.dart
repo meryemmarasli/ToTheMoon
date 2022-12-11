@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 class StockModel {
 
-  StockModel(this.abbreviation, this.name, this.priceHistory, this.priceUP, this.imagePath);
-  int numOwned = 0;
+  StockModel(this.abbreviation, this.name, this.priceHistory, this.imagePath);
+
   String? abbreviation = "Test";
   String? name = "Test";
   String? imagePath = "Test";
-  List<int> priceHistory = [
-    100,
-    101,
-    102,
-    103,
-  ];
-  bool priceUP = true;
+  List<int> priceHistory = List<int>.empty(growable: true);
+  int numOwned = 0;
+
 
   getNumOwned(){
       return numOwned;
@@ -41,12 +37,13 @@ class StockModel {
     return priceHistory;
   }
 
-  bool getPriceUp(){
-    return priceUP;
-  }
-
   double gain() {
-    return (priceHistory.elementAt(priceHistory.length-1) - priceHistory.elementAt(priceHistory.length-2))/priceHistory.elementAt(priceHistory.length-1)*100;
+    double gain = (priceHistory.elementAt(priceHistory.length-1) - priceHistory.elementAt(priceHistory.length-2))/priceHistory.elementAt(priceHistory.length-1)*100;
+    if(gain.isNaN || gain.isInfinite){
+      return 0.0;
+    }
+    print(gain);
+    return gain;
   }
 
   int getCurrentPrice(){
@@ -57,27 +54,17 @@ class StockModel {
     priceHistory.add(newPrice);
   }
 
-  void setPriceUP(bool up){
-    priceUP = up;
-  }
-
   StockModel.fromMap(Map<String, dynamic> json){
     abbreviation = json["abbreviation"];
     name = json["name"];
-    if(json["priceUP"] == "1"){
-      priceUP = true;
-    }else{
-      priceUP = false;
-    }
-    priceHistory = json["priceHistory"];
+    priceHistory.addAll(json["priceHistory"]);
     imagePath = json["imagePath"];
   }
 
   StockModel.fromJson(Map<String, dynamic> json){
     abbreviation = json["abbreviation"];
     name = json["name"];
-    priceHistory = json['priceHistory'];
-    priceUP = json["priceUP"];
+    priceHistory.addAll(json["priceHistory"]);
     imagePath = json["imagePath"];
   }
 
@@ -85,7 +72,6 @@ class StockModel {
     'abbreviation': abbreviation,
     'name': name,
     'priceHistory': priceHistory,
-    'priceUP': priceUP,
     'imagePath': imagePath,
   };
 }

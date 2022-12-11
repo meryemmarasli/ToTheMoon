@@ -1,33 +1,46 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:to_the_moon/models/stock.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
-
 import 'package:flutter/services.dart' as rootBundle;
-
-
 import 'package:flutter/material.dart';
-
-
-
 
 
 class StockViewModel with ChangeNotifier{
   Future<List<StockModel>> stocks = StockDatabase.instance.stocks();
 
-  Future<List<StockModel>> getStock(){
+  Future<List<StockModel>> getStock() {
     return stocks;
   }
 
-  updateStock(StockModel stock, int newPrice){
-    stock.updateValue(newPrice);
-    if(newPrice > stock.priceHistory.elementAt(stock.priceHistory.length-1)){
-      stock.setPriceUP(true);
-    }else{
-      stock.setPriceUP(false);
+  Timer? timer;
+  int marketUpdateSeconds = 10;
+
+  StockViewModel(){
+    timer = Timer.periodic(Duration(seconds: marketUpdateSeconds), (Timer t) => updateMarket());
+
+  }
+
+  updateMarket() async {
+    List<StockModel>  stockList = await getStock();
+    var rng = Random();
+    for(int i = 0; i < stockList.length; i++){
+      updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-10 + rng.nextInt(25))));
     }
+    // Add news listener
+    notifyListeners();
+  }
+
+  updateStock(StockModel stock, int newPrice){
+    if(newPrice < 0){
+      newPrice = 0;
+    }
+    stock.updateValue(newPrice);
     StockDatabase.instance.updateStock(stock);
     notifyListeners();
   }
@@ -63,16 +76,16 @@ class StockDatabase{
     if(_database != null) return _database!;
 
     _database = await _initDB("stock_database.db");
-    instance.insertStock(StockModel("GOOG", 'Google inc.', [100, 101, 102, 103,], true, 'assets/images/google.png'));
-    instance.insertStock(StockModel("APPL", 'Apple inc.', [203, 202, 201, 200,], false, 'assets/images/apple.png'));
-    instance.insertStock(StockModel("MSFT", 'Micrsoft inc.', [300, 301, 302, 303,], true, 'assets/images/microsoft.png'));
-    instance.insertStock(StockModel("AMZN", 'Amazon inc.', [300, 301, 302, 303,], true, 'assets/images/amazon.png'));
-    instance.insertStock(StockModel("TSLA", 'Tesla Inc', [300, 301, 302, 303,], true, 'assets/images/tesla.png'));
-    instance.insertStock(StockModel("JNJ", 'Johnson & Johnson', [300, 301, 302, 303,], true, 'assets/images/johnson.png'));
-    instance.insertStock(StockModel("JPM", 'JP Morgan Chase & Co.', [300, 301, 302, 303,], true, 'assets/images/jpmorgan.png'));
-    instance.insertStock(StockModel("META", 'Meta Platforms Inc.', [300, 301, 302, 303,], true, 'assets/images/meta.png'));
-    instance.insertStock(StockModel("PFE", 'Pfizer Inc.', [300, 301, 302, 303,], true, 'assets/images/pfizer.png'));
-    instance.insertStock(StockModel("NKE", 'Nike inc.', [300, 301, 302, 303,], true, 'assets/images/nike.png'));
+    instance.insertStock(StockModel("GOOG", 'Google inc.', [100, 101, 102, 103,], 'assets/images/google.png'));
+    instance.insertStock(StockModel("APPL", 'Apple inc.', [203, 202, 201, 200,], 'assets/images/apple.png'));
+    instance.insertStock(StockModel("MSFT", 'Micrsoft inc.', [300, 301, 302, 303,], 'assets/images/microsoft.png'));
+    instance.insertStock(StockModel("AMZN", 'Amazon inc.', [300, 301, 302, 303,], 'assets/images/amazon.png'));
+    instance.insertStock(StockModel("TSLA", 'Tesla Inc', [300, 301, 302, 303,], 'assets/images/tesla.png'));
+    instance.insertStock(StockModel("JNJ", 'Johnson & Johnson', [300, 301, 302, 303,], 'assets/images/johnson.png'));
+    instance.insertStock(StockModel("JPM", 'JP Morgan Chase & Co.', [300, 301, 302, 303,], 'assets/images/jpmorgan.png'));
+    instance.insertStock(StockModel("META", 'Meta Platforms Inc.', [300, 301, 302, 303,], 'assets/images/meta.png'));
+    instance.insertStock(StockModel("PFE", 'Pfizer Inc.', [300, 301, 302, 303,], 'assets/images/pfizer.png'));
+    instance.insertStock(StockModel("NKE", 'Nike inc.', [300, 301, 302, 303,], 'assets/images/nike.png'));
 
     return _database!;
   }
@@ -86,7 +99,7 @@ class StockDatabase{
   Future _createDB(Database db, int version){
 
     return db.execute(
-        'CREATE TABLE stocks(abbreviation TEXT PRIMARY KEY, name TEXT, priceHistory LIST, priceUP TEXT, imagePath TEXT)'
+        'CREATE TABLE stocks(abbreviation TEXT PRIMARY KEY, name TEXT, priceHistory LIST, imagePath TEXT)'
     );
   }
 

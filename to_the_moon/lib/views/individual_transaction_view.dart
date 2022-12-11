@@ -132,7 +132,7 @@ class IndividualTransactionStockView extends StatelessWidget {
   }
 
   Color priceColor(StockModel stock){
-    if(stock.getPriceUp()){
+    if(stock.gain() > 0){
       return Colors.green;
     }else{
       return Colors.red;

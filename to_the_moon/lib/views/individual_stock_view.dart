@@ -172,8 +172,8 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                             TextSpan(
                               children: <InlineSpan>[
                                 WidgetSpan(
-                                    child: getGainIcon(stock)),
-                                    TextSpan(text: ' Gain ' + stockViewModel.getStockGain(stock).toString().substring(0, 4) + '%', style: TextStyle(color: priceColor(stock), fontSize: 19),)
+                                    child: getGainIcon(stockViewModel)),
+                                    TextSpan(text: ' Gain ' + getPercentage(stockViewModel), style: TextStyle(color: priceColor(stockViewModel), fontSize: 19),)
                               ],
                             ),
                           ),
@@ -418,19 +418,42 @@ class _IndividualStockViewState extends State<IndividualStockView> {
     return list;
   }
 
-  Color priceColor(StockModel stock) {
-    if (stock.getPriceUp()) {
+  Color priceColor(StockViewModel stockViewModel) {
+    if (stockViewModel.getStockGain(stock) > 0) {
       return Colors.green;
     } else {
       return Colors.red;
     }
   }
 
-  Icon getGainIcon(StockModel stock){
-    if(stock.getPriceUp()){
+  Icon getGainIcon(StockViewModel stockViewModel){
+    if(stockViewModel.getStockGain(stock) > 0){
       return const Icon(CupertinoIcons.arrow_up, color: Colors.green, size: 18,);
     }else{
       return const Icon(CupertinoIcons.arrow_down, color: Colors.red,  size: 18,);
+    }
+  }
+
+  String getPercentage(StockViewModel stockViewModel) {
+    String fullPercentage = stockViewModel.getStockGain(stock).toString();
+    String buffer = '';
+    if(fullPercentage.length == 0){
+      return '0.0%';
+    } else{
+      for(int i = 0; i < fullPercentage.length; i++){
+        if(fullPercentage[i] == '.'){
+          buffer = buffer+fullPercentage[i];
+          if(i+1 < fullPercentage.length){
+            buffer = buffer+fullPercentage[i+1];
+          }if(i+2 < fullPercentage.length && buffer.length < 4){
+            buffer = buffer+fullPercentage[i+2];
+          }
+          return buffer + "%";
+        }else{
+          buffer = buffer+fullPercentage[i];
+        }
+      }
+      return buffer + "%";
     }
   }
 }

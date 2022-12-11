@@ -33,7 +33,11 @@ class LessonView extends StatelessWidget {
     ];
 
     return Scaffold(
-        body: FutureBuilder(
+        body: Container(
+        decoration: const BoxDecoration(
+        color: Color.fromARGB(205, 232, 237, 243),
+        ),
+        child: FutureBuilder(
             // to get User and Lessons
             future: Future.wait<Object>([Lessons, User]),
             builder: (context, AsyncSnapshot<List<Object>> snapshot) {
@@ -48,7 +52,7 @@ class LessonView extends StatelessWidget {
                       return Card(
                           elevation: 1,
                           shape: RoundedRectangleBorder(
-                              side: BorderSide(width: .25),
+                              side: BorderSide(width: 1),
                               borderRadius: BorderRadius.circular(20)),
                           child: ListTile(
                             //change this maybe
@@ -74,7 +78,7 @@ class LessonView extends StatelessWidget {
               } else {
                 return CircularProgressIndicator();
               }
-            }));
+            })));
   }
 
   Icon getTrailing(LessonModel lesson) {

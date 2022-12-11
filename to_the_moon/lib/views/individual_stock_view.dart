@@ -30,9 +30,10 @@ class IndividualStockView extends StatefulWidget {
 }
 
 class _IndividualStockViewState extends State<IndividualStockView> {
-  int? groupValue = 0;
   late StockModel stock;
   late UserModel user;
+
+  int? groupValue = 0;
   int? transaction = 0;
 
   _IndividualStockViewState(this.stock, this.user);
@@ -59,7 +60,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                       return SlideTransition(
                         position: Tween<Offset>(begin: const Offset(0.0, -0.5), end: const Offset(0.0, 0.0)).animate(animation),
                         child: child,
-                  );
+                    );
                 },
                 child: Text.rich(
                   key: ValueKey<int?>(transaction),
@@ -98,7 +99,8 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                     padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
 
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -130,8 +132,8 @@ class _IndividualStockViewState extends State<IndividualStockView> {
             Container(
               width: 380,
               decoration: BoxDecoration(
-                  // border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                   color: Colors.white,
 
                   boxShadow: [
@@ -158,7 +160,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                                 children: <InlineSpan>[
                                   WidgetSpan(
                                       child: Icon(Icons.attach_money, size: 20,)),
-                                  TextSpan(text: "Price " + stockViewModel.getStockPrice(stock).toString(), style: TextStyle(fontSize: 18)),
+                                  TextSpan(text: "Value " + stockViewModel.getStockPrice(stock).toString(), style: TextStyle(fontSize: 18)),
                                 ],
                               ),
                             ),
@@ -206,7 +208,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                                   key: ValueKey<int?>(transaction),
                                   TextSpan(
                                     children: <InlineSpan>[
-                                      TextSpan(text: userViewModel.stockAmount(user,StockViewModel().getStockName(stock).toString()).toString(), style: TextStyle(fontSize: 18),),
+                                      TextSpan(text: userViewModel.stockAmount(user,StockViewModel().getStockAbbreviation(stock).toString()).toString(), style: TextStyle(fontSize: 18),),
                                     ],
                                   ),
                                 ),
@@ -295,11 +297,11 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                         }
 
                         int cost = int.parse(value) * stockViewModel.getStockPrice(stock);
-                        if (cost > userViewModel.getUserCash(user)!) {
+                        if (cost > userViewModel.getUserCash(user)) {
                           return 'Not enough money';
                         }
 
-                        userViewModel.buyStock(user, stock.getName().toString(), int.parse(value), stockViewModel.getStockPrice(stock));
+                        userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stockViewModel.getStockPrice(stock));
                         return null;
                       },
                     ),
@@ -363,10 +365,10 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                           if (value == null || value.isEmpty) {
                             return null;
                           }
-                          if(int.parse(value) > userViewModel.stockAmount(user, stockViewModel.getStockName(stock).toString())){
+                          if(int.parse(value) > userViewModel.stockAmount(user, stockViewModel.getStockAbbreviation(stock).toString())){
                             return 'Not enough stocks';
                           }
-                          userViewModel.sellStock(user, stockViewModel.getStockName(stock).toString(), int.parse(value), stockViewModel.getStockPrice(stock));
+                          userViewModel.sellStock(user, stockViewModel.getStockAbbreviation(stock).toString(), int.parse(value), stockViewModel.getStockPrice(stock));
                           return null;
                         },
                       ),

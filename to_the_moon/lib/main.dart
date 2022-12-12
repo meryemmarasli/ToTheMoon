@@ -36,15 +36,8 @@ class MyApp extends StatelessWidget {
               //primarySwatch: Colors.blue,
 
               ),
-          home: startPage(),
+          home:  WelcomeView(),
         ));
   }
 
-  startPage() {
-    bool accepted = false;
-    if (accepted)
-      return const BottomBar();
-    else
-      return const WelcomeView();
-  }
 }

@@ -483,8 +483,7 @@ class _DashboardViewState extends State<DashboardView>
             Padding(
                 padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                 child: Text(
-                    "\$" +
-                        stockViewModel.getOwnedInvestedCapital(user).toString(),
+                    "\$${stockViewModel.getOwnedInvestedCapital(user).toString()}0",
                     style: TextStyle(color: Colors.white, fontSize: 40))),
           ],
         )
@@ -505,7 +504,7 @@ class _DashboardViewState extends State<DashboardView>
             Padding(
                 padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                 child: Text(
-                    "\$" + stockViewModel.getOwnedTotalAssets(user).toString(),
+                    "\$${stockViewModel.getOwnedTotalAssets(user).toString()}0",
                     style: TextStyle(color: Colors.white, fontSize: 40))),
           ],
         )

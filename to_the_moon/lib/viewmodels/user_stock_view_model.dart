@@ -15,6 +15,7 @@ class UserViewModel with ChangeNotifier {
   Future<UserModel> getUser() {
     return user;
   }
+  
 
   double getAveragePaid(UserModel user, StockModel stock) {
     List<int> pricesPaid = user.stocksOwned[stock.abbreviation] as List<int>;
@@ -43,7 +44,8 @@ class UserViewModel with ChangeNotifier {
     return user.getStockAmount(name);
   }
 
-  void setAgreement(UserModel user) {
+  void setAgreement() async {
+    UserModel user = await getUser();
     user.setAgreement();
     notifyListeners();
   }

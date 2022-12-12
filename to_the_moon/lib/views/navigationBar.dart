@@ -83,7 +83,7 @@ class _BottomBarState extends State<BottomBar> {
                     fontWeight: FontWeight.normal,
                   ),
                   showUnselectedLabels: false,
-                  backgroundColor: Color.fromARGB(255, 226, 226, 226),
+                  backgroundColor: Colors.white,
                   selectedItemColor: Color.fromARGB(255, 0, 50, 91),
                   type: BottomNavigationBarType.fixed,
                   unselectedItemColor: Color.fromARGB(255, 110, 125, 146),

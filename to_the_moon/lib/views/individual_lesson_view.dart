@@ -32,7 +32,7 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ConfettiController(duration: const Duration(seconds: 6));
+    final controller = ConfettiController(duration: const Duration(seconds: 4));
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
@@ -104,6 +104,7 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
                     )),
                 style: ElevatedButton.styleFrom(
                   // change button color when lesson learned status changes
+                  shape: StadiumBorder(),
                   backgroundColor:
                       lesson.getComplete()! ? Colors.blueGrey : Colors.red,
                   padding:
@@ -127,9 +128,9 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
                 }),
             ConfettiWidget(
               confettiController: controller,
-              blastDirection: -pi / 2, // shoot downwards
+              blastDirection: -pi/2, // shoot downwards
               shouldLoop: false,
-              numberOfParticles: 7,
+              numberOfParticles: 100,
               createParticlePath: drawStar,
               colors: [
                 Colors.yellow,

@@ -29,7 +29,6 @@ class StockModel {
     if(gain.isNaN || gain.isInfinite){
       return 0.0;
     }
-    print(gain);
     return gain;
   }
 

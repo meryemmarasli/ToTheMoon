@@ -40,7 +40,6 @@ class _DashboardViewState extends State<DashboardView> {
   int totalLoss = 0;
   var list  = [];
   int i = 1;
-  ScrollController _scrollController = ScrollController();
   int test = 0;
 
 
@@ -132,9 +131,6 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
                  child: Align(
                   alignment: Alignment.topCenter,
                   child: ListView.builder(
-
-                  key: ObjectKey(News[0]),
-                  controller: _scrollController,
                   reverse: true,
                   shrinkWrap: true,
                       itemCount: News.length,

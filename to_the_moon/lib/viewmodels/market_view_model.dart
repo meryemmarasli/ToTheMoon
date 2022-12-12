@@ -82,8 +82,8 @@ class StockViewModel with ChangeNotifier{
   }
 
   updateStock(StockModel stock, int newPrice){
-    if(newPrice < 0){
-      newPrice = 0;
+    if(newPrice < 1){
+      newPrice = 1;
     }
     stock.updateValue(newPrice);
     StockDatabase.instance.updateStock(stock);

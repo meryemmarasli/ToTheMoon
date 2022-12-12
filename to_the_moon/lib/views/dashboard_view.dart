@@ -40,7 +40,10 @@ class _DashboardViewState extends State<DashboardView> {
   int totalLoss = 0;
   var list  = [];
   int i = 1;
-  
+  ScrollController _scrollController = ScrollController();
+  int test = 0;
+
+
   @override
   Widget build(BuildContext context) {
     UserViewModel userViewModel = context.watch<UserViewModel>();
@@ -129,13 +132,17 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
                  child: Align(
                   alignment: Alignment.topCenter,
                   child: ListView.builder(
+
+                  key: ObjectKey(News[0]),
+                  controller: _scrollController,
                   reverse: true,
                   shrinkWrap: true,
-                 itemCount: News.length,
+                      itemCount: News.length,
                    itemBuilder: (context, index){
                      return ListTile(
                        leading: CircleAvatar(child: News[index].getImage(), backgroundColor: Colors.white,),
-                        title: Text("${News[index].getHeadline()}"),
+                       title: Text("${News[index].getHeadline()}" ),
+
                         // subtitle: Text("${News[index].getCompanyName()}"),
                         /*trailing: Column(
                              children: [
@@ -314,6 +321,4 @@ updateTotalCash(Future<UserModel> user) async{
     totalLoss = u.getLoss();
   });
 }
-
-
 }

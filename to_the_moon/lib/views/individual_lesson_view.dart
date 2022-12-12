@@ -1,6 +1,5 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
@@ -19,10 +18,11 @@ class IndividualLessonView extends StatefulWidget {
   final UserModel user;
 
   @override
-  _IndividualLessonViewState createState() => _IndividualLessonViewState(lesson, user);
+  _IndividualLessonViewState createState() =>
+      _IndividualLessonViewState(lesson, user);
 }
-class _IndividualLessonViewState extends State<IndividualLessonView> {
 
+class _IndividualLessonViewState extends State<IndividualLessonView> {
   // Declare a field that holds the Todo.
   final LessonModel lesson;
   final UserModel user;
@@ -32,101 +32,117 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ConfettiController(duration: const Duration(seconds: 6));
+    final controller = ConfettiController(duration: const Duration(seconds: 4));
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 13, 38, 60),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(lesson.getTitle().toString(), textAlign: TextAlign.center),
-            // Animated Cash Change
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 1000),
-              transitionBuilder:
-                  (Widget child, Animation<double> animation) {
-                return SlideTransition(
-                  position: Tween<Offset>(begin: const Offset(0.0, -0.5), end: const Offset(0.0, 0.0)).animate(animation),
-                  child: child,
-                );
-              },
-              child: Text.rich(
-                key: ValueKey<bool?>(rewarded),
-                TextSpan(
-                  children: <InlineSpan>[
-                    TextSpan(text: "\$ " + userViewModel.getUserCash(user).toString()),
-                  ],
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 38, 60),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(lesson.getTitle().toString(),
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 26)),
+              // Animated Cash Change
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 1000),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                            begin: const Offset(0.0, -0.5),
+                            end: const Offset(0.0, 0.0))
+                        .animate(animation),
+                    child: child,
+                  );
+                },
+                child: Text.rich(
+                  key: ValueKey<bool?>(rewarded),
+                  TextSpan(
+                    children: <InlineSpan>[
+                      TextSpan(
+                          text: "\$ " +
+                              userViewModel.getUserCash(user).toString(),
+                          style: TextStyle(fontSize: 24)),
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-
-
-      body: SingleChildScrollView(
-        child: Column(children: [
-          ConfettiWidget(
-            numberOfParticles: 100,
-            confettiController: controller,
-            blastDirection: pi / 2,
-            shouldLoop: false,
-            createParticlePath: drawStar,
+              )
+            ],
           ),
-          //setting up title
-          Padding(padding: EdgeInsets.fromLTRB(10, 10.0, 20, 4.0)),
-          Row(children: [
-            Spacer(),
-            Text(
-              lesson.getDescription().toString(),
-              style: TextStyle(fontSize: 20),
-            ),
-            Spacer(),
-          ]),
-          SizedBox(height: 10),
-          Image.asset(lesson.getImage().toString(), height: 200, width: 200),
-          SizedBox(height: 10),
-          Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(lesson.getContent().toString())),
-          SizedBox(height: 10),
-
-          // TESTING to watch user available cash update
-          //Text(user.getCash().toString()),
-          SizedBox(height: 10),
-          ElevatedButton(
-              child: Text(lessonViewModel.lessonCompletionButtonText(lesson),
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: StadiumBorder(),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            //setting up title
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 20.0, 25, 4.0),
+              child: Text(
+                lesson.getDescription().toString(),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
-              onPressed: () {
-                // only reward the cash if first time completing lesson
-                userViewModel.rewardCash(
-                    user, lesson.getCash()!, lesson.getComplete()!);
-                userViewModel.notifyListeners();
+            ),
+            SizedBox(height: 10),
+            Image.asset(lesson.getImage().toString(), height: 200, width: 200),
+            SizedBox(height: 5),
+            Padding(
+                padding: EdgeInsets.all(24),
+                child: Text(
+                  lesson.getContent().toString(),
+                  style: TextStyle(fontSize: 16, height: 1.5),
+                )),
+            SizedBox(height: 10),
 
-                setState(() {
-                  rewarded = true;
-                });
+            // TESTING to watch user available cash update
+            //Text(user.getCash().toString()),
+            SizedBox(height: 10),
 
-                //insert completed animation
-                lessonViewModel.updateLesson(lesson);
-                lessonViewModel.notifyListeners();
-                //play confetti
-                controller.play();
-              }),
-          SizedBox(height: 50),
-        ]),
-      ),
-    );
+            ElevatedButton(
+                child: Text(lessonViewModel.lessonCompletionButtonText(lesson),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    )),
+                style: ElevatedButton.styleFrom(
+                  // change button color when lesson learned status changes
+                  shape: StadiumBorder(),
+                  backgroundColor:
+                      lesson.getComplete()! ? Colors.blueGrey : Colors.red,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+                ),
+                onPressed: () {
+                  setState(() {
+                    rewarded = true;
+                  });
+                  // only reward the cash if first time completing lesson
+                  // also plays the confetti controller
+                  userViewModel.rewardCash(user, lesson.getCash()!,
+                      lesson.getComplete()!, controller);
+                  userViewModel.notifyListeners();
+
+                  //insert completed animation
+                  lessonViewModel.updateLesson(lesson);
+                  lessonViewModel.notifyListeners();
+                  //play confetti
+                  //controller.play();
+                }),
+            ConfettiWidget(
+              confettiController: controller,
+              blastDirection: -pi/2, // shoot downwards
+              shouldLoop: false,
+              numberOfParticles: 100,
+              createParticlePath: drawStar,
+              colors: [
+                Colors.yellow,
+                Colors.amber,
+                Colors.orange,
+                Colors.lightBlue
+              ],
+              gravity: 1,
+            ),
+            SizedBox(height: 50),
+          ]),
+        ));
   }
 
   Path drawStar(Size size) {

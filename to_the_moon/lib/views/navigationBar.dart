@@ -42,8 +42,10 @@ class _BottomBarState extends State<BottomBar> {
     Future<UserModel> user = userViewModel.getUser();
     return FutureBuilder(
         future: Future.wait([user]),
-        builder: (context,
-            AsyncSnapshot<List> data,) {
+        builder: (
+          context,
+          AsyncSnapshot<List> data,
+        ) {
           {
             if (data.hasError) {
               return Text("Error: ${data.error}");
@@ -52,40 +54,56 @@ class _BottomBarState extends State<BottomBar> {
               return Scaffold(
                 appBar: AppBar(
                   backgroundColor: const Color.fromARGB(255, 13, 38, 60),
-                  leading: Icon(CupertinoIcons.rocket),
+                  leading: Icon(CupertinoIcons.rocket_fill, size: 36),
                   automaticallyImplyLeading: false,
-
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Stock Name
-                        Text("To The Moon"),
+                        Text("To The Moon", style: TextStyle(fontSize: 26)),
                         // Animated Cash Change
-                        Text("\$ " +
-                            userViewModel.getUserCash(userReg).toString()),
-                      ]
-                  ),
+                        Text(
+                            "\$ " +
+                                userViewModel.getUserCash(userReg).toString(),
+                            style: TextStyle(fontSize: 24)),
+                      ]),
                 ),
-
-
                 body: Center(child: _widgetOptions[selectedIndex]),
                 bottomNavigationBar: BottomNavigationBar(
                   currentIndex: selectedIndex,
                   onTap: _onItemTapped,
-                  elevation: 10,
+                  elevation: 1,
                   showSelectedLabels: false,
+                  selectedLabelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
                   showUnselectedLabels: false,
-                  selectedItemColor: Colors.blueGrey,
+                  backgroundColor: Colors.white,
+                  selectedItemColor: Color.fromARGB(255, 0, 50, 91),
                   type: BottomNavigationBarType.fixed,
-                  unselectedItemColor: const Color(0xFF526480),
+                  unselectedItemColor: Color.fromARGB(255, 110, 125, 146),
+                  iconSize: 32,
                   items: [
                     BottomNavigationBarItem(
-                        icon: Icon(CupertinoIcons.home), label: "Dashboard"),
+                      icon: Icon(CupertinoIcons.house),
+                      activeIcon: Icon(CupertinoIcons.house_fill),
+                      label: "Dashboard",
+                    ),
                     BottomNavigationBarItem(
-                        icon: Icon(CupertinoIcons.graph_square),
-                        label: "Market"),
+                      icon: Icon(CupertinoIcons.graph_square),
+                      activeIcon: Icon(CupertinoIcons.graph_square_fill),
+                      label: "Market",
+                    ),
                     BottomNavigationBarItem(
-                        icon: Icon(CupertinoIcons.news), label: "Lessons"),
+                      icon: Icon(CupertinoIcons.book),
+                      activeIcon: Icon(CupertinoIcons.book_fill),
+                      label: "Lessons",
+                    ),
                   ],
                 ),
               );
@@ -93,7 +111,6 @@ class _BottomBarState extends State<BottomBar> {
               return CircularProgressIndicator();
             }
           }
-        }
-    );
+        });
   }
 }

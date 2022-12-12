@@ -14,7 +14,6 @@ import 'package:to_the_moon/views/individual_transaction_view.dart';
 import 'package:to_the_moon/viewmodels/market_view_model.dart';
 import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
 
-
 class IndividualStockView extends StatefulWidget {
   // In the constructor, require a lesson
   const IndividualStockView(
@@ -25,8 +24,8 @@ class IndividualStockView extends StatefulWidget {
   final UserModel user;
 
   @override
-  _IndividualStockViewState createState() => _IndividualStockViewState(stock, user);
-
+  _IndividualStockViewState createState() =>
+      _IndividualStockViewState(stock, user);
 }
 
 class _IndividualStockViewState extends State<IndividualStockView> {
@@ -50,29 +49,35 @@ class _IndividualStockViewState extends State<IndividualStockView> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-              // Stock Name
-              Text(stockViewModel.getStockName(stock).toString(), textAlign: TextAlign.center),
-              // Animated Cash Change
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 1000),
-                transitionBuilder:
-                    (Widget child, Animation<double> animation) {
-                      return SlideTransition(
-                        position: Tween<Offset>(begin: const Offset(0.0, -0.5), end: const Offset(0.0, 0.0)).animate(animation),
-                        child: child,
-                    );
-                },
-                child: Text.rich(
-                  key: ValueKey<int?>(transaction),
-                  TextSpan(
-                    children: <InlineSpan>[
-                      TextSpan(text: "\$ " + userViewModel.getUserCash(user).toString()),
-                    ],
-                  ),
+            // Stock Name
+            Text(stockViewModel.getStockName(stock).toString(),
+                textAlign: TextAlign.center, style: TextStyle(fontSize: 26)),
+            // Animated Cash Change
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1000),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(0.0, -0.5),
+                          end: const Offset(0.0, 0.0))
+                      .animate(animation),
+                  child: child,
+                );
+              },
+              child: Text.rich(
+                key: ValueKey<int?>(transaction),
+                TextSpan(
+                  children: <InlineSpan>[
+                    TextSpan(
+                        text:
+                            "\$ " + userViewModel.getUserCash(user).toString(),
+                        style: TextStyle(fontSize: 24)),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
+        ),
       ),
 
       // Scrollable for the calculator to adjust
@@ -84,9 +89,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
           ),
 
           // Center Column
-          child: Column(
-          children: [
-
+          child: Column(children: [
             // Top Padding
             const Padding(padding: EdgeInsets.fromLTRB(10, 10.0, 20, 4.0)),
 
@@ -94,11 +97,11 @@ class _IndividualStockViewState extends State<IndividualStockView> {
             Center(
                 child: Container(
                     width: 380,
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 5.0),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -109,122 +112,138 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                       ],
                     ),
                     child: SfCartesianChart(
-                      // Initialize category axis
+                        // Initialize category axis
                         primaryXAxis: CategoryAxis(),
-
                         series: <LineSeries<GraphValue, String>>[
                           LineSeries<GraphValue, String>(
-                            // Bind data source
+                              // Bind data source
                               dataSource: processData(),
                               xValueMapper: (GraphValue plot, _) => plot.time,
-                              yValueMapper: (GraphValue plot, _) => plot.price
-                          )
-                        ]
-                    )
-                )
-            ),
+                              yValueMapper: (GraphValue plot, _) => plot.price)
+                        ]))),
             // Bottom Padding
             const SizedBox(height: 10),
 
             // Bottom Section
             Container(
-              width: 380,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+                width: 380,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                   color: Colors.white,
-
                   boxShadow: [
                     BoxShadow(
-                     blurRadius: 5.0,
+                      blurRadius: 5.0,
                       color: Colors.grey[300]!,
                       spreadRadius: 5.0,
                     ),
-                ],
-              ),
-              child: Column(
-                children: [
-
+                  ],
+                ),
+                child: Column(children: [
                   const SizedBox(height: 5),
                   // Info Box of Bottom Section
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // Price Info
                         Container(
-                            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.0),
-                            child: Text.rich(
-                              TextSpan(
-                                children: <InlineSpan>[
-                                  WidgetSpan(
-                                      child: Icon(Icons.attach_money, size: 20,)),
-                                  TextSpan(text: "${stockViewModel.getStockPrice(stock).toString()}.00", style: TextStyle(fontSize: 18)),
-                                ],
-                              ),
-                            ),
-                        ),
-                        // Gain Info
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 10.0),
                           child: Text.rich(
                             TextSpan(
                               children: <InlineSpan>[
                                 WidgetSpan(
-                                    child: getGainIcon(stockViewModel)),
-                                    TextSpan(text: ' Gain ' + getPercentage(stockViewModel), style: TextStyle(color: priceColor(stockViewModel), fontSize: 19),)
+                                    child: Icon(
+                                  Icons.attach_money,
+                                  size: 20,
+                                )),
+                                TextSpan(
+                                    text:
+                                        "${stockViewModel.getStockPrice(stock).toString()}.00",
+                                    style: TextStyle(fontSize: 18)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // Gain Info
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 10.0),
+                          child: Text.rich(
+                            TextSpan(
+                              children: <InlineSpan>[
+                                WidgetSpan(child: getGainIcon(stockViewModel)),
+                                TextSpan(
+                                  text:
+                                      ' Gain ' + getPercentage(stockViewModel),
+                                  style: TextStyle(
+                                      color: priceColor(stockViewModel),
+                                      fontSize: 19),
+                                )
                               ],
                             ),
                           ),
                         ),
                         // Stock Own Info row to split text between non-animated and animated
-                        Row(
-                          children: [
-                            Text.rich(
-                                key: ValueKey<int?>(transaction),
-                                const TextSpan(
-                                    children: <InlineSpan>[
-                                      WidgetSpan(
-                                          child: Icon(Icons.shopping_basket_outlined, size: 19,)),
-                                          TextSpan(text: ' Owned ', style: TextStyle(fontSize: 18),),
-                                ]),
+                        Row(children: [
+                          Text.rich(
+                            key: ValueKey<int?>(transaction),
+                            const TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                  child: Icon(
+                                Icons.shopping_basket_outlined,
+                                size: 19,
+                              )),
+                              TextSpan(
+                                text: ' Owned ',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
                           ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.0),
+                          Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 10.0),
                               child: AnimatedSwitcher(
                                 duration: Duration(milliseconds: 1000),
-                                transitionBuilder:
-                                (Widget child, Animation<double> animation) {
-                                return SlideTransition(
-                                  child: child,
-                                  position: Tween<Offset>(
-                                    begin: Offset(0.0, -0.5),
-                                    end: Offset(0.0, 0.0))
-                                    .animate(animation),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  return SlideTransition(
+                                    child: child,
+                                    position: Tween<Offset>(
+                                            begin: Offset(0.0, -0.5),
+                                            end: Offset(0.0, 0.0))
+                                        .animate(animation),
                                   );
                                 },
                                 child: Text.rich(
                                   key: ValueKey<int?>(transaction),
                                   TextSpan(
                                     children: <InlineSpan>[
-                                      TextSpan(text: userViewModel.stockAmount(user,StockViewModel().getStockAbbreviation(stock).toString()).toString(), style: TextStyle(fontSize: 18),),
+                                      TextSpan(
+                                        text: userViewModel
+                                            .stockAmount(
+                                                user,
+                                                StockViewModel()
+                                                    .getStockAbbreviation(stock)
+                                                    .toString())
+                                            .toString(),
+                                        style: TextStyle(fontSize: 18),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              )
-                            ),
-                          ]
-                        ),
-                    ]
-                  ),
+                              )),
+                        ]),
+                      ]),
 
                   const SizedBox(height: 20),
 
                   // Scrollable Selection
                   Container(
                     alignment: Alignment.center,
-                      child: CupertinoSlidingSegmentedControl<int>(
+                    child: CupertinoSlidingSegmentedControl<int>(
                       backgroundColor: Color.fromARGB(205, 232, 237, 243),
-                      thumbColor:  Color.fromARGB(255, 136, 184, 226),
+                      thumbColor: Color.fromARGB(255, 136, 184, 226),
                       padding: EdgeInsets.all(8),
                       groupValue: groupValue,
                       children: {
@@ -240,25 +259,21 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                   ),
 
                   // Widget based on selection
-                  Container(
-                    child: getMode(userViewModel, stockViewModel)
-                  ),
+                  Container(child: getMode(userViewModel, stockViewModel)),
                   // Bottom padding
                   const SizedBox(height: 40),
-                ]
-              )
-            )
-          ]
-        ),
+                ])),
+            const SizedBox(height: 20),
+          ]),
         ),
       ),
     );
   }
 
-  Widget? getMode(UserViewModel userViewModel, StockViewModel stockViewModel){
-    if(groupValue == 0){
+  Widget? getMode(UserViewModel userViewModel, StockViewModel stockViewModel) {
+    if (groupValue == 0) {
       return buildBuy(userViewModel, stockViewModel);
-    }else{
+    } else {
       return buildSell(userViewModel, stockViewModel);
     }
   }
@@ -279,9 +294,10 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                     child: TextFormField(
                       // impossible to enter negative or non-number
                       keyboardType: TextInputType.number,
-                      scrollPadding: const EdgeInsets.only(bottom:200),
+                      scrollPadding: const EdgeInsets.only(bottom: 200),
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^[1-9][0-9]*'))
                       ],
 
                       decoration: const InputDecoration(
@@ -294,11 +310,17 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                           return null;
                         }
 
-                        int cost = int.parse(value) * stockViewModel.getStockPrice(stock);
+                        int cost = int.parse(value) *
+                            stockViewModel.getStockPrice(stock);
                         if (cost > userViewModel.getUserCash(user)) {
                           return 'Not enough money';
                         }
-                        userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stockViewModel.getStockPrice(stock), stock);
+                        userViewModel.buyStock(
+                            user,
+                            stock.getAbbreviation().toString(),
+                            int.parse(value),
+                            stockViewModel.getStockPrice(stock),
+                            stock);
                         return null;
                       },
                     ),
@@ -319,18 +341,16 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                             transaction = transaction! + 1;
                           });
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                        }
-                      },
-                     child:const Text('Buy'),
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                      }
+                    },
+                    child: const Text('Buy', style: TextStyle(fontSize: 18)),
                   )
                 ],
-              )
-          )
-        ]
-    );
+              ))
+        ]);
   }
 
   Widget buildSell(UserViewModel userViewModel, StockViewModel stockViewModel) {
@@ -348,38 +368,50 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                     width: 200,
                     child: TextFormField(
                       // impossible to enter negative or non-number
-                        keyboardType: TextInputType.number,
-                        scrollPadding: const EdgeInsets.only(bottom:200),
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
-                        ],
+                      keyboardType: TextInputType.number,
+                      scrollPadding: const EdgeInsets.only(bottom: 200),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^[1-9][0-9]*'))
+                      ],
 
-                        decoration: const InputDecoration(
-                          labelText: 'Input Sell Order',
-                        
-                        ),
+                      decoration: const InputDecoration(
+                        labelText: 'Input Sell Order',
+                      ),
 
                       // The validator receives the text that the user has entered.
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return null;
-                          }
-                          if(int.parse(value) > userViewModel.stockAmount(user, stockViewModel.getStockAbbreviation(stock).toString())){
-                            return 'Not enough stocks';
-                          }
-                          userViewModel.sellStock(user, stockViewModel.getStockAbbreviation(stock).toString(), int.parse(value), stockViewModel.getStockPrice(stock), stock);
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
                           return null;
-                        },
-                      ),
+                        }
+                        if (int.parse(value) >
+                            userViewModel.stockAmount(
+                                user,
+                                stockViewModel
+                                    .getStockAbbreviation(stock)
+                                    .toString())) {
+                          return 'Not enough stocks';
+                        }
+                        userViewModel.sellStock(
+                            user,
+                            stockViewModel
+                                .getStockAbbreviation(stock)
+                                .toString(),
+                            int.parse(value),
+                            stockViewModel.getStockPrice(stock),
+                            stock);
+                        return null;
+                      },
                     ),
+                  ),
 
                   // padding for button
                   const SizedBox(height: 10),
 
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor:  Colors.red, shape: StadiumBorder()),
-                    onPressed: ()
-                    {
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red, shape: StadiumBorder()),
+                    onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (formSell.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
@@ -393,17 +425,18 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                         );
                       }
                     },
-                    child:const Text('Sell'),
+                    child: const Text('Sell', style: TextStyle(fontSize: 18)),
                   )
                 ],
-              )
-          )
-        ]
-    );
+              ))
+        ]);
   }
 
   Widget buildSelection(String text) {
-    return Text(text, style: const TextStyle(fontSize: 22, color: Colors.black),);
+    return Text(
+      text,
+      style: const TextStyle(fontSize: 22, color: Colors.black),
+    );
   }
 
   List<GraphValue> processData() {
@@ -422,31 +455,40 @@ class _IndividualStockViewState extends State<IndividualStockView> {
     }
   }
 
-  Icon getGainIcon(StockViewModel stockViewModel){
-    if(stockViewModel.getStockGain(stock) > 0){
-      return const Icon(CupertinoIcons.arrow_up, color: Colors.green, size: 18,);
-    }else{
-      return const Icon(CupertinoIcons.arrow_down, color: Colors.red,  size: 18,);
+  Icon getGainIcon(StockViewModel stockViewModel) {
+    if (stockViewModel.getStockGain(stock) > 0) {
+      return const Icon(
+        CupertinoIcons.arrow_up,
+        color: Colors.green,
+        size: 18,
+      );
+    } else {
+      return const Icon(
+        CupertinoIcons.arrow_down,
+        color: Colors.red,
+        size: 18,
+      );
     }
   }
 
   String getPercentage(StockViewModel stockViewModel) {
     String fullPercentage = stockViewModel.getStockGain(stock).toString();
     String buffer = '';
-    if(fullPercentage.length == 0){
+    if (fullPercentage.length == 0) {
       return '0.0%';
-    } else{
-      for(int i = 0; i < fullPercentage.length; i++){
-        if(fullPercentage[i] == '.'){
-          buffer = buffer+fullPercentage[i];
-          if(i+1 < fullPercentage.length){
-            buffer = buffer+fullPercentage[i+1];
-          }if(i+2 < fullPercentage.length && buffer.length < 4){
-            buffer = buffer+fullPercentage[i+2];
+    } else {
+      for (int i = 0; i < fullPercentage.length; i++) {
+        if (fullPercentage[i] == '.') {
+          buffer = buffer + fullPercentage[i];
+          if (i + 1 < fullPercentage.length) {
+            buffer = buffer + fullPercentage[i + 1];
+          }
+          if (i + 2 < fullPercentage.length && buffer.length < 4) {
+            buffer = buffer + fullPercentage[i + 2];
           }
           return buffer + "%";
-        }else{
-          buffer = buffer+fullPercentage[i];
+        } else {
+          buffer = buffer + fullPercentage[i];
         }
       }
       return buffer + "%";
@@ -454,10 +496,8 @@ class _IndividualStockViewState extends State<IndividualStockView> {
   }
 }
 
-
 class GraphValue {
   GraphValue(this.time, this.price);
   final String time;
   final int price;
 }
-

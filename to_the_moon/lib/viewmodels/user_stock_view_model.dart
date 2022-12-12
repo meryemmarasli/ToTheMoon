@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:collection';
+import 'package:confetti/confetti.dart';
 
 class UserViewModel with ChangeNotifier {
   Future<UserModel> user = UserDatabase.instance.user();
@@ -19,25 +20,27 @@ class UserViewModel with ChangeNotifier {
   double getAveragePaid(UserModel user, StockModel stock) {
     List<int> pricesPaid = user.stocksOwned[stock.abbreviation] as List<int>;
     int totalPaid = 0;
-    for(int i = 0; i < pricesPaid.length; i++){
+    for (int i = 0; i < pricesPaid.length; i++) {
       totalPaid = pricesPaid[i] + totalPaid;
     }
-    return totalPaid/pricesPaid.length;
+    return totalPaid / pricesPaid.length;
   }
 
-  sellStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
+  sellStock(
+      UserModel user, String name, int amount, int currentPrice, StockModel s) {
     user.removeStock(name, amount, s);
     user.addCash(currentPrice * amount);
     notifyListeners();
   }
 
-  buyStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
+  buyStock(
+      UserModel user, String name, int amount, int currentPrice, StockModel s) {
     user.addStock(name, amount, currentPrice, s);
     user.removeCash(currentPrice * amount);
     notifyListeners();
   }
 
-  dynamic stockAmount(UserModel user, String name){
+  dynamic stockAmount(UserModel user, String name) {
     return user.getStockAmount(name);
   }
 
@@ -69,10 +72,11 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void rewardCash(UserModel user, int amount, bool lessonStatus) {
+  void rewardCash(UserModel user, int amount, bool lessonStatus,
+      ConfettiController controller) {
     if (!lessonStatus) {
       updateCash(user, amount);
-      
+      controller.play();
     }
   }
 }

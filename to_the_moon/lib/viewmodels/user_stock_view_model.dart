@@ -41,7 +41,8 @@ class UserViewModel with ChangeNotifier {
     return user.getStockAmount(name);
   }
 
-  void setAgreement(UserModel user) {
+  void setAgreement() async {
+    UserModel user = await getUser();
     user.setAgreement();
     notifyListeners();
   }

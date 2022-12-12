@@ -438,9 +438,8 @@ updateTotalCash(Future<UserModel> user) async{
             Row(children: [
               Padding(
                   padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text("\$" +
-                      stockViewModel.getOwnedInvestedCapital(user)
-                          .toString(), style: TextStyle(
+                  child: Text("\$${stockViewModel.getOwnedInvestedCapital(user)
+                          .toString()}0", style: TextStyle(
                       color: Colors.white,
                       fontSize: 40))),
             ],
@@ -461,8 +460,7 @@ updateTotalCash(Future<UserModel> user) async{
             Row(children: [
               Padding(
                   padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text("\$" +
-                      stockViewModel.getOwnedTotalAssets(user)
+                  child: Text("\$${stockViewModel.getOwnedTotalAssets(user)}0"
                           .toString(), style: TextStyle(
                       color: Colors.white,
                       fontSize: 40))),

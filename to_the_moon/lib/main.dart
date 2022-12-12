@@ -40,12 +40,4 @@ class MyApp extends StatelessWidget {
         ));
   }
 
-  startPage(BuildContext context) async{
-    UserViewModel userViewModel = context.watch<UserViewModel>();
-    UserModel user = await userViewModel.getUser();
-    if (user.acceptAgreement)
-      return const BottomBar();
-    else
-      return  WelcomeView();
-  }
 }

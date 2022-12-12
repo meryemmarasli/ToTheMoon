@@ -12,11 +12,62 @@ class AgreementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<UserModel> User =
-        context.watch<UserViewModel>().getUser() as Future<UserModel>;
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
-        body: FutureBuilder(
+      backgroundColor:Color.fromARGB(231, 209, 229, 255),
+      body: Column(
+        children: [
+            SizedBox(height: 230),
+      
+            Row( children : [
+            SizedBox(width: 45),
+            Container(
+              width: 300,
+              height: 400,
+              decoration: BoxDecoration(
+                   color: Color.fromARGB(255, 216, 234, 246),
+                  border: Border.all(width: 2, color: Color.fromARGB(
+                              255, 2, 44, 78)),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),),
+              child: Column(children: [
+                SizedBox(height: 45),
+                Text("Terms & Conditions ", style: TextStyle(fontSize: 25)),
+                  
+                Padding(padding: EdgeInsets.fromLTRB(5, 20, 5, 20),child:Text("User Agreement. Dassault Systemes may not distribute any Product(s) to any User unless such User is subject to a license agreement with Dassault Systemes similar to the license agreements Dassault Systemes uses for similar or like products. Dassault Systemes will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request.", style: TextStyle(fontSize: 15 ), textAlign: TextAlign.center)),
+                
+                //SizedBox(height: 20),
+                ElevatedButton(
+                      child: Text('Accept.',
+                          style: TextStyle(
+                          color: Colors.white,
+                        )),
+                      onPressed: () {
+                          userViewModel.setAgreement();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (context) => BottomBar()));
+                          },
+                          
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:  Color.fromARGB(255, 234, 80, 69) ,
+                            shape: StadiumBorder(),
+                          ),
+                          
+                          
+                          ),
+                  
+              ],))
+
+            ]),
+        ]
+      )
+
+
+
+    );
+  }
+        /*body: FutureBuilder(
             future: User,
             builder: (
               context,
@@ -31,11 +82,16 @@ class AgreementView extends StatelessWidget {
                     Align(
                       alignment: Alignment(0.0, -0.2),
                       child: Container(
-                        width: 300,
-                        child: Flexible(
-                          child: new Text(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Color.fromARGB(
+                              255, 2, 44, 78)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),),
+                        width: 350,
+                        child: Column(
+                          children:[ 
+                             Text(
                               "User Agreement. Dassault Systemes may not distribute any Product(s) to any User unless such User is subject to a license agreement with Dassault Systemes similar to the license agreements Dassault Systemes uses for similar or like products. Dassault Systemes will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request."),
-                        ),
+                        ]),
                       ),
                     ),
                     Align(
@@ -55,7 +111,7 @@ class AgreementView extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => BottomBar()));
-                                          
+
                                 })),
                       ),
                     ),
@@ -65,5 +121,5 @@ class AgreementView extends StatelessWidget {
                 return CircularProgressIndicator();
               }
             }));
-  }
+  } */
 }

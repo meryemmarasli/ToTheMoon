@@ -31,43 +31,49 @@ class WelcomeViewState extends State<WelcomeView>{
       body:
         Stack(
         children: <Widget>[
-        Align(
-          alignment: Alignment(0.0, -0.8),
+           Align(
+          alignment: Alignment(0.0, -0.39),
           child: Container(
-            child: Text("To The Moon", style:TextStyle(color: Colors.white)), 
+            child: Text("to the moon", style:TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)), 
           ),
         ),
           Align(
               alignment: Alignment(0.0, 0),
 
               child: Container(
-                child: new Image.asset('assets/images/rocket.png'),
+                child: new Image.asset('assets/images/rocketGif.gif'),
                 alignment: Alignment.center,
                 width: 350,
                 height: 250,
               ),
           ),
+         
         Align(
               child: Container(
-                  alignment: Alignment(0.0, 0.7),
-                child: SizedBox(
+                  alignment: Alignment(0.0, 0.5),
+                 child: SizedBox(
                     height: 50,
-                    width:200,
+                    width:100,
                       child:ElevatedButton(
-                      child: Text('Start', style:TextStyle(color: Colors.white,)),
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 220, 35, 22)),
-                      onPressed: () {
-                        if(accept){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar()));
-                        }else{
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => AgreementView()));
+                          child: Text('Start!', style:TextStyle(color: Colors.white,)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 220, 35, 22),
+                            shape: StadiumBorder() ,
+                            )
+                          ,
+                          onPressed: () {
+                            if(accept){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar()));
+                            }else{
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => AgreementView()));
 
-                        }
-                      }
-                  )
+                            }
+                          }
+                      )
                   ),
               ),
-        )
+        ),
+         
     ])
     );
   }

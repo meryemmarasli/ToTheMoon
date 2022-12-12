@@ -103,6 +103,7 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
                   )),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
+                shape: StadiumBorder(),
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
               ),

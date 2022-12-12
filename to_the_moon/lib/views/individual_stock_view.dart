@@ -308,7 +308,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                   const SizedBox(height: 10),
 
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor:  Colors.red),
+                      style: ElevatedButton.styleFrom(backgroundColor:  Colors.red, shape: StadiumBorder()),
                       onPressed: ()
                         {
                         // Validate returns true if the form is valid, or false otherwise.
@@ -377,7 +377,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                   const SizedBox(height: 10),
 
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor:  Colors.red),
+                    style: ElevatedButton.styleFrom(backgroundColor:  Colors.red, shape: StadiumBorder()),
                     onPressed: ()
                     {
                       // Validate returns true if the form is valid, or false otherwise.

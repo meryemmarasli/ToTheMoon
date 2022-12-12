@@ -73,48 +73,102 @@ class _DashboardViewState extends State<DashboardView> {
     }
  
     return Scaffold(
-      body:SingleChildScrollView(
-        child: Column(
-          children: [
-                // Portfolio over view
-                 Row(children: [
-                      Padding(padding: EdgeInsets.fromLTRB(20, 10, 0, 5), child: Text("Porfolio Overview", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold ) ) ),
-                  ]),
-                Container(
-                  height: 158,
-                  width: 373,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Color.fromARGB(255, 2, 44, 78)),
-                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                     gradient:LinearGradient(colors:[  Color.fromARGB(255, 18, 44, 64),  Color.fromARGB(255, 24, 50, 72), Color.fromARGB(255, 89, 42, 97)]),
-                    //color: Color.fromARGB(255, 170, 209, 229),
-                  ),
-                  child: Column(
+      body: FutureBuilder(
+      future: Future.wait([user]),
+        builder: (
+        context,
+          AsyncSnapshot<List> data,
+        ) {
+          {
+            if (data.hasError) {
+              return Text("Error: ${data.error}");
+            } else if (data.hasData) {
+              UserModel userReg = data.data?[0] as UserModel;
+              return SingleChildScrollView(
+                child: Column(
                     children: [
+                      // Portfolio over view
                       Row(children: [
-                      Padding(padding: EdgeInsets.fromLTRB(30, 18, 0, 0), child: Text("Balance:", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold))),
-                     ]),
-                      Row(children : [
-                      Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0), child: Text('\$${totalCash}.00', style: TextStyle(color: Colors.white, fontSize: 40))),
-                    ]),
-                    Row(children: [
-                      Padding(padding: EdgeInsets.fromLTRB(30, 22, 0, 0), child: Icon(CupertinoIcons.arrow_up_circle_fill, color: Colors.green, size: 33)), // total gain arrow
-                      Padding(padding: EdgeInsets.fromLTRB(5, 22, 22, 0), child: Text('\$${totalGain}.00 ', style: TextStyle(color: Colors.green, fontSize: 22))),
-                      Padding(padding:EdgeInsets.fromLTRB(0, 22, 5, 0) , child:Icon(CupertinoIcons.arrow_down_circle_fill, color: Colors.red, size: 33)), // total loss image
-                      Padding(padding: EdgeInsets.fromLTRB(0, 22, 0, 0), child: Text('\$${totalLoss}.00 ', style: TextStyle(color: Colors.red, fontSize: 22))),
+                        Padding(padding: EdgeInsets.fromLTRB(20, 10, 0, 5),
+                            child: Text("Porfolio Overview", style: TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold))),
+                      ]),
+                      Container(
+                        height: 158,
+                        width: 373,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Color.fromARGB(
+                              255, 2, 44, 78)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          gradient: LinearGradient(colors: [
+                            Color.fromARGB(255, 18, 44, 64),
+                            Color.fromARGB(255, 24, 50, 72),
+                            Color.fromARGB(255, 89, 42, 97)
+                          ]),
+                          //color: Color.fromARGB(255, 170, 209, 229),
+                        ),
+                        child: Column(
+                            children: [
+                              Row(children: [
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(30, 18, 0, 0),
+                                    child: Text("Total Assets:", style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold))),
+                              ]),
+                              Row(children: [
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                    child: Text("\$" +
+                                        stockViewModel.getOwnedBalance(userReg)
+                                            .toString(), style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 40))),
+                              ]),
+                              Row(children: [
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(30, 22, 0, 0),
+                                    child: Icon(
+                                        CupertinoIcons.arrow_up_circle_fill,
+                                        color: Colors.green, size: 33)),
+                                // total gain arrow
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(5, 22, 22, 0),
+                                    child: Text('\$${totalGain}.00 ',
+                                        style: TextStyle(color: Colors.green,
+                                            fontSize: 22))),
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 22, 5, 0),
+                                    child: Icon(
+                                        CupertinoIcons.arrow_down_circle_fill,
+                                        color: Colors.red, size: 33)),
+                                // total loss image
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 22, 0, 0),
+                                    child: Text('\$${totalLoss}.00 ',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 22))),
 
-                    ])
+                              ])
+                            ]
+                        ),
+
+                        //market news and your stocks
+                      ),
+
+                      getContainer(News, stockViewModel, userViewModel, user),
+
                     ]
-                  ),
-        
-                //market news and your stocks
                 ),
-              
-              getContainer(News, stockViewModel, userViewModel, user),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          }
+        }),
+        );
 
-        ]
-      ),
-    ));  
  }
 
 stockList(Future<UserModel> u) async{

@@ -40,6 +40,20 @@ class StockViewModel with ChangeNotifier{
     return ((stock.getCurrentPrice()*pricesPaid.length-totalPaid)/totalPaid)*100;
   }
 
+  double getOwnedBalance(UserModel user){
+    double balance = user.getCash().toDouble();
+    List<StockModel> stocks = user.getStocks();
+    for(int i = 0; i < stocks.length; i++){
+      balance = balance + (stocks[i].getCurrentPrice().toDouble() * user.getStockAmount(stocks[i].getAbbreviation().toString()));
+    }
+    print(balance);
+    return balance;
+  }
+
+  Future<List<StockModel>> getStocks() async {
+    return await stocks;
+  }
+
   bool needsScroll() {
     bool ret = needsScrollBool;
     needsScrollBool = false;

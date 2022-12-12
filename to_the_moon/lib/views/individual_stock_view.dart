@@ -66,9 +66,7 @@ class _IndividualStockViewState extends State<IndividualStockView> {
                   key: ValueKey<int?>(transaction),
                   TextSpan(
                     children: <InlineSpan>[
-                      const WidgetSpan(
-                          child: Icon(Icons.attach_money)),
-                      TextSpan(text: userViewModel.getUserCash(user).toString()),
+                      TextSpan(text: "\$ " + userViewModel.getUserCash(user).toString()),
                     ],
                   ),
                 ),

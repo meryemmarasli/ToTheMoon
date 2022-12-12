@@ -37,7 +37,7 @@ class UserModel {
     if(!stocksOwned.containsKey(name)){
       return 0;
     }
-    return stocksOwned[name];
+    return stocksOwned[name]?.length;
   }
 
   
@@ -49,7 +49,7 @@ class UserModel {
     return stocks;
   }
 
-  void addStock(String name, int amount, StockModel s) {
+  void addStock(String name, int amount, int currentPrice, StockModel s) {
     // attempts to add stock if key doesn't exist adds new entry
     // ! in !+ is a null check
     if(!stocks.contains(s)){
@@ -57,14 +57,16 @@ class UserModel {
     }
 
     if(stocksOwned.containsKey(name)){
-      stocksOwned[name]!.add(amount);
+      for(int i = 0; i < amount; i++){
+        stocksOwned[name]!.add(currentPrice);
+      }
     }else{
-      List<int> l = [amount];
-      stocksOwned.addAll({name:l});
+      List<int> list = List<int>.empty(growable: true);
+      for(int i = 0; i < amount; i++){
+        list.add(currentPrice);
+      }
+      stocksOwned.update(name, (e) => (list), ifAbsent: () => list);
     }
-
-    //stocksOwned.update(name, (e) => (stocksOwned[name].add(e)), ifAbsent: () => amount);
-   
   }
 
   void removeStock(String name, int amount, StockModel s){

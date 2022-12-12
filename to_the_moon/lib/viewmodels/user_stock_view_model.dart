@@ -15,6 +15,8 @@ class UserViewModel with ChangeNotifier {
     return user;
   }
 
+
+
   sellStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
     user.removeStock(name, amount, s);
     user.addCash(currentPrice * amount);
@@ -22,7 +24,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   buyStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
-    user.addStock(name, amount, s);
+    user.addStock(name, amount, currentPrice, s);
     user.removeCash(currentPrice * amount);
     notifyListeners();
   }

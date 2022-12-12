@@ -34,7 +34,7 @@ class AgreementView extends StatelessWidget {
               alignment: Alignment.topCenter,
             child: Container(
               width: 300,
-              height: 310,
+              height: 290,
                 margin: const EdgeInsets.only(bottom: 260),
                 decoration: BoxDecoration(
                    color: Colors.white,
@@ -55,7 +55,7 @@ class AgreementView extends StatelessWidget {
                   
                 Padding(padding: EdgeInsets.fromLTRB(5, 20, 5, 10),child:Text("To The Moon may not distribute any Product(s) to any User unless such User is subject to a license agreement with To The Moon similar to the license agreements To The Moon uses for similar or like products. To The Moon will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request.", style: TextStyle(fontSize: 15 ), textAlign: TextAlign.center)),
                 
-                //SizedBox(height: 20),
+                SizedBox(height: 10),
                 ElevatedButton(
                       child: Text('Accept.',
                           style: TextStyle(

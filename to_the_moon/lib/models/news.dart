@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class NewsModel {
-
-  final List<Text> Headlines = [
-    Text('S&P stock drops!'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock drops!'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock drops!'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets'),
-    Text('S&P stock rockets')  ];
-
-  /*
-  final String title;
-  final String headline;
+   NewsModel(this.stockName, this.companyName, this.value, this.change, this.eventType, this.headline, this.imagePath);
 
 
-  NewsModel({required this.title, required this.headline});
+  String? stockName;
+  String? companyName;
+  double? value;
+  String? change;
+  String? imagePath;
+  bool eventType;
 
-  factory NewsModel.fromJson(Map<String, String> json) {
-    return NewsModel(
-        title: json["Title"],
-        headline: json["Content"]
-    );
+  String headline = '';
+ 
+  getStockName(){
+    return stockName;
   }
 
-   */
+  getCompanyName(){
+    return companyName;
+  }
+
+  getValue(){
+    return value;
+  }
+
+  getImage(){
+    return Image.asset(imagePath.toString());    
+    
+  }
+
+  getHeadline(){
+    return headline;
+  }
 }
+
+   

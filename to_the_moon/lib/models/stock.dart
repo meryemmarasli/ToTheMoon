@@ -1,61 +1,63 @@
 import 'package:flutter/material.dart';
 class StockModel {
 
-  StockModel(this.name, this.priceHistory, this.priceUP);
+  StockModel(this.abbreviation, this.name, this.priceHistory, this.imagePath);
 
-  String? name = "S&P";
-  List<int> priceHistory = [
-    100,
-    101,
-    102,
-    103,
-  ];
-  bool priceUP = true;
-
+  String? abbreviation = "Test";
+  String? name = "Test";
+  String? imagePath = "Test";
+  List<int> priceHistory = List<int>.empty(growable: true);
+ 
+  String? getAbbreviation(){
+    return abbreviation;
+  }
 
   String? getName(){
-    return this.name;
+    return name;
+  }
+
+  Widget getImage(){
+    return Image.asset(imagePath.toString());
   }
 
   List<int> getPriceHistory(){
     return priceHistory;
   }
 
-  int getCurrentPrice(){
-    return priceHistory.elementAt(priceHistory.length-1);
+  double gain() {
+    double gain = (priceHistory.elementAt(priceHistory.length-1) - priceHistory.elementAt(priceHistory.length-2))/priceHistory.elementAt(priceHistory.length-1)*100;
+    if(gain.isNaN || gain.isInfinite){
+      return 0.0;
+    }
+    return gain;
   }
 
-  bool getPriceUp(){
-    return priceUP;
+  int getCurrentPrice(){
+    return priceHistory.elementAt(priceHistory.length-1);
   }
 
   void updateValue(int newPrice){
     priceHistory.add(newPrice);
   }
 
-  void setPriceUP(bool up){
-    priceUP = up;
-  }
-
   StockModel.fromMap(Map<String, dynamic> json){
+    abbreviation = json["abbreviation"];
     name = json["name"];
-    if(json["priceUP"] == "1"){
-      priceUP = true;
-    }else{
-      priceUP = false;
-    }
-    priceHistory = json["priceHistory"];
+    priceHistory.addAll(json["priceHistory"]);
+    imagePath = json["imagePath"];
   }
 
   StockModel.fromJson(Map<String, dynamic> json){
+    abbreviation = json["abbreviation"];
     name = json["name"];
-    priceHistory = json['priceHistory'];
-    priceUP = json["priceUP"];
+    priceHistory.addAll(json["priceHistory"]);
+    imagePath = json["imagePath"];
   }
 
   Map<String, dynamic> toMap() =>{
+    'abbreviation': abbreviation,
     'name': name,
     'priceHistory': priceHistory,
-    'priceUP': priceUP
+    'imagePath': imagePath,
   };
 }

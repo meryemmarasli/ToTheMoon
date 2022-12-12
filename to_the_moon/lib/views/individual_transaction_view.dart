@@ -32,7 +32,7 @@ class IndividualTransactionStockView extends StatelessWidget {
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(stock.getName().toString())),
+        title: Center(child: Text(stock.getAbbreviation().toString())),
       ),
       body: Column(
           children: [
@@ -63,16 +63,16 @@ class IndividualTransactionStockView extends StatelessWidget {
                       return 'Please enter a positive number';
                     }
                     int cost = int.parse(value) * stock.getCurrentPrice();
-                    if(cost > user.cash!){
+                    if(cost > userViewModel.getUserCash(user)){
                       return 'Not enough money';
                     }
-                    userViewModel.buyStock(user, stock.getName().toString(), int.parse(value), stock.getCurrentPrice());
+                    userViewModel.buyStock(user, stock.getAbbreviation().toString(), int.parse(value), stock.getCurrentPrice(), stock);
                     return null;
                   },
                 ),
 
             Container(
-              child: Text('Your Owned Stocks: ' + user.getStockAmount(stock.getName().toString()).toString()),
+              child: Text('Your Owned Stocks: ' + user.getStockAmount(stock.getAbbreviation().toString()).toString()),
             ),
 
             Form(
@@ -96,10 +96,10 @@ class IndividualTransactionStockView extends StatelessWidget {
                       if(int.parse(value) < 0){
                         return 'Please enter a positive number';
                       }
-                      if(int.parse(value) > user.getStockAmount(stock.getName().toString())){
+                      if(int.parse(value) > user.getStockAmount(stock.getAbbreviation().toString())){
                         return 'Not enough stocks';
                       }
-                      userViewModel.sellStock(user, stock.getName().toString(), int.parse(value), stock.getCurrentPrice());
+                      userViewModel.sellStock(user, stock.getAbbreviation().toString(), int.parse(value), stock.getCurrentPrice(), stock);
                       return null;
                   },
                   ),
@@ -132,7 +132,7 @@ class IndividualTransactionStockView extends StatelessWidget {
   }
 
   Color priceColor(StockModel stock){
-    if(stock.getPriceUp()){
+    if(stock.gain() > 0){
       return Colors.green;
     }else{
       return Colors.red;

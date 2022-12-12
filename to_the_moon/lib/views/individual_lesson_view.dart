@@ -9,14 +9,26 @@ import 'package:to_the_moon/viewmodels/lesson_view_model.dart';
 import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
 import 'package:to_the_moon/models/User.dart';
 
-class IndividualLessonView extends StatelessWidget {
+class IndividualLessonView extends StatefulWidget {
   // In the constructor, require a lesson
   const IndividualLessonView(
       {super.key, required this.lesson, required this.user});
 
+  final LessonModel lesson;
+  final UserModel user;
+
+  @override
+  _IndividualLessonViewState createState() =>
+      _IndividualLessonViewState(lesson, user);
+}
+
+class _IndividualLessonViewState extends State<IndividualLessonView> {
   // Declare a field that holds the Todo.
   final LessonModel lesson;
   final UserModel user;
+  bool? rewarded = false;
+
+  _IndividualLessonViewState(this.lesson, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +37,38 @@ class IndividualLessonView extends StatelessWidget {
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
         appBar: AppBar(
-          title: Text(lesson.getTitle().toString(),
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 26)),
-          backgroundColor: Color.fromARGB(255, 13, 38, 60),
+          backgroundColor: const Color.fromARGB(255, 13, 38, 60),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(lesson.getTitle().toString(),
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 26)),
+              // Animated Cash Change
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 1000),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                            begin: const Offset(0.0, -0.5),
+                            end: const Offset(0.0, 0.0))
+                        .animate(animation),
+                    child: child,
+                  );
+                },
+                child: Text.rich(
+                  key: ValueKey<bool?>(rewarded),
+                  TextSpan(
+                    children: <InlineSpan>[
+                      TextSpan(
+                          text: "\$ " +
+                              userViewModel.getUserCash(user).toString(),
+                          style: TextStyle(fontSize: 24)),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(children: [
@@ -69,6 +110,9 @@ class IndividualLessonView extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
                 ),
                 onPressed: () {
+                  setState(() {
+                    rewarded = true;
+                  });
                   // only reward the cash if first time completing lesson
                   // also plays the confetti controller
                   userViewModel.rewardCash(user, lesson.getCash()!,

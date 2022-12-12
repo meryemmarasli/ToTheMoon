@@ -16,16 +16,31 @@ class UserViewModel with ChangeNotifier {
     return user;
   }
 
-  sellStock(UserModel user, String name, int amount, int currentPrice) {
-    user.removeStock(name, amount);
+  double getAveragePaid(UserModel user, StockModel stock) {
+    List<int> pricesPaid = user.stocksOwned[stock.abbreviation] as List<int>;
+    int totalPaid = 0;
+    for (int i = 0; i < pricesPaid.length; i++) {
+      totalPaid = pricesPaid[i] + totalPaid;
+    }
+    return totalPaid / pricesPaid.length;
+  }
+
+  sellStock(
+      UserModel user, String name, int amount, int currentPrice, StockModel s) {
+    user.removeStock(name, amount, s);
     user.addCash(currentPrice * amount);
     notifyListeners();
   }
 
-  buyStock(UserModel user, String name, int amount, int currentPrice) {
-    user.addStock(name, amount);
+  buyStock(
+      UserModel user, String name, int amount, int currentPrice, StockModel s) {
+    user.addStock(name, amount, currentPrice, s);
     user.removeCash(currentPrice * amount);
     notifyListeners();
+  }
+
+  dynamic stockAmount(UserModel user, String name) {
+    return user.getStockAmount(name);
   }
 
   void setAgreement(UserModel user) {
@@ -51,6 +66,7 @@ class UserViewModel with ChangeNotifier {
 
   void updateCash(UserModel user, int amount) {
     user.addCash(amount);
+    user.addBalance(amount);
     notifyListeners();
   }
 
@@ -75,7 +91,7 @@ class UserDatabase {
 
     _database = await _initDB("users_database.db");
     instance.insertUser(new UserModel(0, 1000, false,
-        new HashMap<String, int>())); // new HashMap<String,int>())
+        new HashMap<String, List<int>>())); // new HashMap<String,int>())
     return _database!;
   }
 

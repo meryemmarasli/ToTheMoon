@@ -32,7 +32,7 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ConfettiController(duration: const Duration(seconds: 4));
+    final controller = ConfettiController(duration: const Duration(seconds: 3));
     LessonViewModel lessonViewModel = context.watch<LessonViewModel>();
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
@@ -44,29 +44,46 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
               Text(lesson.getTitle().toString(),
                   textAlign: TextAlign.center, style: TextStyle(fontSize: 26)),
               // Animated Cash Change
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 1000),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                            begin: const Offset(0.0, -0.5),
-                            end: const Offset(0.0, 0.0))
-                        .animate(animation),
-                    child: child,
-                  );
-                },
-                child: Text.rich(
-                  key: ValueKey<bool?>(rewarded),
-                  TextSpan(
-                    children: <InlineSpan>[
-                      TextSpan(
-                          text: "\$ " +
-                              userViewModel.getUserCash(user).toString(),
-                          style: TextStyle(fontSize: 24)),
-                    ],
+              Stack(children: [
+                ConfettiWidget(
+                  confettiController: controller,
+                  blastDirection: -pi / 2, // shoot downwards
+                  shouldLoop: false,
+                  numberOfParticles: 5,
+                  createParticlePath: drawStar,
+                  colors: [
+                    Colors.yellow,
+                    Colors.amber,
+                    Colors.orange,
+                    Colors.lightBlue
+                  ],
+                  gravity: 1,
+                ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 1000),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                              begin: const Offset(0.0, -0.5),
+                              end: const Offset(0.0, 0.0))
+                          .animate(animation),
+                      child: child,
+                    );
+                  },
+                  child: Text.rich(
+                    key: ValueKey<bool?>(rewarded),
+                    TextSpan(
+                      children: <InlineSpan>[
+                        TextSpan(
+                            text: "\$ " +
+                                userViewModel.getUserCash(user).toString(),
+                            style: TextStyle(fontSize: 24)),
+                      ],
+                    ),
                   ),
                 ),
-              )
+              ])
             ],
           ),
         ),
@@ -126,20 +143,20 @@ class _IndividualLessonViewState extends State<IndividualLessonView> {
                   //play confetti
                   //controller.play();
                 }),
-            ConfettiWidget(
-              confettiController: controller,
-              blastDirection: -pi/2, // shoot downwards
-              shouldLoop: false,
-              numberOfParticles: 100,
-              createParticlePath: drawStar,
-              colors: [
-                Colors.yellow,
-                Colors.amber,
-                Colors.orange,
-                Colors.lightBlue
-              ],
-              gravity: 1,
-            ),
+            // ConfettiWidget(
+            //   confettiController: controller,
+            //   blastDirection: -pi/2, // shoot downwards
+            //   shouldLoop: false,
+            //   numberOfParticles: 100,
+            //   createParticlePath: drawStar,
+            //   colors: [
+            //     Colors.yellow,
+            //     Colors.amber,
+            //     Colors.orange,
+            //     Colors.lightBlue
+            //   ],
+            //   gravity: 1,
+            // ),
             SizedBox(height: 50),
           ]),
         ));

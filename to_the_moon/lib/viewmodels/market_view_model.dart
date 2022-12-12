@@ -40,15 +40,68 @@ class StockViewModel with ChangeNotifier{
     return ((stock.getCurrentPrice()*pricesPaid.length-totalPaid)/totalPaid)*100;
   }
 
-  double getOwnedBalance(UserModel user){
+  double getOwnedTotalAssets(UserModel user){
     double balance = user.getCash().toDouble();
     List<StockModel> stocks = user.getStocks();
     for(int i = 0; i < stocks.length; i++){
       balance = balance + (stocks[i].getCurrentPrice().toDouble() * user.getStockAmount(stocks[i].getAbbreviation().toString()));
     }
-    print(balance);
     return balance;
   }
+
+  double getOwnedInvestedCapital(UserModel user){
+    double balance = 0;
+    List<StockModel> stocks = user.getStocks();
+    for(int i = 0; i < stocks.length; i++){
+      balance = balance + (stocks[i].getCurrentPrice().toDouble() * user.getStockAmount(stocks[i].getAbbreviation().toString()));
+    }
+    return balance;
+  }
+
+  double getOwnedGain(UserModel user){
+    double totalInvested = 0;
+    double totalCurrentValue = 0;
+    List<StockModel> stocks = user.getStocks();
+    for(int i = 0; i < stocks.length; i++){
+      if(0 <= getOwnedStockGain(user, stocks[i])) {
+        List<int> ownedStock = user.getStocksOwned()[stocks[i].getAbbreviation()] as List<int>;
+        for (int j = 0; j < ownedStock.length; j++) {
+          totalInvested = totalInvested + ownedStock[j];
+        }
+        totalCurrentValue = totalCurrentValue + stocks[i].getCurrentPrice().toDouble() * ownedStock.length;
+      }
+    }
+    double gain = ((totalCurrentValue-totalInvested)/totalInvested)*100;
+    if(gain.isInfinite || gain.isNaN){
+      return 0.0;
+    }else{
+      return gain;
+    }
+  }
+
+  double getOwnedLoss(UserModel user){
+    double totalInvested = 0;
+    double totalCurrentValue = 0;
+    List<StockModel> stocks = user.getStocks();
+    for(int i = 0; i < stocks.length; i++){
+      List<int> ownedStock = user.getStocksOwned()[stocks[i].getAbbreviation()] as List<int>;
+
+      if(0 > getOwnedStockGain(user, stocks[i])) {
+        for (int j = 0; j < ownedStock.length; j++) {
+          totalInvested = totalInvested + ownedStock[j];
+        }
+
+        totalCurrentValue = totalCurrentValue + stocks[i].getCurrentPrice().toDouble() * ownedStock.length;
+      }
+    }
+    double loss = ((totalCurrentValue-totalInvested)/totalCurrentValue)*100;
+    if(loss.isInfinite || loss.isNaN){
+      return 0.0;
+    }else{
+      return loss;
+    }
+  }
+
 
   Future<List<StockModel>> getStocks() async {
     return await stocks;

@@ -112,7 +112,7 @@ class _DashboardViewState extends State<DashboardView> {
                               Row(children: [
                                 Padding(
                                     padding: EdgeInsets.fromLTRB(30, 18, 0, 0),
-                                    child: Text("Total Assets:", style: TextStyle(
+                                    child: Text("Invested Capital:", style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold))),
@@ -121,7 +121,7 @@ class _DashboardViewState extends State<DashboardView> {
                                 Padding(
                                     padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                     child: Text("\$" +
-                                        stockViewModel.getOwnedBalance(userReg)
+                                        stockViewModel.getOwnedInvestedCapital(userReg)
                                             .toString(), style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 40))),
@@ -135,7 +135,7 @@ class _DashboardViewState extends State<DashboardView> {
                                 // total gain arrow
                                 Padding(
                                     padding: EdgeInsets.fromLTRB(5, 22, 22, 0),
-                                    child: Text('\$${totalGain}.00 ',
+                                    child: Text('\$ ' + getRounded(stockViewModel.getOwnedGain(userReg).toString()) + "%",
                                         style: TextStyle(color: Colors.green,
                                             fontSize: 22))),
                                 Padding(
@@ -146,7 +146,7 @@ class _DashboardViewState extends State<DashboardView> {
                                 // total loss image
                                 Padding(
                                     padding: EdgeInsets.fromLTRB(0, 22, 0, 0),
-                                    child: Text('\$${totalLoss}.00 ',
+                                    child: Text('\$ ' + getRounded(stockViewModel.getOwnedLoss(userReg).toString()) + "%",
                                         style: TextStyle(
                                             color: Colors.red, fontSize: 22))),
 

@@ -22,7 +22,7 @@ class StockViewModel with ChangeNotifier{
 
   Timer? timer;
   int marketUpdateSeconds = 15;
-  bool needsScrollBool = false;
+  bool needsScrollBool = true;
 
   StockViewModel(){
     timer = Timer.periodic(Duration(seconds: marketUpdateSeconds), (Timer t) => updateMarket());

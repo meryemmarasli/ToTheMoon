@@ -16,7 +16,14 @@ class UserViewModel with ChangeNotifier {
   }
   
 
-
+  double getAveragePaid(UserModel user, StockModel stock) {
+    List<int> pricesPaid = user.stocksOwned[stock.abbreviation] as List<int>;
+    int totalPaid = 0;
+    for(int i = 0; i < pricesPaid.length; i++){
+      totalPaid = pricesPaid[i] + totalPaid;
+    }
+    return totalPaid/pricesPaid.length;
+  }
 
   sellStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
     user.removeStock(name, amount, s);

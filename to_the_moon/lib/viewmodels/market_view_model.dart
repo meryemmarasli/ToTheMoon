@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:flutter/material.dart';
-import 'package:to_the_moon/models/user.dart';
+import 'package:to_the_moon/models/User.dart';
 import '../models/news.dart';
 
 
@@ -22,6 +22,7 @@ class StockViewModel with ChangeNotifier{
 
   Timer? timer;
   int marketUpdateSeconds = 15;
+  bool needsScrollBool = true;
 
   StockViewModel(){
     timer = Timer.periodic(Duration(seconds: marketUpdateSeconds), (Timer t) => updateMarket());
@@ -29,6 +30,36 @@ class StockViewModel with ChangeNotifier{
   }
 
   NewsModel generatedHeadlineData = NewsModel("NULL", "NULL", 0.0, "0.0", false, "NULL", "NULL");
+
+  double getOwnedStockGain(UserModel user, StockModel stock){
+    List<int> pricesPaid = user.stocksOwned[stock.abbreviation] as List<int>;
+    int totalPaid = 0;
+    for(int i = 0; i < pricesPaid.length; i++){
+      totalPaid = pricesPaid[i] + totalPaid;
+    }
+    return ((stock.getCurrentPrice()*pricesPaid.length-totalPaid)/totalPaid)*100;
+  }
+
+  double getOwnedBalance(UserModel user){
+    double balance = user.getCash().toDouble();
+    List<StockModel> stocks = user.getStocks();
+    for(int i = 0; i < stocks.length; i++){
+      balance = balance + (stocks[i].getCurrentPrice().toDouble() * user.getStockAmount(stocks[i].getAbbreviation().toString()));
+    }
+    print(balance);
+    return balance;
+  }
+
+  Future<List<StockModel>> getStocks() async {
+    return await stocks;
+  }
+
+  bool needsScroll() {
+    bool ret = needsScrollBool;
+    needsScrollBool = false;
+    return ret;
+  }
+
 
   updateMarket() async {
     List<StockModel>  stockList = await getStock();
@@ -53,6 +84,7 @@ class StockViewModel with ChangeNotifier{
         updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-5 + rng.nextInt(12))));
       }
     }
+    needsScrollBool = true;
     notifyListeners();
   }
 

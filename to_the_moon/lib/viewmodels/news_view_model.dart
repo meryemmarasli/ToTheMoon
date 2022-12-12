@@ -74,8 +74,8 @@ class NewsViewModel extends ChangeNotifier{
    }
    Headlines.add(generatedHeadlineData);
 
-   if(Headlines.length > 10){
-     Headlines.removeAt(0);
+   if(Headlines.length > 8){
+     Headlines.removeAt(Headlines.length-9);
    }
   }
 }

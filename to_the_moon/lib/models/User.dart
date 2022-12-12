@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 class UserModel {
 
   int userId = 0;
-  int balance = 1000;
+  int balance = 0;
   int cash = 1000;
   int gains = 0;
   int loss = 0;
@@ -22,12 +22,6 @@ class UserModel {
   List<StockModel> stocks = [];
 
   UserModel(this.userId, this.cash, this.acceptAgreement, this.stocksOwned); //  this.ownedStock
-
-  /*
-  HashMap<String, int> getStock(){
-    return ownedStock;
-  }
-   */
 
   void setAgreement(){
     acceptAgreement = true;
@@ -40,8 +34,7 @@ class UserModel {
     return stocksOwned[name]?.length;
   }
 
-  
-  getStocksOwned(){
+  HashMap<String, List<int>> getStocksOwned(){
     return stocksOwned;
   }
   
@@ -50,8 +43,6 @@ class UserModel {
   }
 
   void addStock(String name, int amount, int currentPrice, StockModel s) {
-    // attempts to add stock if key doesn't exist adds new entry
-    // ! in !+ is a null check
     if(!stocks.contains(s)){
       stocks.add(s);
     }
@@ -70,8 +61,6 @@ class UserModel {
   }
 
   void removeStock(String name, int amount, StockModel s){
-    // attempts to add stock if key doesn't exist adds new entry
-    // ! in !- is a null check
     int i = 0;
     while(i < amount){
       stocksOwned[name]!.removeLast();

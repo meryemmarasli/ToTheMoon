@@ -53,7 +53,7 @@ class AgreementView extends StatelessWidget {
                 SizedBox(height: 15),
                 Text("Terms & Conditions ", style: TextStyle(fontSize: 25)),
                   
-                Padding(padding: EdgeInsets.fromLTRB(5, 20, 5, 10),child:Text("User Agreement. Dassault Systemes may not distribute any Product(s) to any User unless such User is subject to a license agreement with Dassault Systemes similar to the license agreements Dassault Systemes uses for similar or like products. Dassault Systemes will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request.", style: TextStyle(fontSize: 15 ), textAlign: TextAlign.center)),
+                Padding(padding: EdgeInsets.fromLTRB(5, 20, 5, 10),child:Text("To The Moon may not distribute any Product(s) to any User unless such User is subject to a license agreement with To The Moon similar to the license agreements To The Moon uses for similar or like products. To The Moon will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request.", style: TextStyle(fontSize: 15 ), textAlign: TextAlign.center)),
                 
                 //SizedBox(height: 20),
                 ElevatedButton(

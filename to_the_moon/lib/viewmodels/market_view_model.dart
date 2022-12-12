@@ -9,6 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:flutter/material.dart';
+import 'package:to_the_moon/models/user.dart';
 import '../models/news.dart';
 
 
@@ -38,7 +39,8 @@ class StockViewModel with ChangeNotifier{
       if(i == headlineSelection){
         // negative event
         if(rng.nextInt(2) == 0){
-          updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-20 + rng.nextInt(10))));
+          int amount = -20 + rng.nextInt(10);
+          updateStock(stockList[i], (stockList[i].getCurrentPrice() + (amount)));
           eventType = false;
         }
         // positive event

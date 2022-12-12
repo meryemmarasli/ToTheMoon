@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 
 class NewsModel {
-   NewsModel(this.stockName, this.companyName, this.value, this.change, this.eventType, this.headline, this.imagePath);
+   NewsModel(this.stockName, this.companyName, this.value, this.change, this.eventType, this.headline, this.imagePath, this.time);
 
 
   String? stockName;
@@ -12,6 +12,7 @@ class NewsModel {
   String? change;
   String? imagePath;
   bool eventType;
+  String time;
 
   String headline = '';
  
@@ -34,6 +35,10 @@ class NewsModel {
 
   getHeadline(){
     return headline;
+  }
+
+   String getTime() {
+    return time;
   }
 }
 

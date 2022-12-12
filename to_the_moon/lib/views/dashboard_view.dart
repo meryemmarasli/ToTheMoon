@@ -1,11 +1,8 @@
 //dashboard view
 import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:collection';
-
-
 
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/viewmodels/news_view_model.dart';
@@ -17,25 +14,21 @@ import 'package:to_the_moon/viewmodels/market_view_model.dart';
 import 'package:to_the_moon/views/navigationBar.dart';
 import 'package:to_the_moon/views/individual_stock_view.dart';
 
-
-
 import 'package:to_the_moon/views/dashboard_view.dart';
-
 
 class DashboardView extends StatefulWidget {
   @override
-  _DashboardViewState createState(){
-   
-   return  _DashboardViewState();
-
-  } 
+  _DashboardViewState createState() {
+    return _DashboardViewState();
+  }
 }
 
 class _DashboardViewState extends State<DashboardView> with TickerProviderStateMixin{
+
   int totalCash = 0;
   int totalGain = 0;
   int totalLoss = 0;
-  var list  = [];
+  var list = [];
   int i = 1;
 
   bool switchTop = false;
@@ -49,12 +42,12 @@ class _DashboardViewState extends State<DashboardView> with TickerProviderStateM
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut
       );
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     UserViewModel userViewModel = context.watch<UserViewModel>();
     Future<UserModel> user = userViewModel.getUser();
     NewsViewModel newsViewModel = context.watch<NewsViewModel>();
@@ -67,7 +60,7 @@ class _DashboardViewState extends State<DashboardView> with TickerProviderStateM
     if (stockViewModel.needsScroll()) {
       _scrollToEnd();
     }
- 
+
     return Scaffold(
       body: FutureBuilder(
       future: Future.wait([user]),
@@ -145,48 +138,53 @@ class _DashboardViewState extends State<DashboardView> with TickerProviderStateM
                         //market news and your stocks
                       ),),
 
-                      getContainer(News, stockViewModel, userViewModel, user),
 
-                    ]
-                ),
-              );
-            } else {
-              return CircularProgressIndicator();
+                      //market news and your stocks
+                    ),
+
+                    getContainer(News, stockViewModel, userViewModel, user),
+                  ]),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
             }
-          }
-        }),
-        );
+          }),
+    );
+  }
 
- }
+  stockList(Future<UserModel> u) async {
+    UserModel user = await u;
 
-stockList(Future<UserModel> u) async{
-  UserModel user = await u;
+    setState(() {
+      list = user.getStocks();
+    });
+  }
 
-      setState(() {
-        list = user.getStocks();
-       
-      });
-}
-
-getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel userViewModel, Future<UserModel> u) {
-  if(i == 0){
-    return Container(
-       height: 398,
-       width: 373,
-        margin: EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(
-         //border: Border.all(width: 2, color: Color.fromARGB(255, 2, 44, 78)),
-         borderRadius: BorderRadius.all(Radius.circular(20)),
-        //gradient:LinearGradient(colors:[  Color.fromARGB(255, 18, 44, 64),  Color.fromARGB(255, 24, 50, 72), Color.fromARGB(255, 89, 42, 97)]),
-        //color: Color.fromARGB(255, 170, 209, 229),
+  getContainer(List<NewsModel> News, StockViewModel stockViewModel,
+      UserViewModel userViewModel, Future<UserModel> u) {
+    if (i == 0) {
+      return Container(
+          height: 398,
+          width: 373,
+          margin: EdgeInsets.only(right: 20),
+          decoration: BoxDecoration(
+            //border: Border.all(width: 2, color: Color.fromARGB(255, 2, 44, 78)),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            //gradient:LinearGradient(colors:[  Color.fromARGB(255, 18, 44, 64),  Color.fromARGB(255, 24, 50, 72), Color.fromARGB(255, 89, 42, 97)]),
+            //color: Color.fromARGB(255, 170, 209, 229),
           ),
           child: Column(
-          children: [
+            children: [
               Row(children: [
-                Padding(padding: EdgeInsets.fromLTRB(12, 20, 0, 5), child: Text("Market News", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold ) ) ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(12, 20, 0, 5),
+                    child: Text("Market News",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold))),
                 getButton(),
-
               ]),
+
             Flexible(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -212,6 +210,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                         ),
                         subtitle: Text("${News[index].getTime()}"),
                         /*trailing: Column(
+
                              children: [
                                Text("\$${News[index].getValue()}"),
                               News[index].getChange(),
@@ -324,33 +323,37 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                                                   ),
                                                   );
                                                   },
+
                                           );
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                }
-                              })
-                                              )
-                                            ],)
-                      );
-
-
-                  
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                            }
+                          }))
+            ],
+          ));
+    }
   }
-}
 
-  Icon getTrailing(UserModel user, StockModel stock, StockViewModel stockViewModel){
-    if(stockViewModel.getOwnedStockGain(user, stock) > 0){
+  Icon getTrailing(
+      UserModel user, StockModel stock, StockViewModel stockViewModel) {
+    if (stockViewModel.getOwnedStockGain(user, stock) > 0) {
       return Icon(CupertinoIcons.arrow_up, color: Colors.green);
-    }else{
+    } else {
       return Icon(CupertinoIcons.arrow_down, color: Colors.red);
     }
   }
 
-  Color priceColor(UserModel user, StockModel stock, StockViewModel stockViewModel){
-    if(stockViewModel.getOwnedStockGain(user, stock) > 0){
+  Color priceColor(
+      UserModel user, StockModel stock, StockViewModel stockViewModel) {
+    if (stockViewModel.getOwnedStockGain(user, stock) > 0) {
       return Colors.lightGreen;
-    }else{
+    } else {
       return Colors.redAccent;
     }
   }
@@ -389,37 +392,40 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                   })
           ));
       }
+
   }
 
   String getRounded(String fullPercentage) {
     String buffer = '';
-    if(fullPercentage.length == 0){
+    if (fullPercentage.length == 0) {
       return '0.0';
-    } else{
-      for(int i = 0; i < fullPercentage.length; i++){
-        if(fullPercentage[i] == '.'){
-          buffer = buffer+fullPercentage[i];
-          if(i+1 < fullPercentage.length){
-            buffer = buffer+fullPercentage[i+1];
-          }if(i+2 < fullPercentage.length && buffer.length < 4){
-            buffer = buffer+fullPercentage[i+2];
+    } else {
+      for (int i = 0; i < fullPercentage.length; i++) {
+        if (fullPercentage[i] == '.') {
+          buffer = buffer + fullPercentage[i];
+          if (i + 1 < fullPercentage.length) {
+            buffer = buffer + fullPercentage[i + 1];
+          }
+          if (i + 2 < fullPercentage.length && buffer.length < 4) {
+            buffer = buffer + fullPercentage[i + 2];
           }
           return buffer;
-        }else{
-          buffer = buffer+fullPercentage[i];
+        } else {
+          buffer = buffer + fullPercentage[i];
         }
       }
       return buffer;
     }
   }
 
-updateTotalCash(Future<UserModel> user) async{
-  UserModel u = await user;
-  setState(() {
-    totalCash = u.getBalance();
-    totalGain = u.getGain();
-    totalLoss = u.getLoss();
-  });
+  updateTotalCash(Future<UserModel> user) async {
+    UserModel u = await user;
+    setState(() {
+      totalCash = u.getBalance();
+      totalGain = u.getGain();
+      totalLoss = u.getLoss();
+    });
+  }
 }
 
   getTopContainer(StockViewModel stockViewModel, UserModel user) {
@@ -472,3 +478,4 @@ updateTotalCash(Future<UserModel> user) async{
     }
   }
 }
+

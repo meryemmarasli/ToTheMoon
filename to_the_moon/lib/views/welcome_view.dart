@@ -3,13 +3,28 @@ import 'package:flutter/src/widgets/framework.dart';
 
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_the_moon/views/agreement_view.dart';
+import 'package:to_the_moon/viewmodels/user_stock_view_model.dart';
+import 'package:to_the_moon/views/navigationBar.dart';
 
-class WelcomeView extends StatelessWidget {
-  const WelcomeView({super.key});
+import '../models/User.dart';
 
+
+
+class WelcomeView extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return new WelcomeViewState();
+  }
+}
+
+class WelcomeViewState extends State<WelcomeView>{
+  bool accept = false;
   @override
   Widget build(BuildContext context) {
+    UserViewModel userViewModel = context.watch<UserViewModel>();
+    getAccept(userViewModel.getUser());
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 6, 27, 44),
@@ -42,7 +57,12 @@ class WelcomeView extends StatelessWidget {
                       child: Text('Start', style:TextStyle(color: Colors.white,)),
                       style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 220, 35, 22)),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AgreementView()));
+                        if(accept){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar()));
+                        }else{
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => AgreementView()));
+
+                        }
                       }
                   )
                   ),
@@ -51,4 +71,13 @@ class WelcomeView extends StatelessWidget {
     ])
     );
   }
+
+  getAccept(Future<UserModel> f) async{
+     UserModel user = await f;
+      setState(() {
+        accept = user.acceptAgreement;
+      });
+  }
+
 }
+

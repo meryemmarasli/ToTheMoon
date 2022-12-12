@@ -55,6 +55,7 @@ class AgreementView extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => BottomBar()));
+                                          
                                 })),
                       ),
                     ),

@@ -36,15 +36,16 @@ class MyApp extends StatelessWidget {
               //primarySwatch: Colors.blue,
 
               ),
-          home: startPage(),
+          home:  WelcomeView(),
         ));
   }
 
-  startPage() {
-    bool accepted = false;
-    if (accepted)
+  startPage(BuildContext context) async{
+    UserViewModel userViewModel = context.watch<UserViewModel>();
+    UserModel user = await userViewModel.getUser();
+    if (user.acceptAgreement)
       return const BottomBar();
     else
-      return const WelcomeView();
+      return  WelcomeView();
   }
 }

@@ -14,6 +14,7 @@ class UserViewModel with ChangeNotifier {
   Future<UserModel> getUser() {
     return user;
   }
+  
 
   sellStock(UserModel user, String name, int amount, int currentPrice, StockModel s) {
     user.removeStock(name, amount, s);

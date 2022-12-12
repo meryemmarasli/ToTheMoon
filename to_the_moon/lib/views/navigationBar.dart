@@ -37,27 +37,46 @@ class _BottomBarState extends State<BottomBar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 13, 38, 60),
-        leading: Icon(CupertinoIcons.rocket),
-        title: Text("To The Moon"),
+        leading: Icon(CupertinoIcons.rocket_fill, size: 36),
+        title: Text("To The Moon", style: TextStyle(fontSize: 26)),
         automaticallyImplyLeading: false,
       ),
       body: Center(child: _widgetOptions[selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: _onItemTapped,
-        elevation: 10,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: Colors.blueGrey,
+        elevation: 1,
+        showSelectedLabels: true,
+        selectedLabelStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+        ),
+        showUnselectedLabels: true,
+        backgroundColor: Color.fromARGB(255, 226, 226, 226),
+        selectedItemColor: Color.fromARGB(255, 0, 50, 91),
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: const Color(0xFF526480),
+        unselectedItemColor: Color.fromARGB(255, 110, 125, 146),
+        iconSize: 36,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.home), label: "Dashboard"),
+            icon: Icon(CupertinoIcons.house),
+            activeIcon: Icon(CupertinoIcons.house_fill),
+            label: "Dashboard",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.graph_square), label: "Market"),
+            icon: Icon(CupertinoIcons.graph_square),
+            activeIcon: Icon(CupertinoIcons.graph_square_fill),
+            label: "Market",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.news), label: "Lessons"),
+            icon: Icon(CupertinoIcons.book),
+            activeIcon: Icon(CupertinoIcons.book_fill),
+            label: "Lessons",
+          ),
         ],
       ),
     );

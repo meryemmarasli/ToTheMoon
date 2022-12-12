@@ -56,7 +56,8 @@ class LessonView extends StatelessWidget {
                               child: Image.asset(Leading[index]),
                               backgroundColor: Colors.white,
                             ),
-                            title: Text(lessons[index].getTitle().toString()),
+                            title: Text(lessons[index].getTitle().toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                             subtitle: Text(
                                 lessons[index].getDescription().toString()),
                             trailing: getTrailing(lessons[index]),

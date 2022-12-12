@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:collection';
+import 'package:confetti/confetti.dart';
 
 class UserViewModel with ChangeNotifier {
   Future<UserModel> user = UserDatabase.instance.user();
@@ -53,9 +54,11 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void rewardCash(UserModel user, int amount, bool lessonStatus) {
+  void rewardCash(UserModel user, int amount, bool lessonStatus,
+      ConfettiController controller) {
     if (!lessonStatus) {
       updateCash(user, amount);
+      controller.play();
     }
   }
 }

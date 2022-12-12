@@ -45,9 +45,10 @@ class AgreementView extends StatelessWidget {
                             height: 50,
                             width: 200,
                             child: ElevatedButton(
-                                child: Text('Accept.',
+                                child: Text('Accept',
                                     style: TextStyle(
                                       color: Colors.white,
+                                      fontSize: 16,
                                     )),
                                 onPressed: () {
                                   userViewModel.setAgreement(user);

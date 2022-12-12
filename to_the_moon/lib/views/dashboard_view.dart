@@ -47,11 +47,13 @@ class _DashboardViewState extends State<DashboardView> {
 
 
   _scrollToEnd() async {
-    _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent+1,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.easeInOut
-    );
+    if(_scrollController.hasClients){
+      _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut
+      );
+    }
   }
 
   @override

@@ -33,7 +33,7 @@ class WelcomeViewState extends State<WelcomeView>{
            Align(
           alignment: Alignment(0.0, -0.39),
           child: Container(
-            child: Text("to the moon", style:TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)), 
+            child: Text("To The Moon", style:TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
           ),
         ),
           Align(

@@ -39,7 +39,8 @@ class StockViewModel with ChangeNotifier{
       if(i == headlineSelection){
         // negative event
         if(rng.nextInt(2) == 0){
-          updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-20 + rng.nextInt(10))));
+          int amount = -20 + rng.nextInt(10);
+          updateStock(stockList[i], (stockList[i].getCurrentPrice() + (amount)));
           eventType = false;
         }
         // positive event

@@ -18,7 +18,7 @@ class UserModel {
   int gains = 0;
   int loss = 0;
   bool acceptAgreement = false;
-  HashMap<String, int> stocksOwned = HashMap<String, int>();
+  HashMap<String, List<int>> stocksOwned = HashMap<String, List<int>>();
   List<StockModel> stocks = [];
 
   UserModel(this.userId, this.cash, this.acceptAgreement, this.stocksOwned); //  this.ownedStock
@@ -55,15 +55,27 @@ class UserModel {
     if(!stocks.contains(s)){
       stocks.add(s);
     }
-    stocksOwned.update(name, (e) => (stocksOwned[name]! + amount), ifAbsent: () => amount);
+
+    if(stocksOwned.containsKey(name)){
+      stocksOwned[name]!.add(amount);
+    }else{
+      List<int> l = [amount];
+      stocksOwned.addAll({name:l});
+    }
+
+    //stocksOwned.update(name, (e) => (stocksOwned[name].add(e)), ifAbsent: () => amount);
    
   }
 
   void removeStock(String name, int amount, StockModel s){
     // attempts to add stock if key doesn't exist adds new entry
     // ! in !- is a null check
-    stocksOwned.update(name, (e) => (stocksOwned[name]!-amount));
-    if(s.getNumOwned() <= 0) stocks.remove(s);
+    int i = 0;
+    while(i < amount){
+      stocksOwned[name]!.removeLast();
+      i++;
+    }
+    if(stocksOwned[name]!.length <= 0) stocks.remove(s);
   }
 
   void addCash(int amount){
@@ -111,7 +123,7 @@ class UserModel {
     userId = json["userId"];
     cash = json['cash'];
     acceptAgreement = json["acceptAgreement"];
-    stocksOwned = HashMap<String, int>.from(jsonDecode(json['stocksOwned']));
+    stocksOwned = HashMap<String, List<int>>.from(jsonDecode(json['stocksOwned']));
   }
 
   UserModel.fromMap(Map<String, dynamic> json){
@@ -123,7 +135,7 @@ class UserModel {
       acceptAgreement = false;
     }
     cash = json["cash"];
-    stocksOwned = HashMap<String, int>.from(jsonDecode(json['stocksOwned']));
+    stocksOwned = HashMap<String, List<int>>.from(jsonDecode(json['stocksOwned']));
   }
 
   Map<String, dynamic> toMap() =>{

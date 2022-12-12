@@ -78,7 +78,7 @@ class UserDatabase {
 
     _database = await _initDB("users_database.db");
     instance.insertUser(new UserModel(0, 1000, false,
-        new HashMap<String, int>())); // new HashMap<String,int>())
+        new HashMap<String, List<int>>())); // new HashMap<String,int>())
     return _database!;
   }
 

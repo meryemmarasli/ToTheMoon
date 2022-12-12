@@ -11,6 +11,7 @@ import 'package:flutter/services.dart' as rootBundle;
 import 'package:flutter/material.dart';
 import 'package:to_the_moon/models/User.dart';
 import '../models/news.dart';
+import  'package:intl/intl.dart';
 
 
 class StockViewModel with ChangeNotifier{
@@ -29,7 +30,7 @@ class StockViewModel with ChangeNotifier{
 
   }
 
-  NewsModel generatedHeadlineData = NewsModel("NULL", "NULL", 0.0, "0.0", false, "NULL", "NULL");
+  NewsModel generatedHeadlineData = NewsModel("NULL", "NULL", 0.0, "0.0", false, "NULL", "NULL", "Null");
 
   double getOwnedStockGain(UserModel user, StockModel stock){
     List<int> pricesPaid = user.stocksOwned[stock.abbreviation] as List<int>;
@@ -132,7 +133,7 @@ class StockViewModel with ChangeNotifier{
           updateStock(stockList[i], (stockList[i].getCurrentPrice() + (rng.nextInt(100))));
           eventType = true;
         }
-        generatedHeadlineData = NewsModel(stockList[i].getAbbreviation(), stockList[i].getName(), stockList[i].getCurrentPrice().toDouble(), getPercentage(stockList[i]), eventType, "NULL", stockList[i].imagePath);
+        generatedHeadlineData = NewsModel(stockList[i].getAbbreviation(), stockList[i].getName(), stockList[i].getCurrentPrice().toDouble(), getPercentage(stockList[i]), eventType, "NULL", stockList[i].imagePath, DateFormat("hh:mm:ss a").format(DateTime.now()));
       }else{
         updateStock(stockList[i], (stockList[i].getCurrentPrice() + (-5 + rng.nextInt(12))));
       }

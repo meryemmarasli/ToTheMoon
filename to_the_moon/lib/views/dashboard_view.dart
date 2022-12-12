@@ -31,24 +31,20 @@ class DashboardView extends StatefulWidget {
   } 
 }
 
-
-
-
-class _DashboardViewState extends State<DashboardView> {
+class _DashboardViewState extends State<DashboardView> with TickerProviderStateMixin{
   int totalCash = 0;
   int totalGain = 0;
   int totalLoss = 0;
   var list  = [];
   int i = 1;
-  int test = 0;
+
+  bool switchTop = false;
 
   final ScrollController _scrollController = ScrollController();
 
-
-
   _scrollToEnd() async {
     if(_scrollController.hasClients){
-      _scrollController.animateTo(
+      await _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut
@@ -88,12 +84,20 @@ class _DashboardViewState extends State<DashboardView> {
                 child: Column(
                     children: [
                       // Portfolio over view
+
                       Row(children: [
                         Padding(padding: EdgeInsets.fromLTRB(20, 10, 0, 5),
                             child: Text("Porfolio Overview", style: TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.bold))),
                       ]),
-                      Container(
+
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            switchTop = !switchTop;
+                          });
+                        },
+                      child: Container(
                         height: 158,
                         width: 373,
                         decoration: BoxDecoration(
@@ -109,23 +113,7 @@ class _DashboardViewState extends State<DashboardView> {
                         ),
                         child: Column(
                             children: [
-                              Row(children: [
-                                Padding(
-                                    padding: EdgeInsets.fromLTRB(30, 18, 0, 0),
-                                    child: Text("Invested Capital:", style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold))),
-                              ]),
-                              Row(children: [
-                                Padding(
-                                    padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                    child: Text("\$" +
-                                        stockViewModel.getOwnedInvestedCapital(userReg)
-                                            .toString(), style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 40))),
-                              ]),
+                              getTopContainer(stockViewModel, userReg),
                               Row(children: [
                                 Padding(
                                     padding: EdgeInsets.fromLTRB(30, 22, 0, 0),
@@ -155,7 +143,7 @@ class _DashboardViewState extends State<DashboardView> {
                         ),
 
                         //market news and your stocks
-                      ),
+                      ),),
 
                       getContainer(News, stockViewModel, userViewModel, user),
 
@@ -203,22 +191,33 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
               child: Align(
                 alignment: Alignment.topCenter,
                 child: ListView.builder(
+                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                     reverse: true,
                     shrinkWrap: true,
                     controller: _scrollController,
                     itemCount: News.length,
                     itemBuilder: (context, index){
-                      return ListTile(
+                      return Card(
+                          elevation: .5,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(width: 1, color: Color.fromARGB(255, 214, 212, 212)),
+                              // borderRadius: BorderRadius.circular(20)
+                          ),
+                      child: ListTile(
                         leading: CircleAvatar(child: News[index].getImage(), backgroundColor: Colors.white,),
-                        title: Text("${News[index].getHeadline()}" ),
-                        // subtitle: Text("${News[index].getCompanyName()}"),
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0),
+                          child: Text("${News[index].getHeadline()}" ),
+                        ),
+                        subtitle: Text("${News[index].getTime()}"),
                         /*trailing: Column(
                              children: [
                                Text("\$${News[index].getValue()}"),
                               News[index].getChange(),
                             ],
                        ) */
-                      );
+                      ));
                        }
                      ),
                      ),
@@ -244,7 +243,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                             ]),
                             list.length == 0
                             ?Column(children: [
-                              Padding( padding: EdgeInsets.fromLTRB(0, 50, 0, 40),
+                              Padding( padding: EdgeInsets.fromLTRB(0, 15, 0, 40),
                               child: Image.asset(
                                  //'https://media1.giphy.com/media/fxQp8eDj3n41nC9Lk7/giphy.gif?cid=ecf05e47v3r76763ocd9qkmgfxwad4jnx94i8xhjm5006crx&rid=giphy.gif&ct=s',
                                  'assets/images/moon.gif',
@@ -274,7 +273,9 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                                     UserModel user = data.data?[0] as UserModel;
                                     return ListView.builder(
                                         itemCount: list.length,
-                                        itemBuilder: (context, index) {
+
+                                      itemBuilder: (context, index) {
+
                                           return Card(
                                               elevation: .5,
                                               color: Colors.white,
@@ -365,6 +366,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                   ),
                   child: Row( children: [ Text("View Investments", style: TextStyle(color: Colors.grey)), /*Icon(Icons.arrow_right, color: Colors.grey)*/ ]),
                   onPressed: (() {
+                    _scrollToEnd();
                     setState(() {
                       i++;
                     });
@@ -380,6 +382,7 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel 
                   ),
                   child: Row( children: [  /*Icon(Icons.arrow_left, color: Colors.grey),*/ Text("View News", style: TextStyle(color: Colors.grey)) ]),
                   onPressed: (() {
+                    _scrollToEnd();
                     setState(() {
                       i--;
                     });
@@ -418,4 +421,54 @@ updateTotalCash(Future<UserModel> user) async{
     totalLoss = u.getLoss();
   });
 }
+
+  getTopContainer(StockViewModel stockViewModel, UserModel user) {
+    if(switchTop){
+      return Column(
+          children: [
+        Row(children: [
+        Padding(
+            padding: EdgeInsets.fromLTRB(30, 18, 0, 0),
+            child: Text("Invested Capital:", style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold))),
+        ]),
+
+            Row(children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  child: Text("\$" +
+                      stockViewModel.getOwnedInvestedCapital(user)
+                          .toString(), style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40))),
+            ],
+
+        )]);
+    }else{
+      return Column(
+          children: [
+            Row(children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(30, 18, 0, 0),
+                  child: Text("Total Assets:", style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold))),
+            ]),
+
+            Row(children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  child: Text("\$" +
+                      stockViewModel.getOwnedTotalAssets(user)
+                          .toString(), style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40))),
+            ],
+
+            )]);
+    }
+  }
 }

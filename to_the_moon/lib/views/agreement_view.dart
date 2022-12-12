@@ -14,26 +14,46 @@ class AgreementView extends StatelessWidget {
   Widget build(BuildContext context) {
     UserViewModel userViewModel = context.watch<UserViewModel>();
     return Scaffold(
-      backgroundColor:Color.fromARGB(231, 209, 229, 255),
-      body: Column(
+      backgroundColor: Color.fromARGB(255, 239, 246, 249),
+    body: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-            SizedBox(height: 230),
-      
-            Row( children : [
-            SizedBox(width: 45),
-            Container(
+          Stack(
+            alignment: Alignment.bottomCenter,
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                'assets/images/rocket bottom.gif', alignment: Alignment.bottomCenter,
+
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.topCenter,
+            child: Container(
               width: 300,
-              height: 400,
-              decoration: BoxDecoration(
-                   color: Color.fromARGB(255, 216, 234, 246),
-                  border: Border.all(width: 2, color: Color.fromARGB(
-                              255, 2, 44, 78)),
+              height: 310,
+                margin: const EdgeInsets.only(bottom: 260),
+                decoration: BoxDecoration(
+                   color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5.0,
+                      color: Colors.grey[300]!,
+                      spreadRadius: 5.0,
+                    ),
+                  ],
+                  border: Border.all(width: 2, color: Color.fromARGB(255, 2, 44, 78)),
                   borderRadius: BorderRadius.all(Radius.circular(20)),),
-              child: Column(children: [
-                SizedBox(height: 45),
+              child: Column(
+
+                children: [
+                SizedBox(height: 15),
                 Text("Terms & Conditions ", style: TextStyle(fontSize: 25)),
                   
-                Padding(padding: EdgeInsets.fromLTRB(5, 20, 5, 20),child:Text("User Agreement. Dassault Systemes may not distribute any Product(s) to any User unless such User is subject to a license agreement with Dassault Systemes similar to the license agreements Dassault Systemes uses for similar or like products. Dassault Systemes will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request.", style: TextStyle(fontSize: 15 ), textAlign: TextAlign.center)),
+                Padding(padding: EdgeInsets.fromLTRB(5, 20, 5, 10),child:Text("To The Moon may not distribute any Product(s) to any User unless such User is subject to a license agreement with To The Moon similar to the license agreements To The Moon uses for similar or like products. To The Moon will promptly provide PlanetCAD with such license agreement(s) upon PlanetCAD's request.", style: TextStyle(fontSize: 15 ), textAlign: TextAlign.center)),
                 
                 //SizedBox(height: 20),
                 ElevatedButton(
@@ -59,9 +79,9 @@ class AgreementView extends StatelessWidget {
                   
               ],))
 
-            ]),
-        ]
-      )
+          ),
+        ])]
+      ),
 
 
 

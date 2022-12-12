@@ -42,9 +42,21 @@ class _DashboardViewState extends State<DashboardView> {
   int i = 1;
   int test = 0;
 
+  final ScrollController _scrollController = ScrollController();
+
+
+
+  _scrollToEnd() async {
+    _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent+1,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+
     UserViewModel userViewModel = context.watch<UserViewModel>();
     Future<UserModel> user = userViewModel.getUser();
     NewsViewModel newsViewModel = context.watch<NewsViewModel>();
@@ -53,6 +65,10 @@ class _DashboardViewState extends State<DashboardView> {
     List<NewsModel> News = newsViewModel.getHeadlines();
     stockList(user);
     updateTotalCash(user);
+
+    if (stockViewModel.needsScroll()) {
+      _scrollToEnd();
+    }
  
     return Scaffold(
       body:SingleChildScrollView(
@@ -92,7 +108,7 @@ class _DashboardViewState extends State<DashboardView> {
                 //market news and your stocks
                 ),
               
-              getContainer(News, stockViewModel, user),
+              getContainer(News, stockViewModel, userViewModel, user),
 
         ]
       ),
@@ -108,7 +124,7 @@ stockList(Future<UserModel> u) async{
       });
 }
 
-getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserModel> u) {
+getContainer(List<NewsModel> News, StockViewModel stockViewModel, UserViewModel userViewModel, Future<UserModel> u) {
   if(i == 0){
     return Container(
        height: 398,
@@ -127,18 +143,18 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
                 getButton(),
 
               ]),
-               Expanded(
-                 child: Align(
-                  alignment: Alignment.topCenter,
-                  child: ListView.builder(
-                  reverse: true,
-                  shrinkWrap: true,
-                      itemCount: News.length,
-                   itemBuilder: (context, index){
-                     return ListTile(
-                       leading: CircleAvatar(child: News[index].getImage(), backgroundColor: Colors.white,),
-                       title: Text("${News[index].getHeadline()}" ),
-
+            Flexible(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: ListView.builder(
+                    reverse: true,
+                    shrinkWrap: true,
+                    controller: _scrollController,
+                    itemCount: News.length,
+                    itemBuilder: (context, index){
+                      return ListTile(
+                        leading: CircleAvatar(child: News[index].getImage(), backgroundColor: Colors.white,),
+                        title: Text("${News[index].getHeadline()}" ),
                         // subtitle: Text("${News[index].getCompanyName()}"),
                         /*trailing: Column(
                              children: [
@@ -217,19 +233,27 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
                                                       subtitle: Text.rich(
                                                         TextSpan(
                                                           children: <InlineSpan>[
-                                                            TextSpan(text: "${list[index].getName()}"),
+                                                            TextSpan(text: "Owned: " + userViewModel.stockAmount(user, list[index].getAbbreviation()).toString()),
                                                             //TextSpan(text: "${list[index].getCurrentPrice().toString()}.00", style: TextStyle(color: priceColor(list[index]))),
                                                           ],
                                                         ),
                                                       ),
 
                                                       trailing: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           //getTrailing(list[index]),
-                                                          Text("\$${list[index].getCurrentPrice().toString()}.00"),
-                                                          Text(stockViewModel.getStockGain(list[index]).toString().substring(0, 4) + '%', style: TextStyle(color: priceColor(list[index], stockViewModel))),
+                                                          Text("Avg Paid: \$" + getRounded(userViewModel.getAveragePaid(user, list[index]).toString())),
+                                                          Text.rich(
+                                                            TextSpan(
+                                                            children: <InlineSpan>[
+                                                            TextSpan(text: "Avg Gain: "),
+                                                            TextSpan(text: getRounded(stockViewModel.getOwnedStockGain(user, list[index]).toString())+ "%", style: TextStyle(color: priceColor(user, list[index], stockViewModel))),
+                                                          ],
+                                                          ))
                                                         ],
+
                                                       ),
                                                       onTap: () {
                                                       Navigator.push(
@@ -258,16 +282,16 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
   }
 }
 
-  Icon getTrailing(StockModel stock, StockViewModel stockViewModel){
-    if(stockViewModel.getStockGain(stock) > 0){
+  Icon getTrailing(UserModel user, StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getOwnedStockGain(user, stock) > 0){
       return Icon(CupertinoIcons.arrow_up, color: Colors.green);
     }else{
       return Icon(CupertinoIcons.arrow_down, color: Colors.red);
     }
   }
 
-  Color priceColor(StockModel stock, StockViewModel stockViewModel){
-    if(stockViewModel.getStockGain(stock) > 0){
+  Color priceColor(UserModel user, StockModel stock, StockViewModel stockViewModel){
+    if(stockViewModel.getOwnedStockGain(user, stock) > 0){
       return Colors.lightGreen;
     }else{
       return Colors.redAccent;
@@ -307,7 +331,28 @@ getContainer(List<NewsModel> News, StockViewModel stockViewModel, Future<UserMod
           ));
       }
   }
- 
+
+  String getRounded(String fullPercentage) {
+    String buffer = '';
+    if(fullPercentage.length == 0){
+      return '0.0';
+    } else{
+      for(int i = 0; i < fullPercentage.length; i++){
+        if(fullPercentage[i] == '.'){
+          buffer = buffer+fullPercentage[i];
+          if(i+1 < fullPercentage.length){
+            buffer = buffer+fullPercentage[i+1];
+          }if(i+2 < fullPercentage.length && buffer.length < 4){
+            buffer = buffer+fullPercentage[i+2];
+          }
+          return buffer;
+        }else{
+          buffer = buffer+fullPercentage[i];
+        }
+      }
+      return buffer;
+    }
+  }
 
 updateTotalCash(Future<UserModel> user) async{
   UserModel u = await user;

@@ -40,8 +40,8 @@ class UserModel {
     return stocksOwned[name]?.length;
   }
 
-  
-  getStocksOwned(){
+
+  HashMap<String, List<int>> getStocksOwned(){
     return stocksOwned;
   }
   

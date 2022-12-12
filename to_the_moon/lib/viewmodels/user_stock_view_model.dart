@@ -54,12 +54,14 @@ class UserViewModel with ChangeNotifier {
 
   void updateCash(UserModel user, int amount) {
     user.addCash(amount);
+    user.addBalance(amount);
     notifyListeners();
   }
 
   void rewardCash(UserModel user, int amount, bool lessonStatus) {
     if (!lessonStatus) {
       updateCash(user, amount);
+      
     }
   }
 }
@@ -76,7 +78,7 @@ class UserDatabase {
 
     _database = await _initDB("users_database.db");
     instance.insertUser(new UserModel(0, 1000, false,
-        new HashMap<String, int>())); // new HashMap<String,int>())
+        new HashMap<String, List<int>>())); // new HashMap<String,int>())
     return _database!;
   }
 

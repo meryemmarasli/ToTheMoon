@@ -34,7 +34,7 @@ class AgreementView extends StatelessWidget {
               alignment: Alignment.topCenter,
             child: Container(
               width: 300,
-              height: 290,
+              height: 300,
                 margin: const EdgeInsets.only(bottom: 260),
                 decoration: BoxDecoration(
                    color: Colors.white,

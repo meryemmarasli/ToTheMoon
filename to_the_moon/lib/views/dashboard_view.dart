@@ -253,12 +253,12 @@ class _DashboardViewState extends State<DashboardView>
               list.length == 0
                   ? Column(children: [
                       Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 40),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
                           child: Image.asset(
                               //'https://media1.giphy.com/media/fxQp8eDj3n41nC9Lk7/giphy.gif?cid=ecf05e47v3r76763ocd9qkmgfxwad4jnx94i8xhjm5006crx&rid=giphy.gif&ct=s',
                               'assets/images/moon.gif',
                               width: 170,
-                              height: 170)),
+                              height: 160)),
                       Center(
                           child: Text(
                               "uh-oh! looks like you have no investments.",
@@ -266,7 +266,7 @@ class _DashboardViewState extends State<DashboardView>
                       Center(
                           child: Text("start investing now!",
                               style: TextStyle(fontSize: 16))),
-                      SizedBox(height: 8),
+                      // SizedBox(height: 8),
                       Center(child: Icon(Icons.arrow_downward, size: 30))
                     ])
                   : Expanded(

@@ -284,7 +284,7 @@ class StockDatabase {
         'assets/images/johnson.png'));
     instance.insertStock(StockModel(
         "JPM",
-        'JP Morgan Chase & Co.',
+        'JP Morgan Chase',
         [
           300,
           301,

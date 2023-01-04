@@ -18,4 +18,8 @@ The app compromises of three main pages:
 
 The lesson page and market page both lead into their individual respective lessons and apps.
 
-Here is an runthrough of the app:
+ To run and download app:
+ 1. git clone this repository
+ 2. cd into cloned repository
+ 3. open -a simulator (xcode needs to be downloaded for this)
+ 4. flutter run

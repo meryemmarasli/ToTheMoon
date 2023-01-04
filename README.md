@@ -6,8 +6,8 @@ To The Moon is a space themed educational stock application. The app is written 
  
 The app compromises of three main pages:
 
-1.Home Page
-<img src = "https://user-images.githubusercontent.com/29709332/210634965-f4275868-3d3d-46ec-a608-261a1f1720df.png" height = "100">
+1. Home Page: 
+<img src = "https://user-images.githubusercontent.com/29709332/210634965-f4275868-3d3d-46ec-a608-261a1f1720df.png" height = "400" widht = "200">
 
 2. Market Page:
 <img src = "https://user-images.githubusercontent.com/29709332/210634994-e10edfa9-5e0e-469a-b24a-cfff1bf178ed.png" height = "100">

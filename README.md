@@ -10,10 +10,10 @@ The app compromises of three main pages:
 <img src = "https://user-images.githubusercontent.com/29709332/210634965-f4275868-3d3d-46ec-a608-261a1f1720df.png" height = "700" widht = "500">
 
 2. Market Page:
-<img src = "https://user-images.githubusercontent.com/29709332/210634994-e10edfa9-5e0e-469a-b24a-cfff1bf178ed.png" height = "100">
+<img src = "https://user-images.githubusercontent.com/29709332/210634994-e10edfa9-5e0e-469a-b24a-cfff1bf178ed.png" height = "700" widht = "500">
 
 3. Lesson Page:
- <img src = "https://user-images.githubusercontent.com/29709332/210635044-96cf2bd0-247e-4d50-bbea-9b313d5db73d.png" height = "100">
+ <img src = "https://user-images.githubusercontent.com/29709332/210635044-96cf2bd0-247e-4d50-bbea-9b313d5db73d.png" height = "700" widht = "500">
 
 
 The lesson page and market page both lead into their individual respective lessons and apps.

@@ -1,6 +1,6 @@
 # ToTheMoon
 
- ![rocketGif](https://user-images.githubusercontent.com/29709332/210633314-cffa618e-98a7-4984-845c-c177b2ee13fd.gif)
+ ![rocketGif](https://user-images.githubusercontent.com/29709332/210633314-cffa618e-98a7-4984-845c-c177b2ee13fd.gif | width = 100 height = 100)
 
  To The Moon is a space themed educational stock application. The app is written in Flutter. The main goal fo the app is to teach young students how to invest in the market.
  

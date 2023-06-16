@@ -23,3 +23,7 @@ The lesson page and market page both lead into their individual respective lesso
  2. cd into cloned repository
  3. open -a simulator (xcode needs to be downloaded for this)
  4. flutter run
+
+
+## Upcoming Changes:
+The application will be containerized via Docker. 
